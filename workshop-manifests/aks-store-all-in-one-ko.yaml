@@ -296,9 +296,15 @@ spec:
             - name: ORDER_QUEUE_URI
               value: "amqp://rabbitmq:5672"
             - name: ORDER_QUEUE_USERNAME
-              value: "username"
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-secrets
+                  key: RABBITMQ_DEFAULT_USER
             - name: ORDER_QUEUE_PASSWORD
-              value: "password"
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-secrets
+                  key: RABBITMQ_DEFAULT_PASS
             - name: ORDER_QUEUE_NAME
               value: "orders"
             - name: ORDER_DB_URI

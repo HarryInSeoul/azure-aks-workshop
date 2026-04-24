@@ -25,49 +25,61 @@ az account show -o table
 
 # 워크샵 리소스 그룹 생성 (AKS 클러스터 등 모든 워크샵 리소스가 여기에 생성됩니다)
 az group create --name WorkshopDemo-RG --location koreacentral -o table
+
+# 리소스 그룹 이름을 환경 변수로 설정 (이후 명령에서 사용)
+export RESOURCE_GROUP="WorkshopDemo-RG"
 ```
 
-## 1-3. Azure Container Registry (사전 구성)
+## 1-3. Azure Container Registry (사전 제공)
 
-> **참고**: ACR은 워크샵과 별도로 관리되는 **재사용 리소스**입니다.  
-> 이미 생성된 ACR이 있으면 이 단계를 건너뛰고 기존 ACR 이름을 사용하세요.
+> **참고**: 대부분의 컨테이너 이미지는 워크샵 주최자가 사전 구성한 **공용 ACR**에서 제공됩니다.  
+> `store-admin`은 참가자가 직접 소스를 수정하고 빌드하기 위해 **개인 ACR**을 사용합니다.
+
+### 공용 ACR (주최자 제공 — 이미지 Pull 전용)
 
 ```bash
-# ACR 전용 리소스 그룹 (워크샵 정리 시 삭제하지 않음)
-az group create --name WorkshopACR-RG --location koreacentral -o table
+# 공용 ACR 접근 확인
+az acr show --name aksworkshopkoea6e -o table
+```
 
-# ACR 이름은 글로벌 유일 (영소문자+숫자만)
-ACR_NAME="aksworkshop$(openssl rand -hex 3)"
-echo "ACR 이름: $ACR_NAME"
+### 참가자 개인 ACR 생성
 
+```bash
+# 고유한 ACR 이름 생성 (영소문자+숫자만, 글로벌 유일)
+MY_ACR_NAME="workshop$(whoami | tr -d '.-_')$(openssl rand -hex 2)"
+echo "내 ACR 이름: $MY_ACR_NAME"
+
+# ACR 생성 (WorkshopDemo-RG에 함께 생성 — 워크샵 종료 시 자동 삭제)
 az acr create \
-  --resource-group WorkshopACR-RG \
-  --name $ACR_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --name $MY_ACR_NAME \
   --sku Basic \
   --location koreacentral \
   -o table
-
-# 로그인
-az acr login --name $ACR_NAME
 ```
 
-> **메모**: ACR은 `WorkshopACR-RG`에 별도로 유지되며, 워크샵 종료 후에도 삭제하지 않습니다.  
-> 생성된 `$ACR_NAME` 값을 이후 섹션에서 계속 사용합니다. 터미널 세션이 끊기면 다시 설정하세요.
+> **참고**: 개인 ACR은 `WorkshopDemo-RG`에 생성하므로, 워크샵 종료 시 리소스 그룹 삭제와 함께 자동 정리됩니다.
 
 ## 1-4. 환경 변수 설정 (이후 섹션에서 재사용)
 
 ```bash
+# RESOURCE_GROUP은 1-2에서 이미 설정했으므로 새 터미널에서만 다시 실행하세요
 export RESOURCE_GROUP="WorkshopDemo-RG"
-export ACR_NAME="<ACR 이름 (예: aksworkshopkoea6e)>"
+export ACR_NAME="aksworkshopkoea6e"
+export MY_ACR_NAME="<위에서 생성한 개인 ACR 이름>"
 export CLUSTER_NAME="workshop-demo"
 export LOCATION="koreacentral"
 ```
+
+> **참고**:
+> - `ACR_NAME` — 공용 ACR (주최자 제공, 대부분의 이미지 소스)
+> - `MY_ACR_NAME` — 참가자 개인 ACR (store-admin 이미지 빌드/푸시용)
 
 ## 사전 점검 체크리스트
 
 - [ ] `az account show` — 올바른 구독 선택
 - [ ] `az group show -n WorkshopDemo-RG` — 워크샵 리소스 그룹 존재
-- [ ] `az acr show -n $ACR_NAME` — ACR 정상 (재사용 또는 신규 생성)
+- [ ] `az acr show -n $ACR_NAME` — ACR 접근 가능
 - [ ] `docker info` — Docker 데몬 실행 중
 
 ---

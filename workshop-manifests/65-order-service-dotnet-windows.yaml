@@ -1,0 +1,73 @@
+# ⚠️ 배포 전 __ACR_NAME__을 실제 ACR 이름으로 치환하세요:
+#   sed -i "s/__ACR_NAME__/$ACR_NAME/g" workshop-manifests/65-order-service-dotnet-windows.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service-dotnet
+  namespace: pets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service-dotnet
+  template:
+    metadata:
+      labels:
+        app: order-service-dotnet
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": windows
+      tolerations:
+        - key: "os"
+          operator: "Equal"
+          value: "windows"
+          effect: "NoSchedule"
+      containers:
+        - name: order-service-dotnet
+          image: __ACR_NAME__.azurecr.io/order-service-dotnet:win
+          ports:
+            - containerPort: 3000
+          env:
+            - name: ORDER_QUEUE_HOSTNAME
+              value: "rabbitmq"
+            - name: ORDER_QUEUE_PORT
+              value: "5672"
+            - name: ORDER_QUEUE_USERNAME
+              value: "username"
+            - name: ORDER_QUEUE_PASSWORD
+              value: "password"
+            - name: ORDER_QUEUE_NAME
+              value: "orders"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service-dotnet
+  namespace: pets
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: order-service-dotnet
