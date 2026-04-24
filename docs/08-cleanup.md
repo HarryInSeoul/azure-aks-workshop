@@ -27,7 +27,7 @@ az group delete --name $RESOURCE_GROUP --yes --no-wait
 ```
 
 > ⚠️ `WorkshopDemo-RG` 삭제 시 AKS 클러스터, 노드 VMSS, LoadBalancer, Public IP, NSG, VNET 등이 모두 제거됩니다.  
-> ✅ ACR (`WorkshopACR-RG`)은 **삭제하지 않습니다** — 이미지가 보존되어 다음 워크샵에서 재사용할 수 있습니다.
+> ✅ ACR은 워크샵 주최자가 관리하는 공용 리소스이므로 참가자가 삭제할 필요가 없습니다.
 
 ## 8-3. kubeconfig 정리
 
@@ -47,7 +47,6 @@ az group show --name $RESOURCE_GROUP 2>/dev/null && echo "아직 삭제 중..." 
 - [ ] pets 네임스페이스 삭제됨
 - [ ] `WorkshopDemo-RG` 리소스 그룹 삭제 → AKS + 모든 워크샵 리소스 정리
 - [ ] kubeconfig에서 컨텍스트/클러스터 제거
-- [ ] ACR (`WorkshopACR-RG`)은 유지 확인
 
 ---
 
@@ -55,15 +54,16 @@ az group show --name $RESOURCE_GROUP 2>/dev/null && echo "아직 삭제 중..." 
 
 이 워크샵에서 다룬 내용:
 
-1. **AKS 클러스터 생성** — NAP, KEDA, Azure CNI Overlay + Cilium
+1. **AKS 클러스터 생성** — NAP, KEDA, Azure CNI Overlay
 2. **컨테이너 빌드 & ACR 푸시** — 7개 마이크로서비스, 한국어 로컬라이징
 3. **애플리케이션 배포** — StatefulSet, Deployment, Service (LoadBalancer)
 4. **HPA 오토스케일링** — CPU 기반 Pod 수평 확장/축소
 5. **NAP 노드 자동 확장** — Karpenter 기반 노드 프로비저닝/통합
 6. **모니터링 & 트러블슈팅** — kubectl 진단, 일반적인 문제 해결
+7. **AI Agent 배포** — Azure OpenAI 활용 AI 상품 추천 에이전트
 
 ---
 
 | | |
 |:---|---:|
-| [⬅️ 07. 모니터링 & 트러블슈팅](07-monitoring-troubleshooting.md) | [00. 워크샵 개요 🏠](00-overview.md) |
+| [⬅️ 07. 모니터링 & 트러블슈팅](07-monitoring-troubleshooting.md) | [09. AI Agent 배포 ➡️](09-ai-agent.md) |

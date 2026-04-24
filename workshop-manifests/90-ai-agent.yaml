@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ai-agent-config
+  namespace: pets
+data:
+  PRODUCT_SERVICE_URL: "http://product-service:3002"
+  AZURE_OPENAI_API_VERSION: "2024-12-01-preview"
+  # DEMO_MODE: "true" 로 변경하면 Azure OpenAI 없이 데모 추천이 동작합니다
+  DEMO_MODE: "false"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-agent
+  namespace: pets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-agent
+  template:
+    metadata:
+      labels:
+        app: ai-agent
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+        - name: ai-agent
+          image: aksworkshopkoea6e.azurecr.io/ai-agent:v1
+          ports:
+            - containerPort: 5100
+          envFrom:
+            - configMapRef:
+                name: ai-agent-config
+            - secretRef:
+                name: ai-agent-secrets
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 5100
+            failureThreshold: 5
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5100
+            failureThreshold: 3
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5100
+            failureThreshold: 5
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-agent
+  namespace: pets
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 5100
+      targetPort: 5100
+  selector:
+    app: ai-agent
