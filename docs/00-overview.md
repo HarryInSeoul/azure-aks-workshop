@@ -34,6 +34,7 @@
 | **product-service** | Rust | 상품 카탈로그 API (한국어 상품 데이터) |
 | **order-service** | Node.js / Fastify | 주문 접수 → RabbitMQ 큐 전달 |
 | **makeline-service** | Go | 큐에서 주문 처리 → MongoDB 저장 |
+| **ai-agent** | Python / FastAPI | AI 상품 추천 에이전트 (Azure OpenAI) |
 | **MongoDB** | — | 주문 데이터 저장소 |
 | **RabbitMQ** | — | 메시지 큐 |
 | **virtual-customer** | Rust | 부하 생성 (자동 주문) |
