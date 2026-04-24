@@ -8,15 +8,15 @@
 
 | 섹션 | 주제 | 예상 시간 |
 |------|------|-----------|
-| 01 | 사전 준비 — 구독, CLI, ACR | 10분 |
-| 02 | AKS 클러스터 생성 (NAP + KEDA + Azure CNI Overlay) | 15분 |
-| 03 | 애플리케이션 빌드 & ACR 푸시 | 15분 |
-| 04 | 펫 스토어 배포 + Ingress 설정 | 15분 |
-| 05 | AI Agent 배포 (Azure OpenAI) | 15분 |
-| 06 | HPA 오토스케일링 관찰 | 15분 |
-| 07 | NAP(Karpenter) 노드 자동 확장 | 15분 |
-| 08 | 모니터링 & 트러블슈팅 | 15분 |
-| 09 | 정리 (리소스 삭제) | 5분 |
+| [01](01-prerequisites.md) | 사전 준비 — 구독, CLI, ACR | 10분 |
+| [02](02-create-cluster.md) | AKS 클러스터 생성 (NAP + KEDA + Azure CNI Overlay) | 15분 |
+| [03](03-build-and-push.md) | 애플리케이션 빌드 & ACR 푸시 | 15분 |
+| [04](04-deploy-app.md) | 펫 스토어 배포 + Ingress 설정 | 15분 |
+| [05](05-ai-agent.md) | AI Agent 배포 (Azure OpenAI) | 15분 |
+| [06](06-hpa-autoscaling.md) | HPA 오토스케일링 관찰 | 15분 |
+| [07](07-nap-node-scaling.md) | NAP(Karpenter) 노드 자동 확장 | 15분 |
+| [08](08-monitoring-troubleshooting.md) | 모니터링 & 트러블슈팅 | 15분 |
+| [09](09-cleanup.md) | 정리 (리소스 삭제) | 5분 |
 | **합계** | | **~120분** |
 
 ## 아키텍처
