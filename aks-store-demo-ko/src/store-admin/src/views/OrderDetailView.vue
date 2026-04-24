@@ -2,28 +2,28 @@
   <div class="order-detail-container" v-if="orderExists">
     <div class="order-header-section">
       <div class="order-info">
-        <h2>Order Details</h2>
-        <p><b>Order ID:</b> {{ order?.orderId }}</p>
-        <p><b>Customer ID:</b> {{ order?.customerId }}</p>
+        <h2>주문 상세</h2>
+        <p><b>주문 ID:</b> {{ order?.orderId }}</p>
+        <p><b>고객 ID:</b> {{ order?.customerId }}</p>
         <p>
-          <b>Status: </b>
+          <b>상태: </b>
           <span :class="order?.status === 0 ? 'status-pending' : 'status-completed'">
-            {{ order?.status === 0 ? 'Pending' : 'Completed' }}
+            {{ order?.status === 0 ? '처리 중' : '완료' }}
           </span>
         </p>
       </div>
       <div class="action-button" v-if="order?.status === 0">
-        <button @click="completeOrder" class="complete-button">Complete Order</button>
+        <button @click="completeOrder" class="complete-button">주문 완료 처리</button>
       </div>
     </div>
 
     <div class="order-items-container">
       <div class="order-header">
-        <div class="order-column product-id">Product ID</div>
-        <div class="order-column product-name">Product Name</div>
-        <div class="order-column quantity">Quantity</div>
-        <div class="order-column price">Price</div>
-        <div class="order-column total">Total</div>
+        <div class="order-column product-id">상품 ID</div>
+        <div class="order-column product-name">상품명</div>
+        <div class="order-column quantity">수량</div>
+        <div class="order-column price">가격</div>
+        <div class="order-column total">합계</div>
       </div>
 
       <div class="order-items">
@@ -40,15 +40,15 @@
 
       <div class="order-summary">
         <div class="summary-row">
-          <span>Subtotal:</span>
+          <span>소계:</span>
           <span>{{ calculateSubtotal().toFixed(2) }}</span>
         </div>
         <div class="summary-row">
-          <span>Shipping:</span>
-          <span>Free</span>
+          <span>배송비:</span>
+          <span>무료</span>
         </div>
         <div class="summary-row total">
-          <span>Total:</span>
+          <span>총액:</span>
           <span>{{ calculateSubtotal().toFixed(2) }}</span>
         </div>
       </div>
@@ -57,7 +57,7 @@
 
   <div class="loading-container" v-else>
     <div class="loading-spinner"></div>
-    <h3>Fetching order details...</h3>
+    <h3>주문 상세 정보를 불러오는 중...</h3>
   </div>
 </template>
 
@@ -107,15 +107,15 @@ const completeOrder = () => {
         .then((response) => {
           if (response.ok) {
             orderStore.removeOrder(foundOrder)
-            alert('Order successfully processed')
+            alert('주문이 성공적으로 처리되었습니다')
             router.push('/')
           } else {
-            alert('Error occurred while processing order')
+            alert('주문 처리 중 오류가 발생했습니다')
           }
         })
         .catch((error) => {
           console.log(error)
-          alert('Error occurred while processing order')
+          alert('주문 처리 중 오류가 발생했습니다')
         })
     }
   }

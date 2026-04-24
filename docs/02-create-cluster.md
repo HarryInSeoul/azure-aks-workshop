@@ -2,7 +2,7 @@
 
 ## 2-1. 클러스터 생성
 
-NAP(Node Auto Provisioning), KEDA, Azure CNI Overlay + Cilium을 활성화한 AKS 클러스터를 생성합니다.
+NAP(Node Auto Provisioning), KEDA, Azure CNI Overlay를 활성화한 AKS 클러스터를 생성합니다.
 
 ```bash
 az aks create \
@@ -15,7 +15,6 @@ az aks create \
   --node-provisioning-mode Auto \
   --network-plugin azure \
   --network-plugin-mode overlay \
-  --network-dataplane cilium \
   --generate-ssh-keys \
   -o table
 ```
@@ -29,17 +28,32 @@ az aks create \
 | `--node-provisioning-mode Auto` | NAP(Karpenter 기반) 활성화 — 워크로드에 맞춰 노드를 자동 생성/삭제 |
 | `--enable-keda` | KEDA(이벤트 기반 오토스케일러) 활성화 |
 | `--network-plugin azure --network-plugin-mode overlay` | Azure CNI Overlay 네트워크 (Pod IP ↔ 노드 IP 분리) |
-| `--network-dataplane cilium` | eBPF 기반 Cilium 데이터플레인 (높은 성능, 네트워크 정책) |
+
+> **💡 Cilium 옵션**: Linux 전용 클러스터에서 고성능 eBPF 네트워크가 필요하면 `--network-dataplane cilium`을 추가할 수 있습니다.  
+> 단, **Cilium은 Windows 노드를 지원하지 않으므로**, 4-6절(Windows .NET 배포) 핸즈온을 진행하려면 Cilium 없이 클러스터를 생성하세요.
+
+> **💡 Tip**: 클러스터 생성 시 `--enable-app-routing` 옵션을 추가하면 Web App Routing(관리형 NGINX Ingress)이 함께 활성화됩니다. 이후 [04. 펫 스토어 배포](04-deploy-app.md)의 Ingress 핸즈온에서 사용합니다.
+> ```bash
+> # 기존 클러스터에 나중에 활성화하려면:
+> az aks approuting enable --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP
+> ```
 
 ## 2-2. ACR 연결
 
-AKS 클러스터가 ACR에서 이미지를 풀(pull) 할 수 있도록 연결합니다.
+AKS 클러스터가 ACR에서 이미지를 풀(pull) 할 수 있도록 공용 ACR과 개인 ACR을 모두 연결합니다.
 
 ```bash
+# 공용 ACR 연결 (주최자 제공 이미지)
 az aks update \
   --name $CLUSTER_NAME \
   --resource-group $RESOURCE_GROUP \
   --attach-acr $ACR_NAME
+
+# 개인 ACR 연결 (store-admin 이미지)
+az aks update \
+  --name $CLUSTER_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --attach-acr $MY_ACR_NAME
 ```
 
 ## 2-3. kubeconfig 설정

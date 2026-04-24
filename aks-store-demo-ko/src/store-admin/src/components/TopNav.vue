@@ -2,13 +2,13 @@
   <nav>
     <div class="logo">
       <router-link to="/">
-        <img src="/contoso-pet-store-logo.png" alt="Contoso Pet Store Logo" />
+        <img src="/contoso-pet-store-logo.png" alt="Contoso 펫 스토어 로고" />
       </router-link>
-      Admin Portal
+      관리자 포털
     </div>
     <ul class="nav-links" :class="{ 'nav-links--open': isNavOpen }">
-      <li><router-link to="/orders" @click="closeNav">Orders</router-link></li>
-      <li><router-link to="/products" @click="closeNav">Products</router-link></li>
+      <li><router-link to="/orders" @click="closeNav">주문 관리</router-link></li>
+      <li><router-link to="/products" @click="closeNav">상품 관리</router-link></li>
     </ul>
     <button class="hamburger" @click="toggleNav">
       <span class="hamburger-icon"></span>

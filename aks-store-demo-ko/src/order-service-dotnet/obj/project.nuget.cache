@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "13uBK7aIOsteycYTWoU4JO9dxbovFqnl+6XQHgvOKSwKzxROuU8PW3Tk5AIzGe0B5Ekorha0/an1Rih0JXZyvg==",
+  "success": true,
+  "projectFilePath": "/home/hyehunlim/projects/AKS-Worklshop/aks-store-demo-ko/src/order-service-dotnet/OrderService.csproj",
+  "expectedPackageFiles": [
+    "/home/hyehunlim/.nuget/packages/rabbitmq.client/6.8.1/rabbitmq.client.6.8.1.nupkg.sha512",
+    "/home/hyehunlim/.nuget/packages/system.memory/4.5.5/system.memory.4.5.5.nupkg.sha512",
+    "/home/hyehunlim/.nuget/packages/system.threading.channels/7.0.0/system.threading.channels.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

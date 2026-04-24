@@ -1,6 +1,6 @@
 <template>
   <div class="action-button">
-    <button @click="saveProduct" class="button">Save Product</button>
+    <button @click="saveProduct" class="button">상품 저장</button>
   </div>
 
   <div v-if="showValidationErrors && validationErrors.length > 0" class="validation-errors">
@@ -12,20 +12,20 @@
   <div class="product-form-container">
     <div class="product-info-section">
       <div class="form-group">
-        <label for="product-name">Name</label>
+        <label for="product-name">상품명</label>
         <input
           id="product-name"
-          placeholder="Product Name"
+          placeholder="상품명을 입력하세요"
           v-model="product.name"
           class="form-input"
         />
       </div>
 
       <div class="form-group">
-        <label for="product-price">Price</label>
+        <label for="product-price">가격</label>
         <input
           id="product-price"
-          placeholder="Product Price"
+          placeholder="상품 가격"
           v-model="product.price"
           type="number"
           step="0.01"
@@ -34,10 +34,10 @@
       </div>
 
       <div class="form-group">
-        <label for="product-tags">Keywords</label>
+        <label for="product-tags">키워드</label>
         <input
           id="product-tags"
-          placeholder="Product Keywords"
+          placeholder="상품 키워드"
           v-model="product.tags"
           class="form-input"
         />
@@ -45,20 +45,20 @@
 
       <div class="form-group">
         <div class="label-with-actions">
-          <label for="product-description">Description</label>
+          <label for="product-description">설명</label>
           <button
             v-if="aiCapabilities.includes('description')"
             @click="generateDescription"
             class="button ai-button"
           >
-            <span class="ai-icon">✨</span> Ask AI Assistant
+            <span class="ai-icon">✨</span> AI 도우미 요청
           </button>
         </div>
         <div class="description-container">
           <textarea
             rows="8"
             id="product-description"
-            placeholder="Product Description"
+            placeholder="상품 설명"
             v-model="product.description"
             class="form-textarea"
           ></textarea>
@@ -71,14 +71,14 @@
     <div class="product-image-section">
       <div class="form-group">
         <div class="label-with-actions">
-          <label for="product-image">Image</label>
+          <label for="product-image">이미지</label>
           <button
             v-if="aiCapabilities.includes('image')"
             id="product-image-btn"
             @click="generateImage"
             class="button ai-button"
           >
-            <span class="ai-icon">✨</span> Generate Image
+            <span class="ai-icon">✨</span> 이미지 생성
           </button>
         </div>
         <div
@@ -87,14 +87,14 @@
           class="image-container"
           :class="{ loading: isLoadingImage }"
         >
-          <img v-if="product.image" :src="product.image" alt="Product Image" />
+          <img v-if="product.image" :src="product.image" alt="상품 이미지" />
           <div class="overlay">{{ overlayText }}</div>
         </div>
 
         <input
           v-else
           id="product-image"
-          placeholder="Product Image URL"
+          placeholder="상품 이미지 URL"
           v-model="product.image"
           class="form-input"
         />
@@ -135,15 +135,15 @@ const overlayText = ref('')
 const validationErrors = computed(() => {
   const errors: string[] = []
   if (product.value.name.length === 0) {
-    errors.push('Please enter a value for the name field')
+    errors.push('상품명을 입력해 주세요')
   }
 
   if (product.value.price <= 0) {
-    errors.push('Please enter a value greater than 0 for the price field')
+    errors.push('가격은 0보다 큰 값을 입력해 주세요')
   }
 
   if (!product.value.description || product.value.description.length === 0) {
-    errors.push('Please enter a value for the description field')
+    errors.push('상품 설명을 입력해 주세요')
   }
 
   return errors
@@ -156,7 +156,7 @@ const generateDescription = (): void => {
     (Array.isArray(product.value.tags) && product.value.tags.length === 0) ||
     (typeof product.value.tags === 'string' && product.value.tags === '')
   ) {
-    alert('Please enter a value for the keywords field')
+    alert('키워드를 입력해 주세요')
     return
   }
 
@@ -187,7 +187,7 @@ const generateDescription = (): void => {
     })
     .catch((error) => {
       console.log(error)
-      alert('Error occurred while generating product description')
+      alert('상품 설명 생성 중 오류가 발생했습니다')
     })
     .finally(() => {
       clearInterval(intervalId)
@@ -197,12 +197,12 @@ const generateDescription = (): void => {
 const generateImage = (): void => {
   // ensure the tag has a value
   if (!product.value.description || product.value.description === '') {
-    alert('Please enter a product description')
+    alert('상품 설명을 먼저 입력해 주세요')
     return
   }
 
   isLoadingImage.value = true
-  overlayText.value = 'Drawing...'
+  overlayText.value = '그리는 중...'
 
   const requestBody = {
     name: product.value.name,
@@ -220,13 +220,13 @@ const generateImage = (): void => {
       return response.json()
     })
     .then((productResponse) => {
-      overlayText.value = 'Downloading...'
+      overlayText.value = '다운로드 중...'
       product.value.image = ''
       product.value.image = productResponse.image
     })
     .catch((error) => {
       console.log(error)
-      alert('Error occurred while generating product image')
+      alert('상품 이미지 생성 중 오류가 발생했습니다')
     })
     .finally(() => {
       isLoadingImage.value = false
@@ -237,7 +237,7 @@ const waitForAI = (): ReturnType<typeof setInterval> => {
   let dots = ''
   const intervalId = setInterval(() => {
     dots += '.'
-    product.value.description = `Thinking${dots}`
+    product.value.description = `생각 중${dots}`
   }, 500)
   return intervalId
 }
@@ -269,7 +269,7 @@ const saveProduct = (): void => {
   })
     .then((response) => response.json())
     .then((data) => {
-      alert('Product saved successfully')
+      alert('상품이 성공적으로 저장되었습니다')
       // update or add the product to the list
       if (method === 'PUT') {
         productStore.updateProduct(data)
@@ -280,7 +280,7 @@ const saveProduct = (): void => {
     })
     .catch((error) => {
       console.log(error)
-      alert('Error occurred while saving product')
+      alert('상품 저장 중 오류가 발생했습니다')
     })
 }
 
@@ -291,7 +291,7 @@ onMounted(() => {
       // Copy all properties from the found product to our local product
       Object.assign(product.value, foundProduct)
     } else {
-      alert('Product not found')
+      alert('상품을 찾을 수 없습니다')
     }
   }
 

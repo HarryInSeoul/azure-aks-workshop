@@ -1,4 +1,4 @@
-# 09. AI Agent 배포 (Azure OpenAI)
+# 08. AI Agent 배포 (Azure OpenAI)
 
 > 이 섹션에서는 **Azure OpenAI**를 활용한 **AI 상품 추천 에이전트**를 AKS에 배포합니다.
 > 기존 펫 스토어의 상품 카탈로그를 조회(Tool)하고, LLM으로 맞춤 추천(Reasoning)을 생성하는 패턴을 체험합니다.
@@ -28,10 +28,10 @@
 
 ---
 
-## 9-1. Azure OpenAI 리소스 생성
+## 8-1. Azure OpenAI 리소스 생성
 
-> **💡 이미 Azure OpenAI 리소스가 있다면** 이 단계를 건너뛰고 9-2로 이동하세요.  
-> **Azure OpenAI가 없거나 빠르게 테스트만 하려면** [9-1-B. 데모 모드](#9-1-b-데모-모드-azure-openai-없이-실습)로 이동하세요.
+> **💡 이미 Azure OpenAI 리소스가 있다면** 이 단계를 건너뛰고 8-2로 이동하세요.  
+> **Azure OpenAI가 없거나 빠르게 테스트만 하려면** [8-1-B. 데모 모드](#8-1-b-데모-모드-azure-openai-없이-실습)로 이동하세요.
 
 ```bash
 # Azure OpenAI 리소스 생성
@@ -77,7 +77,7 @@ AOAI_KEY=$(az cognitiveservices account keys list \
 echo "API 키: ${AOAI_KEY:0:8}..."
 ```
 
-### 9-1-B. 데모 모드 (Azure OpenAI 없이 실습)
+### 8-1-B. 데모 모드 (Azure OpenAI 없이 실습)
 
 Azure OpenAI 리소스 없이도 AI Agent의 동작 흐름을 체험할 수 있습니다.  
 데모 모드에서는 LLM 대신 규칙 기반으로 인기 상품을 추천합니다.
@@ -88,11 +88,11 @@ AOAI_ENDPOINT="https://demo.openai.azure.com"
 AOAI_KEY="demo-key"
 ```
 
-> 9-3에서 ConfigMap의 `DEMO_MODE`를 `"true"`로 변경하면 됩니다.
+> 8-3에서 ConfigMap의 `DEMO_MODE`를 `"true"`로 변경하면 됩니다.
 
 ---
 
-## 9-2. AI Agent 빌드 & ACR 푸시
+## 8-2. AI Agent 빌드 & ACR 푸시
 
 ```bash
 cd aks-store-demo-ko/src/ai-agent
@@ -120,7 +120,7 @@ v1
 
 ---
 
-## 9-3. Kubernetes Secret & ConfigMap 생성
+## 8-3. Kubernetes Secret & ConfigMap 생성
 
 AI Agent가 Azure OpenAI에 접근하기 위한 자격증명을 Secret으로 생성합니다.
 
@@ -143,7 +143,7 @@ kubectl create secret generic ai-agent-secrets \
 
 ---
 
-## 9-4. AI Agent 배포
+## 8-4. AI Agent 배포
 
 ```bash
 kubectl apply -f workshop-manifests/90-ai-agent.yaml
@@ -174,7 +174,7 @@ kubectl exec -n pets deploy/ai-agent -- wget -qO- http://localhost:5100/health
 
 ---
 
-## 9-5. AI 추천 테스트
+## 8-5. AI 추천 테스트
 
 ### Port-Forward로 접속
 
@@ -237,7 +237,7 @@ kill %1 2>/dev/null
 
 ---
 
-## 9-6. (선택) 정리
+## 8-6. (선택) 정리
 
 ```bash
 # AI Agent 리소스 삭제
@@ -290,4 +290,4 @@ az cognitiveservices account delete \
 
 | | |
 |:---|---:|
-| [⬅️ 08. 정리](08-cleanup.md) | [00. 워크샵 개요 🏠](00-overview.md) |
+| [⬅️ 07. 모니터링 & 트러블슈팅](07-monitoring-troubleshooting.md) | [09. 정리 ➡️](09-cleanup.md) |

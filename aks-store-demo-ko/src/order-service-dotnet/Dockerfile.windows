@@ -1,0 +1,15 @@
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS build
+WORKDIR /src
+COPY OrderService.csproj .
+RUN dotnet restore
+COPY . .
+RUN dotnet publish -c Release -o /app
+
+# Runtime stage — Windows Server 2022 (LTSC)
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-nanoserver-ltsc2022
+WORKDIR /app
+COPY --from=build /app .
+ENV ASPNETCORE_URLS=http://+:3000
+EXPOSE 3000
+ENTRYPOINT ["OrderService.exe"]

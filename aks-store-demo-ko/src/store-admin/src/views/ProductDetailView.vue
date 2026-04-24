@@ -1,21 +1,21 @@
 <template>
   <div class="action-button">
     <router-link :to="`/product/${productId}/edit`">
-      <button class="button">Edit Product</button>
+      <button class="button">상품 수정</button>
     </router-link>
   </div>
   <div class="product-detail" v-if="productExists">
     <div class="product-image">
-      <img :src="product?.image" alt="Product Image" />
+      <img :src="product?.image" alt="상품 이미지" />
     </div>
     <div class="product-info">
       <h2>{{ product?.name }} - {{ product?.price }}</h2>
-      <small>Product ID: {{ product?.id }}</small>
+      <small>상품 ID: {{ product?.id }}</small>
       <p>{{ product?.description }}</p>
     </div>
   </div>
   <div class="product-detail" v-else>
-    <h3>Product not found</h3>
+    <h3>상품을 찾을 수 없습니다</h3>
   </div>
 </template>
 

@@ -153,4 +153,4 @@ kubectl describe aksnodeclasses.karpenter.azure.com default
 
 | | |
 |:---|---:|
-| [⬅️ 06. NAP 노드 확장](06-nap-node-scaling.md) | [08. 정리 ➡️](08-cleanup.md) |
+| [⬅️ 06. NAP 노드 확장](06-nap-node-scaling.md) | [08. AI Agent 배포 ➡️](08-ai-agent.md) |

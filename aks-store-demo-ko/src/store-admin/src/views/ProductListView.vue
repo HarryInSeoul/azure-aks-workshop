@@ -1,17 +1,17 @@
 <template>
   <div class="action-button">
     <router-link to="/product/add">
-      <button class="button">Add Product</button>
+      <button class="button">상품 추가</button>
     </router-link>
   </div>
 
   <div v-if="products.length > 0" class="product-table">
     <!-- Column headers -->
     <div class="table-header">
-      <div class="column-id">Product ID</div>
-      <div class="column-name">Product Name</div>
-      <div class="column-description">Description</div>
-      <div class="column-price">Price</div>
+      <div class="column-id">상품 ID</div>
+      <div class="column-name">상품명</div>
+      <div class="column-description">설명</div>
+      <div class="column-price">가격</div>
     </div>
 
     <!-- Product rows -->
@@ -29,8 +29,8 @@
   </div>
 
   <div class="empty-list" v-else>
-    <h3>No products available</h3>
-    <p>Add your first product to get started</p>
+    <h3>등록된 상품이 없습니다</h3>
+    <p>첫 번째 상품을 추가해 보세요</p>
   </div>
 </template>
 

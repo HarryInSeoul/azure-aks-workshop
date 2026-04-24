@@ -30,6 +30,8 @@ aks-store-demo-ko/src/
 
 ## 3-2. 이미지 빌드 & 푸시
 
+> **참고**: ACR은 워크샵 주최자가 사전 제공합니다. 이미지가 이미 푸시되어 있으면 이 단계를 건너뛰세요.
+
 ACR 로그인 후 7개 서비스를 모두 빌드하고 `:ko` 태그로 푸시합니다.
 
 ```bash
@@ -74,61 +76,88 @@ docker push $ACR_NAME.azurecr.io/virtual-worker:ko
 
 ## 3-3. 푸시 확인
 
+대부분의 이미지는 공용 ACR(`aksworkshopkoea6e`)에 이미 존재합니다.
+
 ```bash
 az acr repository list --name $ACR_NAME -o table
 ```
 
-### 예상 출력
+## 3-4. store-admin 소스 수정 & 개인 ACR에 빌드
+
+> **핵심 핸즈온**: store-admin은 참가자가 직접 소스를 수정하고 **개인 ACR**에 이미지를 빌드합니다.
+
+### store-admin 소스 수정 (한국어 UI 커스터마이징)
+
+`aks-store-demo-ko/src/store-admin/` 디렉터리에서 원하는 부분을 자유롭게 수정하세요.
+
+예시 — 페이지 타이틀 변경:
+
+```bash
+# index.html의 타이틀 확인
+grep "<title>" aks-store-demo-ko/src/store-admin/index.html
+```
+
+원하는 텍스트로 수정한 뒤 개인 ACR에 빌드합니다.
+
+### 개인 ACR에 이미지 빌드 & 푸시
+
+```bash
+cd aks-store-demo-ko/src
+
+# 개인 ACR에 store-admin 빌드 (ACR Task — 원격 빌드)
+az acr build \
+  --registry $MY_ACR_NAME \
+  --image store-admin:ko \
+  --file store-admin/Dockerfile \
+  store-admin/
+```
+
+확인:
+
+```bash
+az acr repository list --name $MY_ACR_NAME -o table
+```
 
 ```
 Result
-----------------
-makeline-service
-order-service
-product-service
+-----------
 store-admin
-store-front
-virtual-customer
-virtual-worker
-```
-
-## 3-4. (선택) 로컬 Docker Compose 테스트
-
-배포 전에 로컬에서 전체 스택을 실행해볼 수 있습니다.
-
-```bash
-cd aks-store-demo-ko
-docker-compose -f docker-compose-local.yml up -d
-```
-
-- store-front: http://localhost:80
-- store-admin: http://localhost:8081
-
-```bash
-# 정리
-docker-compose -f docker-compose-local.yml down
 ```
 
 ## 3-5. 매니페스트 내 ACR 이름 수정
 
-`workshop-manifests/aks-store-all-in-one-ko.yaml` 파일에서 ACR 이름을 본인의 ACR로 변경합니다.
+`workshop-manifests/aks-store-all-in-one-ko.yaml` 파일에서 store-admin 이미지만 개인 ACR로 변경합니다.
 
 ```bash
-cd /home/hyehunlim/projects/AKS-Worklshop
+cd /home/hyehunlim/projects/AKS-Workshop
 
-# 일괄 치환 (aksworkshopkoea6e → 본인 ACR 이름)
-sed -i "s/aksworkshopkoea6e/$ACR_NAME/g" workshop-manifests/aks-store-all-in-one-ko.yaml
+# store-admin 이미지만 개인 ACR로 변경
+sed -i "s|aksworkshopkoea6e.azurecr.io/store-admin:ko|$MY_ACR_NAME.azurecr.io/store-admin:ko|g" \
+  workshop-manifests/aks-store-all-in-one-ko.yaml
 ```
 
 확인:
+
 ```bash
 grep "azurecr.io" workshop-manifests/aks-store-all-in-one-ko.yaml
 ```
 
+```
+# 예상 출력 — store-admin만 개인 ACR, 나머지는 공용 ACR
+aksworkshopkoea6e.azurecr.io/order-service:ko
+aksworkshopkoea6e.azurecr.io/makeline-service:ko
+aksworkshopkoea6e.azurecr.io/product-service:ko
+aksworkshopkoea6e.azurecr.io/store-front:ko
+<MY_ACR>.azurecr.io/store-admin:ko            ← 개인 ACR
+aksworkshopkoea6e.azurecr.io/virtual-customer:ko
+aksworkshopkoea6e.azurecr.io/virtual-worker:ko
+```
+
 ## 점검 체크리스트
 
-- [ ] ACR에 7개 리포지터리 존재
-- [ ] 매니페스트의 이미지 참조가 본인 ACR을 가리킴
+- [ ] 공용 ACR에 6개 리포지터리 존재 (store-admin 제외)
+- [ ] 개인 ACR에 store-admin 이미지 존재
+- [ ] 매니페스트에서 store-admin만 개인 ACR을 가리킴, 나머지는 공용 ACR
 
 ---
 

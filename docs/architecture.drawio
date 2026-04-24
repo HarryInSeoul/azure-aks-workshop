@@ -1,0 +1,1492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-04-17T00:00:00.000Z" agent="draw.io" type="device">
+  <diagram id="aks-pet-store-arch" name="AKS 펫 스토어 아키텍처">
+    <mxGraphModel dx="1900" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ==================== USERS ==================== -->
+        <mxCell id="users" value="사용자 / 인터넷" style="shape=cloud;whiteSpace=wrap;html=1;fontSize=20;fillColor=#F5F5F5;strokeColor=#78909C;fontStyle=1;fontColor=#37474F;fontFamily=Segoe UI;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="750" y="10" width="300" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== AZURE CLOUD ==================== -->
+        <mxCell id="azure" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0F6FF;strokeColor=#0078D4;strokeWidth=3;arcSize=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="130" width="1920" height="1340" as="geometry"/>
+        </mxCell>
+        <mxCell id="azure-lbl" value="Microsoft Azure — Korea Central" style="text;html=1;align=left;verticalAlign=middle;fontSize=26;fontStyle=1;fontColor=#0078D4;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="70" y="142" width="500" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== 공용 ACR ==================== -->
+        <mxCell id="acr-shared-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#0078D4;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="70" y="200" width="300" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr-shared-tag" value="주최자 제공" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=#005A9E;fontColor=#FFFFFF;fontSize=12;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="85" y="210" width="90" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr-shared" value="Azure Container Registry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=#005A9E;fontColor=#FFFFFF;fontSize=17;fontStyle=1;fontFamily=Segoe UI;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="90" y="248" width="260" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr-shared-name" value="aksworkshopkoea6e" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#0078D4;fontFamily=Segoe UI Semibold;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="305" width="220" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr-shared-imgs" value="store-front · product-service · order-service&#xa;makeline-service · virtual-customer · virtual-worker" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#78909C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="80" y="325" width="280" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== 참가자 ACR ==================== -->
+        <mxCell id="acr-my-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="70" y="385" width="300" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr-my-tag" value="참가자 생성" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;fontColor=#FFFFFF;fontSize=12;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="85" y="395" width="90" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr-my" value="Azure Container Registry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;fontColor=#FFFFFF;fontSize=17;fontStyle=1;fontFamily=Segoe UI;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="90" y="432" width="260" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr-my-name" value="$MY_ACR_NAME" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#2E7D32;fontFamily=Segoe UI Semibold;fontStyle=3;" vertex="1" parent="1">
+          <mxGeometry x="110" y="488" width="220" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr-my-imgs" value="store-admin (한국어 커스텀)" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontColor=#558B2F;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="110" y="488" width="220" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== WorkshopDemo-RG ==================== -->
+        <mxCell id="rg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;strokeWidth=2;arcSize=2;" vertex="1" parent="1">
+          <mxGeometry x="400" y="200" width="1540" height="1250" as="geometry"/>
+        </mxCell>
+        <mxCell id="rg-lbl" value="WorkshopDemo-RG" style="text;html=1;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#F57F17;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="420" y="208" width="250" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== INGRESS ==================== -->
+        <mxCell id="ingress-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="590" y="248" width="550" height="75" as="geometry"/>
+        </mxCell>
+        <mxCell id="ingress-title" value="Ingress Controller" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#0D47A1;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="640" y="252" width="260" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="ingress-type" value="Web App Routing (NGINX)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;strokeColor=#0D47A1;fontColor=#FFFFFF;fontSize=12;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="920" y="256" width="195" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="ingress-paths" value="/ → store-front    |    /admin → store-admin" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#1565C0;fontFamily=Segoe UI;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="620" y="288" width="490" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== AKS CLUSTER ==================== -->
+        <mxCell id="aks" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#283593;strokeWidth=2.5;arcSize=2;" vertex="1" parent="1">
+          <mxGeometry x="430" y="345" width="1490" height="1085" as="geometry"/>
+        </mxCell>
+        <mxCell id="aks-lbl" value="AKS Cluster" style="text;html=1;align=left;verticalAlign=middle;fontSize=26;fontStyle=1;fontColor=#1A237E;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="460" y="355" width="220" height="38" as="geometry"/>
+        </mxCell>
+
+        <!-- Badges -->
+        <mxCell id="b1" value="NAP / Karpenter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=13;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="460" y="400" width="148" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="b2" value="KEDA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=13;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="618" y="400" width="70" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="b3" value="Azure CNI Overlay" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=13;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="698" y="400" width="162" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="b4" value="Web App Routing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;strokeColor=#0D47A1;fontColor=#FFFFFF;fontSize=13;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="870" y="400" width="155" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== NAMESPACE ==================== -->
+        <mxCell id="ns" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=2;dashed=1;dashPattern=10 5;arcSize=2;" vertex="1" parent="1">
+          <mxGeometry x="455" y="450" width="1445" height="960" as="geometry"/>
+        </mxCell>
+        <mxCell id="ns-lbl" value="Namespace: pets" style="text;html=1;align=left;verticalAlign=middle;fontSize=18;fontStyle=3;fontColor=#7B1FA2;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="475" y="458" width="220" height="28" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== FRONTEND =============== -->
+        <mxCell id="fe-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=none;opacity=30;" vertex="1" parent="1">
+          <mxGeometry x="465" y="492" width="1425" height="188" as="geometry"/>
+        </mxCell>
+        <mxCell id="fe-lbl" value="FRONTEND" style="text;html=1;fontSize=16;fontStyle=1;fontColor=#2E7D32;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="498" width="130" height="26" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="sf" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="510" y="530" width="300" height="138" as="geometry"/>
+        </mxCell>
+        <mxCell id="sf-n" value="store-front" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#1B5E20;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="540" y="540" width="240" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="sf-t" value="Vue.js 3 + Nginx" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#388E3C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="560" y="575" width="200" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="sf-d" value="고객용 웹 프론트엔드 (한국어)" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="530" y="600" width="260" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="sf-src" value="공용 ACR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=#005A9E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="530" y="630" width="75" height="22" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="sa" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="530" width="300" height="138" as="geometry"/>
+        </mxCell>
+        <mxCell id="sa-n" value="store-admin" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#1B5E20;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="540" width="240" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="sa-t" value="Vue.js 3 + Nginx" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#388E3C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="575" width="200" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="sa-d" value="관리자 대시보드 (한국어)" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="600" width="220" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="sa-src" value="참가자 ACR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;fontColor=#FFFFFF;fontSize=11;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="630" width="85" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== BACKEND API =============== -->
+        <mxCell id="api-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=none;opacity=22;" vertex="1" parent="1">
+          <mxGeometry x="465" y="694" width="1425" height="202" as="geometry"/>
+        </mxCell>
+        <mxCell id="api-lbl" value="BACKEND API" style="text;html=1;fontSize=16;fontStyle=1;fontColor=#6A1B9A;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="700" width="150" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- order-service swap box -->
+        <mxCell id="os-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#F9A825;strokeWidth=2.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="490" y="732" width="260" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-n" value="order-service" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#E65100;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="510" y="740" width="220" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-sub" value="주문 접수 → 큐 전달" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="530" y="772" width="180" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-swap-lbl" value="런타임 교체 가능" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#BDBDBD;fontFamily=Segoe UI;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="540" y="800" width="160" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-tag1" value="Node.js" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F57F17;strokeColor=#E65100;fontColor=#FFFFFF;fontSize=13;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="520" y="826" width="85" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-tag-default" value="기본" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#F57F17;fontFamily=Segoe UI;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="854" width="65" height="16" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-tag2" value=".NET 8" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#5C6BC0;strokeColor=#283593;fontColor=#FFFFFF;fontSize=13;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="628" y="826" width="85" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-tag-opt" value="옵션 C" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#5C6BC0;fontFamily=Segoe UI;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="638" y="854" width="65" height="16" as="geometry"/>
+        </mxCell>
+
+        <!-- product-service -->
+        <mxCell id="ps" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FBE9E7;strokeColor=#BF360C;strokeWidth=2.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="800" y="732" width="260" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="ps-n" value="product-service" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#BF360C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="820" y="742" width="220" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="ps-t" value="Rust" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#D84315;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="850" y="775" width="160" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="ps-d" value="상품 카탈로그 API (한국어)" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="830" y="800" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- makeline-service -->
+        <mxCell id="ms" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2F1;strokeColor=#00695C;strokeWidth=2.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="1370" y="732" width="260" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="ms-n" value="makeline-service" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#004D40;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1385" y="742" width="230" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="ms-t" value="Go" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#00796B;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="775" width="140" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="ms-d" value="큐에서 주문 처리 → DB 저장" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1390" y="800" width="220" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== DATA / MESSAGING =============== -->
+        <mxCell id="data-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=none;opacity=25;" vertex="1" parent="1">
+          <mxGeometry x="465" y="910" width="1425" height="178" as="geometry"/>
+        </mxCell>
+        <mxCell id="data-lbl" value="DATA &amp; MESSAGING" style="text;html=1;fontSize=16;fontStyle=1;fontColor=#E65100;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="916" width="220" height="26" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rmq" value="RabbitMQ" style="shape=process;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;strokeWidth=2.5;fontSize=22;fontStyle=1;fontColor=#BF360C;fontFamily=Segoe UI;size=0.05;" vertex="1" parent="1">
+          <mxGeometry x="530" y="950" width="310" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="rmq-d" value="메시지 큐 (orders)  |  AMQP :5672" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#E65100;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="540" y="1020" width="290" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="mongo" value="MongoDB" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2.5;fontSize=22;fontStyle=1;fontColor=#1B5E20;fontFamily=Segoe UI;size=12;boundedLbl=1;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="948" width="280" height="75" as="geometry"/>
+        </mxCell>
+        <mxCell id="mongo-d" value="주문 데이터 저장소 (orderdb)  |  :27017" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#2E7D32;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="1028" width="300" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== SIMULATION =============== -->
+        <mxCell id="sim-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=none;opacity=30;" vertex="1" parent="1">
+          <mxGeometry x="465" y="1102" width="1425" height="148" as="geometry"/>
+        </mxCell>
+        <mxCell id="sim-lbl" value="SIMULATION (부하 테스트)" style="text;html=1;fontSize=16;fontStyle=1;fontColor=#78909C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1108" width="260" height="26" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="vc" value="virtual-customer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#B0BEC5;strokeWidth=2;fontSize=17;fontStyle=1;fontColor=#546E7A;dashed=1;dashPattern=6 3;arcSize=10;verticalAlign=top;spacingTop=8;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="510" y="1140" width="260" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="vc-d" value="Rust — 자동 주문 생성" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#90A4AE;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="540" y="1180" width="200" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="vw" value="virtual-worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#B0BEC5;strokeWidth=2;fontSize=17;fontStyle=1;fontColor=#546E7A;dashed=1;dashPattern=6 3;arcSize=10;verticalAlign=top;spacingTop=8;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="1140" width="260" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="vw-d" value="Rust — 자동 주문 처리" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#90A4AE;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="1180" width="200" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== INFO BOX =============== -->
+        <mxCell id="info" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CFD8DC;strokeWidth=1.5;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="1110" width="310" height="145" as="geometry"/>
+        </mxCell>
+        <mxCell id="info-t" value="클러스터 사양" style="text;html=1;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#37474F;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1580" y="1118" width="160" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="info-d" value="VM: Standard_D2s_v3 (2vCPU, 8GiB)&#xa;초기 노드: 2개 (Linux)&#xa;네트워크: Azure CNI Overlay&#xa;오토스케일: NAP + KEDA&#xa;리전: Korea Central" style="text;html=1;align=left;verticalAlign=top;fontSize=13;fontColor=#78909C;fontFamily=Segoe UI;spacingLeft=6;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="1575" y="1150" width="280" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== LEGEND =============== -->
+        <mxCell id="legend" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CFD8DC;strokeWidth=1.5;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="490" width="310" height="202" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-t" value="데이터 흐름" style="text;html=1;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#37474F;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1580" y="498" width="150" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="l1" value="" style="endArrow=blockThin;endFill=1;strokeColor=#E65100;strokeWidth=3;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1590" y="548" as="sourcePoint"/><mxPoint x="1650" y="548" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="l1t" value="주문 파이프라인" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#E65100;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1660" y="537" width="160" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="l2" value="" style="endArrow=blockThin;endFill=1;strokeColor=#2E7D32;strokeWidth=3;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1590" y="583" as="sourcePoint"/><mxPoint x="1650" y="583" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="l2t" value="DB 저장" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#2E7D32;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1660" y="572" width="160" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="l3" value="" style="endArrow=blockThin;endFill=1;strokeColor=#BF360C;strokeWidth=2.5;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1590" y="618" as="sourcePoint"/><mxPoint x="1650" y="618" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="l3t" value="상품 API 호출" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#BF360C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1660" y="607" width="160" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="l4" value="" style="endArrow=blockThin;endFill=1;strokeColor=#B0BEC5;strokeWidth=2;dashed=1;dashPattern=10 5;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1590" y="653" as="sourcePoint"/><mxPoint x="1650" y="653" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="l4t" value="시뮬레이션 트래픽" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#B0BEC5;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1660" y="642" width="170" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== CONNECTIONS ==================== -->
+
+        <!-- Users → Ingress -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#0078D4;strokeWidth=3;endArrow=blockThin;endFill=1;" edge="1" source="users" target="ingress-box" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Ingress → store-front -->
+        <mxCell id="e2" value="/" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#1565C0;strokeWidth=2.5;fontSize=15;fontColor=#1565C0;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="ingress-box" target="sf" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Ingress → store-admin -->
+        <mxCell id="e3" value="/admin" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#1565C0;strokeWidth=2.5;fontSize=15;fontColor=#1565C0;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="ingress-box" target="sa" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-front → order-service -->
+        <mxCell id="e4" value="주문 요청" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#F9A825;strokeWidth=2.5;fontSize=15;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.4;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="sf" target="os-box" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-front → product-service -->
+        <mxCell id="e5" value="상품 조회" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#BF360C;strokeWidth=2.5;fontSize=15;fontColor=#BF360C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;" edge="1" source="sf" target="ps" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-admin → product-service -->
+        <mxCell id="e6" value="상품 관리" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#BF360C;strokeWidth=2.5;fontSize=15;fontColor=#BF360C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.3;entryDx=0;entryDy=0;" edge="1" source="sa" target="ps" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-admin → makeline-service -->
+        <mxCell id="e7" value="주문 현황" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#00695C;strokeWidth=2.5;fontSize=15;fontColor=#00695C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="sa" target="ms" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1680" y="599"/>
+              <mxPoint x="1680" y="720"/>
+              <mxPoint x="1500" y="720"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- order → rabbitmq -->
+        <mxCell id="e8" value="큐 발행" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E65100;strokeWidth=3;fontSize=15;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;" edge="1" source="os-box" target="rmq" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- rabbitmq → makeline -->
+        <mxCell id="e9" value="큐 소비" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E65100;strokeWidth=3;fontSize=15;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.7;entryDx=0;entryDy=0;" edge="1" source="rmq" target="ms" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1060" y="970"/>
+              <mxPoint x="1060" y="837"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- makeline → mongo -->
+        <mxCell id="e10" value="저장" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#2E7D32;strokeWidth=3;fontSize=15;fontColor=#2E7D32;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="ms" target="mongo" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1500" y="908"/>
+              <mxPoint x="1280" y="908"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- virtual-customer → order -->
+        <mxCell id="e11" value="부하 생성" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#B0BEC5;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=14;fontColor=#B0BEC5;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.2;entryY=1;entryDx=0;entryDy=0;" edge="1" source="vc" target="os-box" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- virtual-worker → mongo -->
+        <mxCell id="e12" value="자동 처리" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#B0BEC5;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=14;fontColor=#B0BEC5;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="vw" target="mongo" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- 공용 ACR → AKS -->
+        <mxCell id="e13" value="이미지 Pull" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#0078D4;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=13;fontColor=#0078D4;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.05;entryDx=0;entryDy=0;" edge="1" source="acr-shared" target="aks" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- 참가자 ACR → AKS -->
+        <mxCell id="e14" value="store-admin Pull" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#2E7D32;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=13;fontColor=#2E7D32;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.2;entryDx=0;entryDy=0;" edge="1" source="acr-my" target="aks" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-04-17T00:00:00.000Z" agent="draw.io" type="device">
+  <diagram id="aks-pet-store-arch" name="AKS 펫 스토어 아키텍처">
+    <mxGraphModel dx="1800" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ==================== INTERNET / USERS ==================== -->
+        <mxCell id="users" value="사용자 / 인터넷" style="shape=cloud;whiteSpace=wrap;html=1;fontSize=18;fillColor=#F5F5F5;strokeColor=#616161;fontStyle=1;fontColor=#333333;fontFamily=Segoe UI;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="700" y="5" width="280" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== AZURE CLOUD BOUNDARY ==================== -->
+        <mxCell id="azure-cloud" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0F6FF;strokeColor=#0078D4;strokeWidth=3;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="60" y="115" width="1800" height="1350" as="geometry"/>
+        </mxCell>
+        <mxCell id="azure-label" value="Microsoft Azure  —  Korea Central" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=24;fontStyle=1;fontColor=#0078D4;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="85" y="125" width="500" height="42" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== ACR (Shared) ==================== -->
+        <mxCell id="rg-acr-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#0078D4;strokeWidth=2;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="90" y="185" width="280" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="rg-acr-label" value="사전 제공 (Shared)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontStyle=1;fontColor=#0078D4;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="105" y="192" width="220" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr" value="Azure Container&#xa;Registry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=#005A9E;fontColor=#FFFFFF;fontSize=16;fontStyle=1;fontFamily=Segoe UI;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="110" y="235" width="240" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr-sub" value="워크샵 주최자 사전 제공" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=0;fontColor=#999999;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="130" y="305" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== DEMO RESOURCE GROUP ==================== -->
+        <mxCell id="rg-demo-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;strokeWidth=2;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="400" y="185" width="1440" height="1260" as="geometry"/>
+        </mxCell>
+        <mxCell id="rg-demo-label" value="WorkshopDemo-RG" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#F57F17;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="420" y="192" width="250" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== INGRESS / LB TIER ==================== -->
+        <mxCell id="ingress" value="Ingress Controller" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=18;fontStyle=1;fontColor=#0D47A1;fontFamily=Segoe UI;strokeWidth=2.5;size=14;" vertex="1" parent="1">
+          <mxGeometry x="680" y="228" width="320" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="ingress-sub" value="Web App Routing (NGINX)  |  옵션: AGC (Gateway API)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=0;fontColor=#1565C0;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="590" y="293" width="500" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="ingress-paths" value="/ → store-front  |  /admin → store-admin" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontStyle=2;fontColor=#90A4AE;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="660" y="316" width="360" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== AKS CLUSTER ==================== -->
+        <mxCell id="aks-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#283593;strokeWidth=2.5;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="430" y="350" width="1390" height="1075" as="geometry"/>
+        </mxCell>
+        <mxCell id="aks-label" value="AKS Cluster" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=24;fontStyle=1;fontColor=#1A237E;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="455" y="360" width="250" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- AKS Feature Badges -->
+        <mxCell id="badge-nap" value="NAP / Karpenter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=14;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="455" y="410" width="160" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="badge-keda" value="KEDA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=14;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="625" y="410" width="80" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="badge-cilium" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="715" y="410" width="0" height="0" as="geometry"/>
+        </mxCell>
+        <mxCell id="badge-cni" value="Azure CNI Overlay" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=14;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="810" y="410" width="175" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="badge-war" value="Web App Routing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;strokeColor=#0D47A1;fontColor=#FFFFFF;fontSize=14;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="995" y="410" width="168" height="32" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== NAMESPACE: PETS ==================== -->
+        <mxCell id="ns-pets-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=2;dashed=1;dashPattern=10 5;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="455" y="460" width="1345" height="945" as="geometry"/>
+        </mxCell>
+        <mxCell id="ns-pets-label" value="Namespace: pets" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=18;fontStyle=3;fontColor=#7B1FA2;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="475" y="468" width="220" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== FRONTEND TIER ==================== -->
+        <mxCell id="tier-fe-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=none;opacity=25;" vertex="1" parent="1">
+          <mxGeometry x="465" y="503" width="1325" height="175" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-fe-label" value="FRONTEND" style="text;html=1;fontSize=15;fontStyle=1;fontColor=#2E7D32;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="508" width="130" height="26" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="store-front" value="store-front" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#1B5E20;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="500" y="538" width="290" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="sf-tech" value="Vue.js 3 + Nginx" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontColor=#388E3C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="535" y="582" width="220" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="sf-desc" value="고객용 웹 프론트엔드 (한국어 UI)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="515" y="615" width="260" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="store-admin" value="store-admin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#1B5E20;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="538" width="290" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="sa-tech" value="Vue.js 3 + Nginx" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontColor=#388E3C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="582" width="220" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="sa-desc" value="관리자 대시보드" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="615" width="220" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== BACKEND API TIER ==================== -->
+        <mxCell id="tier-api-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=none;opacity=18;" vertex="1" parent="1">
+          <mxGeometry x="465" y="692" width="1325" height="195" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-api-label" value="BACKEND API" style="text;html=1;fontSize=15;fontStyle=1;fontColor=#6A1B9A;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="697" width="150" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- order-service (Node.js) -->
+        <mxCell id="order-service" value="order-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;strokeWidth=2.5;fontSize=18;fontStyle=1;fontColor=#E65100;arcSize=10;verticalAlign=top;spacingTop=8;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="728" width="210" height="145" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-tech" value="Node.js / Fastify" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontColor=#F57F17;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="495" y="766" width="180" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-desc" value="주문 접수 → 큐 전달" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="495" y="793" width="180" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-default" value="기본" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F57F17;strokeColor=#E65100;fontColor=#FFFFFF;fontSize=11;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="495" y="822" width="45" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- order-service-dotnet (.NET) -->
+        <mxCell id="order-service-dotnet" value="order-service-dotnet" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#5C6BC0;strokeWidth=2.5;fontSize=18;fontStyle=1;fontColor=#283593;arcSize=10;verticalAlign=top;spacingTop=8;fontFamily=Segoe UI;dashed=1;dashPattern=6 3;" vertex="1" parent="1">
+          <mxGeometry x="480" y="728" width="210" height="145" as="geometry"/>
+        </mxCell>
+        <mxCell id="osd-tech" value=".NET 8 / C#" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontColor=#5C6BC0;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="495" y="766" width="180" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="osd-desc" value="주문 접수 → 큐 전달" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="495" y="793" width="180" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="osd-option" value="옵션 C" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#5C6BC0;strokeColor=#283593;fontColor=#FFFFFF;fontSize=11;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="495" y="822" width="55" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- Swap indicator -->
+        <mxCell id="swap-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9E9E9E;strokeWidth=1;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="475" y="723" width="220" height="155" as="geometry"/>
+        </mxCell>
+        <mxCell id="swap-label" value="order-service" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=18;fontStyle=1;fontColor=#424242;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="495" y="733" width="180" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="swap-nodejs" value="Node.js (기본)  |  .NET 8 (옵션 C)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="762" width="210" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="swap-desc" value="주문 접수 → 큐 전달&#xa;런타임 교체 가능" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="490" y="790" width="200" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="swap-tags" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="490" y="838" width="200" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="tag-nodejs" value="Node.js" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F57F17;strokeColor=#E65100;fontColor=#FFFFFF;fontSize=11;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="498" y="840" width="65" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="tag-dotnet" value=".NET 8" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#5C6BC0;strokeColor=#283593;fontColor=#FFFFFF;fontSize=11;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="573" y="840" width="60" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- product-service -->
+        <mxCell id="product-service" value="product-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FBE9E7;strokeColor=#BF360C;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#BF360C;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="750" y="728" width="270" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="ps-tech" value="Rust" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontColor=#D84315;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="785" y="770" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="ps-desc" value="상품 카탈로그 API (한국어)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="775" y="803" width="220" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- makeline-service -->
+        <mxCell id="makeline-service" value="makeline-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2F1;strokeColor=#00695C;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#004D40;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="728" width="270" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="ms-tech" value="Go" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontColor=#00796B;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1325" y="770" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="ms-desc" value="큐에서 주문 처리 → DB 저장" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1315" y="803" width="220" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== DATA / MESSAGING TIER ==================== -->
+        <mxCell id="tier-data-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=none;opacity=22;" vertex="1" parent="1">
+          <mxGeometry x="465" y="900" width="1325" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-data-label" value="DATA &amp; MESSAGING" style="text;html=1;fontSize=15;fontStyle=1;fontColor=#E65100;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="906" width="220" height="26" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rabbitmq" value="RabbitMQ" style="shape=process;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#BF360C;fontFamily=Segoe UI;size=0.06;" vertex="1" parent="1">
+          <mxGeometry x="530" y="938" width="290" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="rmq-desc" value="메시지 큐 (orders)  |  AMQP :5672" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontColor=#E65100;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="535" y="1003" width="280" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="mongodb" value="MongoDB" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#1B5E20;fontFamily=Segoe UI;size=12;boundedLbl=1;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="928" width="250" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="mongo-desc" value="주문 데이터 저장소 (orderdb)  |  :27017" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontColor=#2E7D32;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1095" y="1013" width="300" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== SIMULATION TIER ==================== -->
+        <mxCell id="tier-sim-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E0E0E0;strokeColor=none;opacity=20;" vertex="1" parent="1">
+          <mxGeometry x="465" y="1085" width="1325" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-sim-label" value="SIMULATION (부하 테스트)" style="text;html=1;fontSize=15;fontStyle=1;fontColor=#757575;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1090" width="260" height="26" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="virtual-customer" value="virtual-customer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;strokeWidth=2;fontSize=17;fontStyle=1;fontColor=#424242;dashed=1;dashPattern=6 3;arcSize=10;verticalAlign=top;spacingTop=8;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1120" width="270" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="vc-desc" value="Rust — 자동 주문 생성" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="535" y="1159" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="virtual-worker" value="virtual-worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;strokeWidth=2;fontSize=17;fontStyle=1;fontColor=#424242;dashed=1;dashPattern=6 3;arcSize=10;verticalAlign=top;spacingTop=8;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="1120" width="270" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="vw-desc" value="Rust — 자동 주문 처리" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1145" y="1159" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== INFO BOX ==================== -->
+        <mxCell id="info-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B0BEC5;strokeWidth=1.5;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="1095" width="275" height="155" as="geometry"/>
+        </mxCell>
+        <mxCell id="info-title" value="클러스터 사양" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=17;fontStyle=1;fontColor=#37474F;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1530" y="1100" width="150" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="info-details" value="VM: Standard_D2s_v3 (2vCPU, 8GiB)&#xa;초기 노드: 2개 (Linux) + 1개 (Windows)&#xa;네트워크: Azure CNI Overlay&#xa;오토스케일: NAP + KEDA&#xa;리전: Korea Central" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontColor=#546E7A;fontFamily=Segoe UI;spacingLeft=6;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="1130" width="260" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== LEGEND ==================== -->
+        <mxCell id="legend-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CFD8DC;strokeWidth=1.5;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="490" width="275" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-title" value="데이터 흐름 (Data Flow)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#37474F;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1525" y="498" width="240" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-1" value="" style="endArrow=blockThin;endFill=1;strokeColor=#E65100;strokeWidth=3;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1535" y="545" as="sourcePoint"/><mxPoint x="1595" y="545" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="legend-1t" value="주문 파이프라인" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#E65100;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1605" y="534" width="160" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-2" value="" style="endArrow=blockThin;endFill=1;strokeColor=#2E7D32;strokeWidth=3;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1535" y="580" as="sourcePoint"/><mxPoint x="1595" y="580" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="legend-2t" value="DB 저장" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#2E7D32;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1605" y="569" width="160" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-3" value="" style="endArrow=blockThin;endFill=1;strokeColor=#BF360C;strokeWidth=2.5;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1535" y="615" as="sourcePoint"/><mxPoint x="1595" y="615" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="legend-3t" value="상품 API 호출" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#BF360C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1605" y="604" width="160" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-4" value="" style="endArrow=blockThin;endFill=1;strokeColor=#9E9E9E;strokeWidth=2;dashed=1;dashPattern=10 5;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1535" y="650" as="sourcePoint"/><mxPoint x="1595" y="650" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="legend-4t" value="시뮬레이션 트래픽" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1605" y="639" width="170" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== CONNECTIONS ==================== -->
+
+        <!-- Users → Ingress -->
+        <mxCell id="e-user-ingress" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#0078D4;strokeWidth=2.5;endArrow=blockThin;endFill=1;exitX=0.5;exitY=0.85;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="users" target="ingress" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Ingress → store-front -->
+        <mxCell id="e-ingress-sf" value="/" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#1565C0;strokeWidth=2.5;fontSize=14;fontColor=#1565C0;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="ingress" target="store-front" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Ingress → store-admin -->
+        <mxCell id="e-ingress-sa" value="/admin" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#1565C0;strokeWidth=2.5;fontSize=14;fontColor=#1565C0;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="ingress" target="store-admin" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-front → order-service -->
+        <mxCell id="e-sf-order" value="주문 요청" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#F9A825;strokeWidth=2.5;fontSize=15;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.4;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="store-front" target="swap-box" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-front → product-service -->
+        <mxCell id="e-sf-product" value="상품 조회" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#BF360C;strokeWidth=2.5;fontSize=15;fontColor=#BF360C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;" edge="1" source="store-front" target="product-service" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-admin → product-service -->
+        <mxCell id="e-sa-product" value="상품 관리" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#BF360C;strokeWidth=2.5;fontSize=15;fontColor=#BF360C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.3;entryDx=0;entryDy=0;" edge="1" source="store-admin" target="product-service" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-admin → makeline-service -->
+        <mxCell id="e-sa-makeline" value="주문 현황" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#00695C;strokeWidth=2.5;fontSize=15;fontColor=#00695C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="store-admin" target="makeline-service" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1640" y="602"/>
+              <mxPoint x="1640" y="715"/>
+              <mxPoint x="1425" y="715"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- order-service → RabbitMQ -->
+        <mxCell id="e-order-rmq" value="큐 발행" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E65100;strokeWidth=3;fontSize=15;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;" edge="1" source="swap-box" target="rabbitmq" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- RabbitMQ → makeline-service -->
+        <mxCell id="e-rmq-makeline" value="큐 소비" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E65100;strokeWidth=3;fontSize=15;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.7;entryDx=0;entryDy=0;" edge="1" source="rabbitmq" target="makeline-service" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1030" y="956"/>
+              <mxPoint x="1030" y="818"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- makeline-service → MongoDB -->
+        <mxCell id="e-makeline-mongo" value="저장" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#2E7D32;strokeWidth=3;fontSize=15;fontColor=#2E7D32;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="makeline-service" target="mongodb" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1425" y="895"/>
+              <mxPoint x="1245" y="895"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- virtual-customer → order-service -->
+        <mxCell id="e-vc-order" value="부하 생성" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9E9E9E;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=14;fontColor=#757575;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.2;entryY=1;entryDx=0;entryDy=0;" edge="1" source="virtual-customer" target="swap-box" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- virtual-worker → makeline-service -->
+        <mxCell id="e-vw-makeline" value="자동 처리" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9E9E9E;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=14;fontColor=#757575;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="virtual-worker" target="mongodb" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ACR → AKS -->
+        <mxCell id="e-acr-aks" value="이미지 Pull" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#0078D4;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=14;fontColor=#0078D4;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.08;entryDx=0;entryDy=0;" edge="1" source="acr" target="aks-box" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-04-16T00:00:00.000Z" agent="draw.io" type="device">
+  <diagram id="aks-pet-store-arch" name="AKS 펫 스토어 아키텍처">
+    <mxGraphModel dx="1800" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ==================== INTERNET / USERS ==================== -->
+        <mxCell id="users" value="사용자 / 인터넷" style="shape=cloud;whiteSpace=wrap;html=1;fontSize=18;fillColor=#F5F5F5;strokeColor=#616161;fontStyle=1;fontColor=#333333;shadow=1;fontFamily=Segoe UI;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="660" y="5" width="280" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== AZURE CLOUD BOUNDARY ==================== -->
+        <mxCell id="azure-cloud" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0F6FF;strokeColor=#0078D4;strokeWidth=3;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="60" y="115" width="1800" height="1250" as="geometry"/>
+        </mxCell>
+        <mxCell id="azure-label" value="Microsoft Azure  —  Korea Central" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=24;fontStyle=1;fontColor=#0078D4;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="85" y="125" width="500" height="42" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== ACR RESOURCE GROUP ==================== -->
+        <mxCell id="rg-acr-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;strokeWidth=2;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="90" y="185" width="280" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="rg-acr-label" value="WorkshopACR-RG" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#F57F17;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="105" y="192" width="220" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr" value="Azure Container&#xa;Registry (Basic)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=#005A9E;fontColor=#FFFFFF;fontSize=16;fontStyle=1;shadow=1;fontFamily=Segoe UI;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="110" y="240" width="240" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr-sub" value="워크샵 주최자 사전 제공" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=0;fontColor=#999999;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="130" y="315" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== DEMO RESOURCE GROUP ==================== -->
+        <mxCell id="rg-demo-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;strokeWidth=2;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="400" y="185" width="1440" height="1160" as="geometry"/>
+        </mxCell>
+        <mxCell id="rg-demo-label" value="WorkshopDemo-RG" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#F57F17;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="420" y="192" width="250" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== LOAD BALANCERS ==================== -->
+        <mxCell id="lb1" value="Load Balancer" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=16;fontStyle=1;fontColor=#0D47A1;shadow=1;fontFamily=Segoe UI;strokeWidth=2;size=12;" vertex="1" parent="1">
+          <mxGeometry x="505" y="232" width="200" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="lb1-sub" value="store-front :80" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#1565C0;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="530" y="290" width="150" height="22" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="lb2" value="Load Balancer" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=16;fontStyle=1;fontColor=#0D47A1;shadow=1;fontFamily=Segoe UI;strokeWidth=2;size=12;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="232" width="200" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="lb2-sub" value="store-admin :80" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#1565C0;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1075" y="290" width="150" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== AKS CLUSTER ==================== -->
+        <mxCell id="aks-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#283593;strokeWidth=2.5;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="430" y="330" width="1390" height="995" as="geometry"/>
+        </mxCell>
+        <mxCell id="aks-label" value="AKS Cluster" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=24;fontStyle=1;fontColor=#1A237E;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="455" y="340" width="250" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- AKS Feature Badges -->
+        <mxCell id="badge-nap" value="NAP / Karpenter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=14;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="455" y="390" width="160" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="badge-keda" value="KEDA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=14;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="625" y="390" width="80" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="badge-cilium" value="Cilium" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=14;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="715" y="390" width="85" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="badge-cni" value="Azure CNI Overlay" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=14;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="810" y="390" width="175" height="32" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== NAMESPACE: PETS ==================== -->
+        <mxCell id="ns-pets-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=2;dashed=1;dashPattern=10 5;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="455" y="440" width="1345" height="865" as="geometry"/>
+        </mxCell>
+        <mxCell id="ns-pets-label" value="Namespace: pets" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=18;fontStyle=3;fontColor=#7B1FA2;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="475" y="448" width="220" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== FRONTEND TIER ==================== -->
+        <mxCell id="tier-fe-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=none;opacity=25;" vertex="1" parent="1">
+          <mxGeometry x="465" y="483" width="1325" height="175" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-fe-label" value="FRONTEND" style="text;html=1;fontSize=15;fontStyle=1;fontColor=#2E7D32;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="488" width="130" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- store-front -->
+        <mxCell id="store-front" value="store-front" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#1B5E20;shadow=1;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="500" y="518" width="290" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="sf-tech" value="Vue.js 3 + Nginx" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontStyle=0;fontColor=#388E3C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="535" y="562" width="220" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="sf-desc" value="고객용 웹 프론트엔드 (한국어 UI)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="515" y="595" width="260" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- store-admin -->
+        <mxCell id="store-admin" value="store-admin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#1B5E20;shadow=1;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="518" width="290" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="sa-tech" value="Vue.js 3 + Nginx" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontStyle=0;fontColor=#388E3C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="562" width="220" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="sa-desc" value="관리자 대시보드" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="595" width="220" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== API / BACKEND TIER ==================== -->
+        <mxCell id="tier-api-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=none;opacity=18;" vertex="1" parent="1">
+          <mxGeometry x="465" y="672" width="1325" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-api-label" value="BACKEND API" style="text;html=1;fontSize=15;fontStyle=1;fontColor=#6A1B9A;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="677" width="150" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- order-service -->
+        <mxCell id="order-service" value="order-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#E65100;shadow=1;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="490" y="708" width="270" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-tech" value="Node.js / Fastify" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontStyle=0;fontColor=#F57F17;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="525" y="750" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-desc" value="주문 접수 → 큐 전달" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="525" y="783" width="200" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- product-service -->
+        <mxCell id="product-service" value="product-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FBE9E7;strokeColor=#BF360C;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#BF360C;shadow=1;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="810" y="708" width="270" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="ps-tech" value="Rust" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontStyle=0;fontColor=#D84315;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="845" y="750" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="ps-desc" value="상품 카탈로그 API (한국어)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="835" y="783" width="220" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- makeline-service -->
+        <mxCell id="makeline-service" value="makeline-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2F1;strokeColor=#00695C;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#004D40;shadow=1;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="708" width="270" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="ms-tech" value="Go" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontStyle=0;fontColor=#00796B;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1385" y="750" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="ms-desc" value="큐에서 주문 처리 → DB 저장" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1375" y="783" width="220" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== DATA / MESSAGING TIER ==================== -->
+        <mxCell id="tier-data-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=none;opacity=22;" vertex="1" parent="1">
+          <mxGeometry x="465" y="866" width="1325" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-data-label" value="DATA &amp; MESSAGING" style="text;html=1;fontSize=15;fontStyle=1;fontColor=#E65100;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="872" width="220" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- RabbitMQ -->
+        <mxCell id="rabbitmq" value="RabbitMQ" style="shape=process;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#BF360C;shadow=1;fontFamily=Segoe UI;size=0.06;" vertex="1" parent="1">
+          <mxGeometry x="530" y="905" width="290" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="rmq-desc" value="메시지 큐 (orders)  |  AMQP :5672" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#E65100;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="535" y="970" width="280" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- MongoDB -->
+        <mxCell id="mongodb" value="MongoDB" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2.5;fontSize=20;fontStyle=1;fontColor=#1B5E20;shadow=1;fontFamily=Segoe UI;size=12;boundedLbl=1;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="895" width="250" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="mongo-desc" value="주문 데이터 저장소 (orderdb)  |  :27017" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#2E7D32;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1095" y="980" width="300" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== SIMULATION TIER ==================== -->
+        <mxCell id="tier-sim-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E0E0E0;strokeColor=none;opacity=20;" vertex="1" parent="1">
+          <mxGeometry x="465" y="1050" width="1325" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-sim-label" value="SIMULATION (부하 테스트)" style="text;html=1;fontSize=15;fontStyle=1;fontColor=#757575;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1055" width="260" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- virtual-customer -->
+        <mxCell id="virtual-customer" value="virtual-customer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;strokeWidth=2;fontSize=17;fontStyle=1;fontColor=#424242;dashed=1;dashPattern=6 3;arcSize=10;verticalAlign=top;spacingTop=8;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1087" width="270" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="vc-desc" value="Rust — 자동 주문 생성" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="535" y="1126" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- virtual-worker -->
+        <mxCell id="virtual-worker" value="virtual-worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;strokeWidth=2;fontSize=17;fontStyle=1;fontColor=#424242;dashed=1;dashPattern=6 3;arcSize=10;verticalAlign=top;spacingTop=8;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="1087" width="270" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="vw-desc" value="Rust — 자동 주문 처리" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1145" y="1126" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== LEGEND ==================== -->
+        <mxCell id="legend-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CFD8DC;strokeWidth=1.5;shadow=1;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="470" width="275" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-title" value="주문 처리 흐름 (Data Flow)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#37474F;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1525" y="478" width="240" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-1" value="" style="endArrow=blockThin;endFill=1;strokeColor=#E65100;strokeWidth=3;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1535" y="525" as="sourcePoint"/>
+            <mxPoint x="1595" y="525" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-1t" value="주문 파이프라인" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#E65100;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1605" y="514" width="160" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-2" value="" style="endArrow=blockThin;endFill=1;strokeColor=#2E7D32;strokeWidth=3;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1535" y="560" as="sourcePoint"/>
+            <mxPoint x="1595" y="560" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-2t" value="DB 저장" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#2E7D32;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1605" y="549" width="160" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-3" value="" style="endArrow=blockThin;endFill=1;strokeColor=#BF360C;strokeWidth=2.5;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1535" y="595" as="sourcePoint"/>
+            <mxPoint x="1595" y="595" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-3t" value="상품 API 호출" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#BF360C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1605" y="584" width="160" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-4" value="" style="endArrow=blockThin;endFill=1;strokeColor=#9E9E9E;strokeWidth=2;dashed=1;dashPattern=10 5;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1535" y="630" as="sourcePoint"/>
+            <mxPoint x="1595" y="630" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-4t" value="시뮬레이션 트래픽" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1605" y="619" width="170" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== INFO BOX ==================== -->
+        <mxCell id="info-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B0BEC5;strokeWidth=1.5;shadow=1;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="1060" width="275" height="165" as="geometry"/>
+        </mxCell>
+        <mxCell id="info-title" value="클러스터 사양" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=17;fontStyle=1;fontColor=#37474F;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1530" y="1068" width="150" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="info-details" value="VM: Standard_D2s_v3 (2vCPU, 8GiB)&#xa;초기 노드: 2개&#xa;네트워크: Azure CNI Overlay&#xa;오토스케일: NAP + KEDA&#xa;리전: Korea Central" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#546E7A;fontFamily=Segoe UI;spacingLeft=6;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="1100" width="260" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== CONNECTIONS ==================== -->
+
+        <!-- Users → Load Balancers -->
+        <mxCell id="e-user-lb1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#0078D4;strokeWidth=2.5;endArrow=blockThin;endFill=1;exitX=0.3;exitY=0.85;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="users" target="lb1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-user-lb2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#0078D4;strokeWidth=2.5;endArrow=blockThin;endFill=1;exitX=0.7;exitY=0.85;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="users" target="lb2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- LB → Frontend -->
+        <mxCell id="e-lb1-sf" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#1565C0;strokeWidth=2.5;endArrow=blockThin;endFill=1;" edge="1" source="lb1-sub" target="store-front" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-lb2-sa" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#1565C0;strokeWidth=2.5;endArrow=blockThin;endFill=1;" edge="1" source="lb2-sub" target="store-admin" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-front → order-service -->
+        <mxCell id="e-sf-order" value="주문 요청" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#F9A825;strokeWidth=2.5;fontSize=15;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.4;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="store-front" target="order-service" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-front → product-service -->
+        <mxCell id="e-sf-product" value="상품 조회" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#BF360C;strokeWidth=2.5;fontSize=15;fontColor=#BF360C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;" edge="1" source="store-front" target="product-service" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-admin → product-service -->
+        <mxCell id="e-sa-product" value="상품 관리" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#BF360C;strokeWidth=2.5;fontSize=15;fontColor=#BF360C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.3;entryDx=0;entryDy=0;" edge="1" source="store-admin" target="product-service" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-admin → makeline-service -->
+        <mxCell id="e-sa-makeline" value="주문 현황" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#00695C;strokeWidth=2.5;fontSize=15;fontColor=#00695C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="store-admin" target="makeline-service" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1660" y="582"/>
+              <mxPoint x="1660" y="695"/>
+              <mxPoint x="1485" y="695"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- order-service → RabbitMQ -->
+        <mxCell id="e-order-rmq" value="큐 발행 (Publish)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E65100;strokeWidth=3;fontSize=15;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;" edge="1" source="order-service" target="rabbitmq" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- RabbitMQ → makeline-service -->
+        <mxCell id="e-rmq-makeline" value="큐 소비 (Consume)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E65100;strokeWidth=3;fontSize=15;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.7;entryDx=0;entryDy=0;" edge="1" source="rabbitmq" target="makeline-service" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1080" y="923"/>
+              <mxPoint x="1080" y="798"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- makeline-service → MongoDB -->
+        <mxCell id="e-makeline-mongo" value="저장 (Write)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#2E7D32;strokeWidth=3;fontSize=15;fontColor=#2E7D32;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="makeline-service" target="mongodb" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1485" y="862"/>
+              <mxPoint x="1245" y="862"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- virtual-customer → order-service -->
+        <mxCell id="e-vc-order" value="부하 생성" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9E9E9E;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=14;fontColor=#757575;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.2;entryY=1;entryDx=0;entryDy=0;" edge="1" source="virtual-customer" target="order-service" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- virtual-worker → makeline-service -->
+        <mxCell id="e-vw-makeline" value="자동 처리" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9E9E9E;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=14;fontColor=#757575;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="virtual-worker" target="mongodb" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ACR → AKS (image pull) -->
+        <mxCell id="e-acr-aks" value="이미지 Pull" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#0078D4;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=14;fontColor=#0078D4;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.1;entryDx=0;entryDy=0;" edge="1" source="acr" target="aks-box" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-04-16T00:00:00.000Z" agent="draw.io" type="device">
+  <diagram id="aks-pet-store-arch" name="AKS 펫 스토어 아키텍처">
+    <mxGraphModel dx="1800" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ==================== INTERNET / USERS ==================== -->
+        <mxCell id="users" value="" style="outlineConnect=0;fontColor=#232323;gradientColor=none;fillColor=#505050;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=16;fontStyle=1;aspect=fixed;pointerEvents=1;shape=mxgraph.mscae.enterprise.internet;" vertex="1" parent="1">
+          <mxGeometry x="790" y="10" width="60" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="user-label" value="사용자 / 인터넷" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=18;fontStyle=1;fontColor=#333333;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="720" y="55" width="200" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== AZURE CLOUD BOUNDARY ==================== -->
+        <mxCell id="azure-cloud" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0F6FF;strokeColor=#0078D4;strokeWidth=3;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="60" y="105" width="1800" height="1260" as="geometry"/>
+        </mxCell>
+        <mxCell id="azure-icon" value="" style="outlineConnect=0;fontColor=#232323;gradientColor=none;fillColor=#0078D4;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=14;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.mscae.cloud.azure;" vertex="1" parent="1">
+          <mxGeometry x="80" y="118" width="50" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="azure-label" value="Microsoft Azure  ―  Korea Central" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1;fontColor=#0078D4;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="140" y="118" width="450" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== ACR RESOURCE GROUP ==================== -->
+        <mxCell id="rg-acr-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;strokeWidth=2;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="90" y="178" width="280" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="rg-acr-label" value="WorkshopACR-RG" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#F57F17;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="105" y="185" width="220" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr" value="" style="outlineConnect=0;fontColor=#232323;gradientColor=none;fillColor=#0078D4;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=14;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.azure2.container_registry;" vertex="1" parent="1">
+          <mxGeometry x="180" y="230" width="68" height="62" as="geometry"/>
+        </mxCell>
+        <mxCell id="acr-label" value="Azure Container&#xa;Registry (Basic)" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=15;fontStyle=1;fontColor=#0078D4;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="130" y="300" width="175" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== DEMO RESOURCE GROUP ==================== -->
+        <mxCell id="rg-demo-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;strokeWidth=2;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="400" y="178" width="1440" height="1170" as="geometry"/>
+        </mxCell>
+        <mxCell id="rg-demo-label" value="WorkshopDemo-RG" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#F57F17;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="420" y="185" width="250" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== LOAD BALANCERS ==================== -->
+        <mxCell id="lb1" value="" style="outlineConnect=0;fontColor=#232323;gradientColor=none;fillColor=#0078D4;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=14;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.azure2.load_balancer;" vertex="1" parent="1">
+          <mxGeometry x="570" y="228" width="65" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="lb1-label" value="Load Balancer&#xa;store-front :80" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=14;fontStyle=1;fontColor=#0078D4;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="512" y="296" width="180" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="lb2" value="" style="outlineConnect=0;fontColor=#232323;gradientColor=none;fillColor=#0078D4;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=14;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.azure2.load_balancer;" vertex="1" parent="1">
+          <mxGeometry x="1118" y="228" width="65" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="lb2-label" value="Load Balancer&#xa;store-admin :80" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;fontSize=14;fontStyle=1;fontColor=#0078D4;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="296" width="180" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== AKS CLUSTER ==================== -->
+        <mxCell id="aks-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#283593;strokeWidth=2.5;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="430" y="350" width="1390" height="978" as="geometry"/>
+        </mxCell>
+        <mxCell id="aks-icon" value="" style="outlineConnect=0;fontColor=#232323;gradientColor=none;fillColor=#0078D4;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=14;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.azure2.kubernetes_service;" vertex="1" parent="1">
+          <mxGeometry x="450" y="360" width="50" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="aks-label" value="AKS Cluster" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1;fontColor=#1A237E;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="510" y="358" width="250" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- AKS Feature Badges -->
+        <mxCell id="badge-nap" value="NAP / Karpenter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=13;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="455" y="410" width="150" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="badge-keda" value="KEDA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=13;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="615" y="410" width="75" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="badge-cilium" value="Cilium" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=13;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="700" y="410" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="badge-cni" value="Azure CNI Overlay" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;strokeColor=#1A237E;fontColor=#FFFFFF;fontSize=13;fontStyle=1;arcSize=30;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="790" y="410" width="168" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== NAMESPACE: PETS ==================== -->
+        <mxCell id="ns-pets-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=2;dashed=1;dashPattern=10 5;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="455" y="460" width="1345" height="848" as="geometry"/>
+        </mxCell>
+        <mxCell id="ns-pets-label" value="Namespace: pets" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=17;fontStyle=3;fontColor=#7B1FA2;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="475" y="468" width="200" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ===================================================================================== -->
+        <!-- ==================== FRONTEND TIER ==================== -->
+        <!-- ===================================================================================== -->
+        <mxCell id="tier-fe-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=none;opacity=25;" vertex="1" parent="1">
+          <mxGeometry x="465" y="500" width="1325" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-fe-label" value="FRONTEND" style="text;html=1;fontSize=14;fontStyle=1;fontColor=#2E7D32;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="505" width="120" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- store-front -->
+        <mxCell id="store-front" value="store-front" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2;fontSize=17;fontStyle=1;fontColor=#1B5E20;shadow=1;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="500" y="535" width="280" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="sf-tech" value="Vue.js 3 + Nginx" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#388E3C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="530" y="575" width="220" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="sf-desc" value="고객용 웹 프론트엔드 (한국어 UI)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=0;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="510" y="602" width="260" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- store-admin -->
+        <mxCell id="store-admin" value="store-admin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2;fontSize=17;fontStyle=1;fontColor=#1B5E20;shadow=1;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="535" width="280" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="sa-tech" value="Vue.js 3 + Nginx" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#388E3C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="575" width="220" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="sa-desc" value="관리자 대시보드" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=0;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="602" width="220" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- ===================================================================================== -->
+        <!-- ==================== API / BACKEND TIER ==================== -->
+        <!-- ===================================================================================== -->
+        <mxCell id="tier-api-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=none;opacity=18;" vertex="1" parent="1">
+          <mxGeometry x="465" y="685" width="1325" height="175" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-api-label" value="BACKEND API" style="text;html=1;fontSize=14;fontStyle=1;fontColor=#6A1B9A;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="690" width="140" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- order-service -->
+        <mxCell id="order-service" value="order-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;strokeWidth=2;fontSize=17;fontStyle=1;fontColor=#E65100;shadow=1;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="490" y="720" width="260" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-tech" value="Node.js / Fastify" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#F57F17;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="520" y="760" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="os-desc" value="주문 접수 → 큐 전달" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=0;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="520" y="788" width="200" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- product-service -->
+        <mxCell id="product-service" value="product-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FBE9E7;strokeColor=#BF360C;strokeWidth=2;fontSize=17;fontStyle=1;fontColor=#BF360C;shadow=1;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="810" y="720" width="260" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="ps-tech" value="Rust" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#D84315;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="840" y="760" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="ps-desc" value="상품 카탈로그 API (한국어)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=0;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="830" y="788" width="220" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- makeline-service -->
+        <mxCell id="makeline-service" value="makeline-service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2F1;strokeColor=#00695C;strokeWidth=2;fontSize=17;fontStyle=1;fontColor=#004D40;shadow=1;arcSize=10;verticalAlign=top;spacingTop=10;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="720" width="260" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="ms-tech" value="Go" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#00796B;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="760" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="ms-desc" value="큐에서 주문 처리 → DB 저장" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=0;fontColor=#666666;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1370" y="788" width="220" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- ===================================================================================== -->
+        <!-- ==================== DATA &amp; MESSAGING TIER ==================== -->
+        <!-- ===================================================================================== -->
+        <mxCell id="tier-data-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=none;opacity=22;" vertex="1" parent="1">
+          <mxGeometry x="465" y="875" width="1325" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-data-label" value="DATA &amp; MESSAGING" style="text;html=1;fontSize=14;fontStyle=1;fontColor=#E65100;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="880" width="200" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- RabbitMQ -->
+        <mxCell id="rabbitmq" value="" style="outlineConnect=0;fontColor=#232323;gradientColor=none;fillColor=#A67C52;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=14;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.azure2.service_bus;" vertex="1" parent="1">
+          <mxGeometry x="637" y="912" width="55" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="rmq-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;strokeWidth=2;shadow=1;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="570" y="900" width="280" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="rmq-title" value="RabbitMQ" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=18;fontStyle=1;fontColor=#BF360C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="610" y="910" width="200" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="rmq-desc" value="메시지 큐 (orders)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#E65100;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="610" y="945" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="rmq-proto" value="AMQP :5672" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontStyle=0;fontColor=#999999;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="610" y="972" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- MongoDB -->
+        <mxCell id="mongo-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2;shadow=1;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="900" width="280" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="mongo-title" value="MongoDB" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=18;fontStyle=1;fontColor=#1B5E20;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="910" width="200" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="mongo-desc" value="주문 데이터 저장소 (orderdb)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=0;fontColor=#2E7D32;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="945" width="220" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="mongo-proto" value="mongodb :27017" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontStyle=0;fontColor=#999999;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="972" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ===================================================================================== -->
+        <!-- ==================== SIMULATION TIER ==================== -->
+        <!-- ===================================================================================== -->
+        <mxCell id="tier-sim-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E0E0E0;strokeColor=none;opacity=20;" vertex="1" parent="1">
+          <mxGeometry x="465" y="1050" width="1325" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="tier-sim-label" value="SIMULATION (부하 테스트)" style="text;html=1;fontSize=14;fontStyle=1;fontColor=#757575;align=left;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1055" width="250" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- virtual-customer -->
+        <mxCell id="virtual-customer" value="virtual-customer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;strokeWidth=2;fontSize=16;fontStyle=1;fontColor=#424242;dashed=1;dashPattern=6 3;arcSize=10;verticalAlign=top;spacingTop=8;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1085" width="260" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="vc-desc" value="Rust — 자동 주문 생성" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=0;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="530" y="1120" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- virtual-worker -->
+        <mxCell id="virtual-worker" value="virtual-worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;strokeWidth=2;fontSize=16;fontStyle=1;fontColor=#424242;dashed=1;dashPattern=6 3;arcSize=10;verticalAlign=top;spacingTop=8;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="1085" width="260" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="vw-desc" value="Rust — 자동 주문 처리" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=0;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="1120" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== INFO BOX ==================== -->
+        <mxCell id="info-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B0BEC5;strokeWidth=1.5;shadow=1;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="1060" width="265" height="165" as="geometry"/>
+        </mxCell>
+        <mxCell id="info-title" value="클러스터 사양" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#37474F;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1530" y="1070" width="140" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="info-details" value="VM: Standard_D2s_v3 (2vCPU, 8GiB)&#xa;초기 노드: 2개&#xa;네트워크: Azure CNI Overlay&#xa;오토스케일: NAP + KEDA&#xa;리전: Korea Central" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=13;fontStyle=0;fontColor=#546E7A;fontFamily=Segoe UI;spacingLeft=6;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="1100" width="250" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- ===================================================================================== -->
+        <!-- ==================== CONNECTIONS ==================== -->
+        <!-- ===================================================================================== -->
+
+        <!-- Users → Load Balancers -->
+        <mxCell id="e-user-lb1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#0078D4;strokeWidth=2.5;endArrow=blockThin;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="user-label" target="lb1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-user-lb2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#0078D4;strokeWidth=2.5;endArrow=blockThin;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="user-label" target="lb2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- LB → Frontend -->
+        <mxCell id="e-lb1-sf" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#1565C0;strokeWidth=2.5;endArrow=blockThin;endFill=1;" edge="1" source="lb1-label" target="store-front" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-lb2-sa" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#1565C0;strokeWidth=2.5;endArrow=blockThin;endFill=1;" edge="1" source="lb2-label" target="store-admin" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-front → order-service -->
+        <mxCell id="e-sf-order" value="주문 요청" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#F9A825;strokeWidth=2.5;fontSize=14;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.4;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="store-front" target="order-service" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-front → product-service -->
+        <mxCell id="e-sf-product" value="상품 조회" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#BF360C;strokeWidth=2.5;fontSize=14;fontColor=#BF360C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;" edge="1" source="store-front" target="product-service" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-admin → product-service -->
+        <mxCell id="e-sa-product" value="상품 관리" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#BF360C;strokeWidth=2.5;fontSize=14;fontColor=#BF360C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.3;entryDx=0;entryDy=0;" edge="1" source="store-admin" target="product-service" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- store-admin → makeline-service -->
+        <mxCell id="e-sa-makeline" value="주문 현황" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#00695C;strokeWidth=2.5;fontSize=14;fontColor=#00695C;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="store-admin" target="makeline-service" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1640" y="595"/>
+              <mxPoint x="1640" y="700"/>
+              <mxPoint x="1480" y="700"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- order-service → RabbitMQ -->
+        <mxCell id="e-order-rmq" value="큐 발행 (Publish)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E65100;strokeWidth=3;fontSize=14;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;" edge="1" source="order-service" target="rmq-box" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- RabbitMQ → makeline-service -->
+        <mxCell id="e-rmq-makeline" value="큐 소비 (Consume)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E65100;strokeWidth=3;fontSize=14;fontColor=#E65100;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.7;entryDx=0;entryDy=0;" edge="1" source="rmq-box" target="makeline-service" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1060" y="936"/>
+              <mxPoint x="1060" y="804"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- makeline-service → MongoDB -->
+        <mxCell id="e-makeline-mongo" value="저장 (Write)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#2E7D32;strokeWidth=3;fontSize=14;fontColor=#2E7D32;fontStyle=1;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="makeline-service" target="mongo-box" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1480" y="870"/>
+              <mxPoint x="1250" y="870"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- virtual-customer → order-service -->
+        <mxCell id="e-vc-order" value="부하 생성" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9E9E9E;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=13;fontColor=#757575;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.2;entryY=1;entryDx=0;entryDy=0;" edge="1" source="virtual-customer" target="order-service" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- virtual-worker → makeline-service -->
+        <mxCell id="e-vw-makeline" value="자동 처리" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9E9E9E;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=13;fontColor=#757575;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="virtual-worker" target="mongo-box" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ACR → AKS (image pull) -->
+        <mxCell id="e-acr-aks" value="이미지 Pull" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#0078D4;strokeWidth=2;dashed=1;dashPattern=10 5;fontSize=13;fontColor=#0078D4;fontStyle=2;fontFamily=Segoe UI;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.1;entryDx=0;entryDy=0;" edge="1" source="acr-label" target="aks-box" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== ORDER FLOW LEGEND ==================== -->
+        <mxCell id="legend-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CFD8DC;strokeWidth=1.5;shadow=1;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="470" width="265" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-title" value="주문 처리 흐름" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#37474F;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1530" y="478" width="140" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-1" value="" style="endArrow=blockThin;endFill=1;strokeColor=#E65100;strokeWidth=3;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1535" y="523" as="sourcePoint"/>
+            <mxPoint x="1585" y="523" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-1t" value="주문 파이프라인" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#E65100;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1595" y="512" width="150" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-2" value="" style="endArrow=blockThin;endFill=1;strokeColor=#2E7D32;strokeWidth=3;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1535" y="553" as="sourcePoint"/>
+            <mxPoint x="1585" y="553" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-2t" value="DB 저장" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#2E7D32;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1595" y="542" width="150" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-3" value="" style="endArrow=blockThin;endFill=1;strokeColor=#BF360C;strokeWidth=2.5;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1535" y="583" as="sourcePoint"/>
+            <mxPoint x="1585" y="583" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-3t" value="상품 API 호출" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#BF360C;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1595" y="572" width="150" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-4" value="" style="endArrow=blockThin;endFill=1;strokeColor=#9E9E9E;strokeWidth=2;dashed=1;dashPattern=10 5;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1535" y="613" as="sourcePoint"/>
+            <mxPoint x="1585" y="613" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-4t" value="시뮬레이션 트래픽" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#757575;fontFamily=Segoe UI;" vertex="1" parent="1">
+          <mxGeometry x="1595" y="602" width="150" height="22" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

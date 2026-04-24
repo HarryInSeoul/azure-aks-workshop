@@ -1,16 +1,16 @@
 <template>
   <!-- <div v-if="isLoading" class="loading-container">
     <div class="loading-spinner"></div>
-    <p>Fetching orders...</p>
+    <p>주문 목록을 불러오는 중...</p>
   </div> -->
 
   <div v-if="hasOrders" class="order-table">
     <!-- Column headers -->
     <div class="table-header">
-      <div class="column-id">Order ID</div>
-      <div class="column-customer">Customer ID</div>
-      <div class="column-status">Status</div>
-      <div class="column-price">Total</div>
+      <div class="column-id">주문 ID</div>
+      <div class="column-customer">고객 ID</div>
+      <div class="column-status">상태</div>
+      <div class="column-price">합계</div>
     </div>
 
     <!-- Order rows -->
@@ -22,17 +22,17 @@
     >
       <div class="column-id">{{ order.orderId }}</div>
       <div class="column-customer">{{ order.customerId }}</div>
-      <div class="column-status">{{ order.status === 0 ? 'Pending' : 'Completed' }}</div>
+      <div class="column-status">{{ order.status === 0 ? '처리 중' : '완료' }}</div>
       <div class="column-price">{{ orderTotal(order) }}</div>
     </div>
   </div>
 
   <!-- <div class="empty-list" v-else>
-    <h3>No orders available</h3>
+    <h3>주문이 없습니다</h3>
   </div> -->
   <div v-else class="loading-container">
     <div class="loading-spinner"></div>
-    <p>Fetching orders...</p>
+    <p>주문 목록을 불러오는 중...</p>
   </div>
 </template>
 
