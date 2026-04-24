@@ -29,9 +29,9 @@
 
 | 서비스 | 언어 | 역할 |
 |--------|------|------|
-| **store-front** | Vue.js 3 + Nginx | 고객용 웹 프론트엔드 (한국어 UI) |
+| **store-front** | Vue.js 3 + Nginx | 고객용 웹 프론트엔드 |
 | **store-admin** | Vue.js 3 + Nginx | 관리자 대시보드 |
-| **product-service** | Rust | 상품 카탈로그 API (한국어 상품 데이터) |
+| **product-service** | Rust | 상품 카탈로그 API |
 | **order-service** | Node.js / Fastify | 주문 접수 → RabbitMQ 큐 전달 |
 | **makeline-service** | Go | 큐에서 주문 처리 → MongoDB 저장 |
 | **ai-agent** | Python / FastAPI | AI 상품 추천 에이전트 (Azure OpenAI) |

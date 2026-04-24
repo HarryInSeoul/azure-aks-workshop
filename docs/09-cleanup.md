@@ -55,7 +55,7 @@ az group show --name $RESOURCE_GROUP 2>/dev/null && echo "아직 삭제 중..." 
 이 워크샵에서 다룬 내용:
 
 1. **AKS 클러스터 생성** — NAP, KEDA, Azure CNI Overlay
-2. **컨테이너 빌드 & ACR 푸시** — 7개 마이크로서비스, 한국어 로컬라이징
+2. **컨테이너 빌드 & ACR 푸시** — 7개 마이크로서비스
 3. **애플리케이션 배포** — StatefulSet, Deployment, Service (LoadBalancer)
 4. **HPA 오토스케일링** — CPU 기반 Pod 수평 확장/축소
 5. **NAP 노드 자동 확장** — Karpenter 기반 노드 프로비저닝/통합

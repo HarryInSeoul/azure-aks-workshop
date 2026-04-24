@@ -283,7 +283,7 @@ az cognitiveservices account delete \
 
 - [ ] `kubectl get pods -n pets -l app=ai-agent` — Pod 1/1 Running
 - [ ] `/health` 응답에 `"ready": true` 포함
-- [ ] `POST /recommend` — 한국어 추천 결과 반환
+- [ ] `POST /recommend` — 추천 결과 반환
 - [ ] (데모 모드) `"mode": "demo"` 확인
 
 ---

@@ -71,12 +71,12 @@ store-admin        LoadBalancer   10.0.x.x       <EXTERNAL-IP>    80:xxxxx/TCP
 
 1. **고객 스토어**: `http://<store-front EXTERNAL-IP>`
    - 제목: "Contoso 펫 스토어"
-   - 상품 목록이 한국어로 표시 (예: "짭짤한 선원의 삑삑 오징어")
+   - 상품 목록이 표시됨 (예: "짭짤한 선원의 샑샑 오징어")
 
 2. **관리자 대시보드**: `http://<store-admin EXTERNAL-IP>`
    - 주문 목록 확인 (virtual-customer가 자동 주문 생성 중)
 
-### CLI로 한국어 상품 확인
+### CLI로 상품 확인
 
 ```bash
 STORE_IP=$(kubectl get svc store-front -n pets -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
@@ -228,13 +228,13 @@ echo "Ingress IP: $INGRESS_IP"
 
 | URL | 서비스 | 설명 |
 |-----|--------|------|
-| `http://<INGRESS-IP>/` | store-front | 고객 펫 스토어 (한국어) |
+| `http://<INGRESS-IP>/` | store-front | 고객 펫 스토어 |
 | `http://<INGRESS-IP>/admin` | store-admin | 관리자 대시보드 |
 
 ### CLI 검증
 
 ```bash
-# 고객 스토어 — 한국어 상품 확인
+# 고객 스토어 — 상품 확인
 curl -s http://$INGRESS_IP/api/products | python3 -c "
 import sys, json
 for p in json.load(sys.stdin):
@@ -443,7 +443,7 @@ echo "AGC 주소: http://$AGC_FQDN"
 
 | URL | 서비스 | 설명 |
 |-----|--------|------|
-| `http://<AGC-FQDN>/` | store-front | 고객 펫 스토어 (한국어) |
+| `http://<AGC-FQDN>/` | store-front | 고객 펫 스토어 |
 | `http://<AGC-FQDN>/admin` | store-admin | 관리자 대시보드 |
 
 > **참고**: AGC는 IP 대신 FQDN(도메인)으로 접근합니다.
@@ -451,7 +451,7 @@ echo "AGC 주소: http://$AGC_FQDN"
 ### CLI 검증
 
 ```bash
-# 한국어 상품 확인
+# 상품 확인
 curl -s http://$AGC_FQDN/api/products | python3 -c "
 import sys, json
 for p in json.load(sys.stdin):
@@ -748,8 +748,8 @@ az aks update --name $CLUSTER_NAME -g $RESOURCE_GROUP --attach-acr $ACR_NAME
 ## 점검 체크리스트
 
 - [ ] `kubectl get pods -n pets` — 모든 Pod 1/1 Running
-- [ ] 브라우저에서 store-front 한국어 UI 확인
-- [ ] 상품 목록이 한국어로 표시됨
+- [ ] 브라우저에서 store-front UI 확인
+- [ ] 상품 목록이 정상 표시됨
 
 ---
 
