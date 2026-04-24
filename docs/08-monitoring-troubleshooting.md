@@ -1,6 +1,6 @@
-# 07. 모니터링 & 트러블슈팅
+# 08. 모니터링 & 트러블슈팅
 
-## 7-1. 클러스터 리소스 모니터링
+## 8-1. 클러스터 리소스 모니터링
 
 ### 노드 리소스 현황
 
@@ -26,7 +26,7 @@ kubectl top pods -n pets --sort-by=cpu
 kubectl get all -n pets
 ```
 
-## 7-2. 일반적인 트러블슈팅 시나리오
+## 8-2. 일반적인 트러블슈팅 시나리오
 
 ### 시나리오 1: Pod가 Pending 상태
 
@@ -98,7 +98,7 @@ kubectl get pods -n kube-system -l k8s-app=metrics-server
 kubectl get svc -n pets -w
 ```
 
-## 7-3. 유용한 디버깅 명령어 모음
+## 8-3. 유용한 디버깅 명령어 모음
 
 ```bash
 # Pod 로그 (실시간)
@@ -120,7 +120,7 @@ kubectl run -it --rm dns-test --image=busybox:1.37 --restart=Never -- nslookup m
 kubectl run -it --rm net-test --image=busybox:1.37 --restart=Never -- wget -qO- http://product-service.pets:3002/health
 ```
 
-## 7-4. Karpenter/NAP 관련 디버깅
+## 8-4. Karpenter/NAP 관련 디버깅
 
 ```bash
 # NodePool 상태 및 제한 확인
@@ -136,7 +136,7 @@ kubectl get nodes -o custom-columns=NAME:.metadata.name,SKU:.metadata.labels.kar
 kubectl describe aksnodeclasses.karpenter.azure.com default
 ```
 
-## 7-5. Azure Portal에서 확인
+## 8-5. Azure Portal에서 확인
 
 1. **AKS > 워크로드**: 배포/Pod/ReplicaSet 상태
 2. **AKS > 서비스 및 수신**: LoadBalancer IP 확인
@@ -153,4 +153,4 @@ kubectl describe aksnodeclasses.karpenter.azure.com default
 
 | | |
 |:---|---:|
-| [⬅️ 06. NAP 노드 확장](06-nap-node-scaling.md) | [08. AI Agent 배포 ➡️](08-ai-agent.md) |
+| [⬅️ 07. NAP 노드 확장](07-nap-node-scaling.md) | [09. 정리 ➡️](09-cleanup.md) |

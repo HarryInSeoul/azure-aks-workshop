@@ -66,4 +66,4 @@ az group show --name $RESOURCE_GROUP 2>/dev/null && echo "아직 삭제 중..." 
 
 | | |
 |:---|---:|
-| [⬅️ 08. AI Agent 배포](08-ai-agent.md) | [00. 워크샵 개요 🏠](00-overview.md) |
+| [⬅️ 08. 모니터링 & 트러블슈팅](08-monitoring-troubleshooting.md) | [00. 워크샵 개요 🏠](00-overview.md) |

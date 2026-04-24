@@ -1,11 +1,11 @@
-# 05. HPA 오토스케일링
+# 06. HPA 오토스케일링
 
 ## 개요
 
 Horizontal Pod Autoscaler(HPA)는 CPU/메모리 사용률에 따라 Pod 수를 자동으로 조절합니다.  
 이 섹션에서는 `store-front`와 `order-service`에 HPA를 적용하고, virtual-customer가 생성하는 부하에 따라 스케일링되는 과정을 관찰합니다.
 
-## 5-1. HPA 배포
+## 6-1. HPA 배포
 
 ```bash
 kubectl apply -f workshop-manifests/55-hpa-store.yaml
@@ -18,7 +18,7 @@ kubectl apply -f workshop-manifests/55-hpa-store.yaml
 | store-front | 2 | 10 | 60% |
 | order-service | 1 | 8 | 60% |
 
-## 5-2. HPA 상태 관찰
+## 6-2. HPA 상태 관찰
 
 ```bash
 # HPA 현황 (TARGETS 컬럼에 현재 CPU% / 목표% 표시)
@@ -35,7 +35,7 @@ order-service-hpa   Deployment/order-service   cpu: 120%/60%  1         8       
 
 > virtual-customer가 시간당 100건의 주문을 생성하므로, 배포 후 수 분 이내에 HPA가 스케일 아웃을 시작합니다.
 
-## 5-3. 실시간 모니터링
+## 6-3. 실시간 모니터링
 
 ### Pod 리소스 사용량
 
@@ -56,7 +56,7 @@ kubectl get pods -n pets -w
 kubectl get deploy -n pets -w
 ```
 
-## 5-4. 부하 조절 실험
+## 6-4. 부하 조절 실험
 
 ### 부하 증가 — virtual-customer 주문 빈도 올리기
 
@@ -80,7 +80,7 @@ kubectl set env deployment/virtual-customer -n pets ORDERS_PER_HOUR=10
 kubectl scale deployment/virtual-customer -n pets --replicas=0
 ```
 
-## 5-5. HPA 상세 확인
+## 6-5. HPA 상세 확인
 
 ```bash
 kubectl describe hpa store-front-hpa -n pets
@@ -123,4 +123,4 @@ NAP(Karpenter)가 노드 자동 추가  ← 다음 섹션에서 실습
 
 | | |
 |:---|---:|
-| [⬅️ 04. 앱 배포](04-deploy-app.md) | [06. NAP 노드 확장 ➡️](06-nap-node-scaling.md) |
+| [⬅️ 05. AI Agent 배포](05-ai-agent.md) | [07. NAP 노드 확장 ➡️](07-nap-node-scaling.md) |

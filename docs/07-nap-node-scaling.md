@@ -1,4 +1,4 @@
-# 06. NAP (Node Auto Provisioning) 노드 자동 확장
+# 07. NAP (Node Auto Provisioning) 노드 자동 확장
 
 ## 개요
 
@@ -15,7 +15,7 @@ NAP(Node Auto Provisioning)은 Karpenter 기반의 AKS 노드 오토스케일링
 | 설정 | 노드풀 min/max | NodePool CRD로 유연 제어 |
 | Karpenter 위치 | 해당 없음 | AKS 관리 컨트롤 플레인 내부 |
 
-## 6-1. 기본 NAP NodePool 확인
+## 7-1. 기본 NAP NodePool 확인
 
 클러스터 생성 시 `--node-provisioning-mode Auto`로 이미 NAP이 활성화되어 있습니다.
 
@@ -24,7 +24,7 @@ kubectl get nodepools.karpenter.sh
 kubectl get aksnodeclasses.karpenter.azure.com
 ```
 
-## 6-2. 커스텀 NodePool 배포
+## 7-2. 커스텀 NodePool 배포
 
 워크샵용 커스텀 NodePool을 생성하여 D 시리즈 VM만 사용하도록 제한합니다.
 
@@ -72,7 +72,7 @@ spec:
 kubectl get nodepools.karpenter.sh
 ```
 
-## 6-3. 노드 스케일 아웃 유발
+## 7-3. 노드 스케일 아웃 유발
 
 HPA가 많은 Pod를 생성하면 기존 노드에 스케줄링 공간이 부족해지고, NAP이 새 노드를 추가합니다.
 
@@ -108,7 +108,7 @@ kubectl get nodeclaims.karpenter.sh
 kubectl get pods -n pets --field-selector=status.phase=Pending
 ```
 
-## 6-4. 노드 스케일 인 관찰
+## 7-4. 노드 스케일 인 관찰
 
 부하를 줄이면 NAP이 미사용 노드를 자동 정리합니다.
 
@@ -124,7 +124,7 @@ kubectl get nodeclaims.karpenter.sh -w
 
 > `consolidationPolicy: WhenEmptyOrUnderutilized` 설정에 따라 비어있거나 저활용 노드는 자동으로 제거됩니다.
 
-## 6-5. NAP 이벤트/로그 확인
+## 7-5. NAP 이벤트/로그 확인
 
 ```bash
 # NodePool 상태
@@ -169,4 +169,4 @@ NodePool 제약 조건 (SKU family, OS, arch) 확인
 
 | | |
 |:---|---:|
-| [⬅️ 05. HPA 오토스케일링](05-hpa-autoscaling.md) | [07. 모니터링 & 트러블슈팅 ➡️](07-monitoring-troubleshooting.md) |
+| [⬅️ 06. HPA 오토스케일링](06-hpa-autoscaling.md) | [08. 모니터링 & 트러블슈팅 ➡️](08-monitoring-troubleshooting.md) |

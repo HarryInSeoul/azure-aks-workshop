@@ -755,4 +755,4 @@ az aks update --name $CLUSTER_NAME -g $RESOURCE_GROUP --attach-acr $ACR_NAME
 
 | | |
 |:---|---:|
-| [⬅️ 03. 빌드 & 푸시](03-build-and-push.md) | [05. HPA 오토스케일링 ➡️](05-hpa-autoscaling.md) |
+| [⬅️ 03. 빌드 & 푸시](03-build-and-push.md) | [05. AI Agent 배포 ➡️](05-ai-agent.md) |
