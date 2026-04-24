@@ -48,14 +48,15 @@ grep "<title>" aks-store-demo-ko/src/store-admin/index.html
 ACR Task를 사용하여 **클라우드에서 원격 빌드** 후 개인 ACR에 푸시합니다.
 
 ```bash
-cd aks-store-demo-ko/src
+# 리포 루트로 이동
+cd ~/azure-aks-workshop
 
 # 개인 ACR에 store-admin 빌드 (ACR Task — 원격 빌드)
 az acr build \
   --registry $MY_ACR_NAME \
   --image store-admin:v1 \
-  --file store-admin/Dockerfile \
-  store-admin/
+  --file aks-store-demo-ko/src/store-admin/Dockerfile \
+  aks-store-demo-ko/src/store-admin/
 ```
 
 > **💡 ACR Task**: `az acr build`는 Docker 데몬 없이 Azure에서 직접 이미지를 빌드합니다.  
@@ -78,7 +79,7 @@ store-admin
 `workshop-manifests/aks-store-all-in-one-ko.yaml` 파일에서 store-admin 이미지만 개인 ACR로 변경합니다.
 
 ```bash
-cd /home/hyehunlim/projects/AKS-Workshop
+cd ~/azure-aks-workshop
 
 # store-admin 이미지만 개인 ACR로 변경
 sed -i "s|aksworkshopkoea6e.azurecr.io/store-admin:ko|$MY_ACR_NAME.azurecr.io/store-admin:v1|g" \

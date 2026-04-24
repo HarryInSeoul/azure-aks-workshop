@@ -109,8 +109,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { useProductStore } from '@/stores'
 import type { Product } from '@/types'
 
-const aiServiceUrl = '/api/ai'
-const productServiceUrl = '/api/product'
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '')
+const aiServiceUrl = `${baseUrl}/api/ai`
+const productServiceUrl = `${baseUrl}/api/product`
 
 const productStore = useProductStore()
 const route = useRoute()

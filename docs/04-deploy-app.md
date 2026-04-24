@@ -42,17 +42,17 @@ kubectl get pods -n pets -w
 ### 예상 출력
 
 ```
-NAME                                READY   STATUS    RESTARTS   AGE
-makeline-service-xxx                1/1     Running   0          2m
-mongodb-0                           1/1     Running   0          2m
-order-service-xxx                   1/1     Running   0          2m
-product-service-xxx                 1/1     Running   0          2m
-rabbitmq-0                          1/1     Running   0          2m
-store-admin-xxx                     1/1     Running   0          2m
-store-front-xxx                     1/1     Running   0          2m
-store-front-xxx                     1/1     Running   0          2m
-virtual-customer-xxx                1/1     Running   0          2m
-virtual-worker-xxx                  1/1     Running   0          2m
+NAME                                READY   STATUS    RESTARTS       AGE
+makeline-service-c8568b9c7-6pfdh    1/1     Running   0              2m33s
+mongodb-0                           1/1     Running   0              2m35s
+order-service-c9cd69cff-qr5ld       1/1     Running   0              2m33s
+product-service-5497bfff7f-wrjp8    1/1     Running   0              2m32s
+rabbitmq-0                          1/1     Running   0              2m34s
+store-admin-59f6656f5f-pkrlp        1/1     Running   0              2m31s
+store-front-5d9488b5db-54b6n        1/1     Running   0              2m32s
+store-front-5d9488b5db-t6m6g        1/1     Running   0              2m32s
+virtual-customer-67674c6946-d52w7   1/1     Running   0              2m31s
+virtual-worker-5486bbb9b6-n857z     1/1     Running   3 (107s ago)   2m31s
 ```
 
 ## 4-3. 외부 접속 확인
@@ -62,9 +62,14 @@ kubectl get svc -n pets
 ```
 
 ```
-NAME               TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)
-store-front        LoadBalancer   10.0.x.x       <EXTERNAL-IP>    80:xxxxx/TCP
-store-admin        LoadBalancer   10.0.x.x       <EXTERNAL-IP>    80:xxxxx/TCP
+NAME               TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)              AGE
+makeline-service   ClusterIP      10.0.89.12     <none>          3001/TCP             3m10s
+mongodb            ClusterIP      10.0.254.91    <none>          27017/TCP            3m13s
+order-service      ClusterIP      10.0.31.61     <none>          3000/TCP             3m11s
+product-service    ClusterIP      10.0.141.175   <none>          3002/TCP             3m10s
+rabbitmq           ClusterIP      10.0.202.128   <none>          5672/TCP,15672/TCP   3m12s
+store-admin        LoadBalancer   10.0.176.39    20.249.27.125   80:30691/TCP         3m9s
+store-front        LoadBalancer   10.0.59.53     20.200.224.21   80:30942/TCP         3m9s
 ```
 
 ### 브라우저 접속
@@ -93,8 +98,13 @@ for p in json.load(sys.stdin):
 1. 콘토소 캣닢 친구 — ₩9.99
 2. 짭짤한 선원의 삑삑 오징어 — ₩6.99
 3. 인어공주 쥐돌이 3형제 — ₩12.99
-4. 바다 탐험가 퍼즐볼 — ₩10.99
+4. 바다 탐험가 퍼즐볼 — ₩11.99
 5. 해적 앵무새 낚싯대 — ₩8.99
+6. 뱃사람의 터그 로프 — ₩14.99
+7. 조개 포근 침대 — ₩19.99
+8. 해양 매듭 공 — ₩7.99
+9. 콘토소 집게발 꽃게 장난감 — ₩3.99
+10. 어이 강아지 구명조끼 — ₩5.99
 ...
 ```
 
@@ -142,8 +152,8 @@ nginx-0                                1/1     Running   0          1m
 ```
 
 ```
-NAME                                    CONTROLLER                            PARAMETERS   AGE
-webapprouting.kubernetes.azure.com      k8s.io/ingress-nginx                  <none>       1m
+NAME                                 CONTROLLER                                 PARAMETERS   AGE
+webapprouting.kubernetes.azure.com   webapprouting.kubernetes.azure.com/nginx   <none>       3m
 ```
 
 ### Step 2: Service 타입을 ClusterIP로 변경
@@ -162,9 +172,9 @@ kubectl get svc -n pets store-front store-admin
 ```
 
 ```
-NAME          TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
-store-front   ClusterIP   10.0.x.x       <none>        80/TCP    10m
-store-admin   ClusterIP   10.0.x.x       <none>        80/TCP    10m
+NAME          TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+store-front   ClusterIP   10.0.59.53    <none>        80/TCP    11m
+store-admin   ClusterIP   10.0.176.39   <none>        80/TCP    11m
 ```
 
 > 기존 LoadBalancer External IP는 더 이상 접근되지 않습니다.
@@ -186,6 +196,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: webapprouting.kubernetes.azure.com
   rules:
@@ -198,14 +209,19 @@ spec:
                 name: store-admin
                 port:
                   number: 80
-          - path: /
-            pathType: Prefix
+          - path: /()(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: store-front
                 port:
                   number: 80
 ```
+
+> **💡 `rewrite-target: /$2` 동작 원리**  
+> 두 경로 모두 캡처 그룹 2개를 사용하며, `$2`가 실제 요청 경로가 됩니다.
+> - `/admin/js/app.js` → `/admin(/|$)(.*)` 매칭 → `$2` = `js/app.js` → store-admin에 `/js/app.js` 전달
+> - `/api/products` → `/()(.*)` 매칭 → `$2` = `api/products` → store-front에 `/api/products` 전달
 
 ### Step 4: Ingress IP 확인 & 접속
 
@@ -215,8 +231,8 @@ kubectl get ingress -n pets -w
 ```
 
 ```
-NAME           CLASS                                   HOSTS   ADDRESS          PORTS   AGE
-pets-ingress   webapprouting.kubernetes.azure.com       *       <INGRESS-IP>    80      1m
+NAME           CLASS                                HOSTS   ADDRESS          PORTS   AGE
+pets-ingress   webapprouting.kubernetes.azure.com   *       20.249.129.218   80      20s
 ```
 
 ```bash
@@ -246,7 +262,8 @@ curl -s -o /dev/null -w '%{http_code}' http://$INGRESS_IP/admin
 # → 200
 ```
 
-### (선택) 되돌리기 — LoadBalancer로 복원
+<details>
+<summary><strong>(선택) 되돌리기 — LoadBalancer로 복원</strong></summary>
 
 Ingress 실습 후 원래 상태로 되돌리려면:
 
@@ -256,9 +273,7 @@ kubectl patch svc store-front -n pets -p '{"spec": {"type": "LoadBalancer"}}'
 kubectl patch svc store-admin -n pets -p '{"spec": {"type": "LoadBalancer"}}'
 ```
 
-> **💡 참고**: Ingress 매니페스트에서는 NGINX 컨트롤러에서 `/admin` 경로의 trailing slash를 올바르게 처리하기 위해
-> 정규식(`/admin(/|$)(.*)`)을 사용합니다. 4-5절의 AGC Gateway API에서는 `PathPrefix: /admin`으로 동일한 동작을 달성합니다.
-> 두 방식 모두 `/admin`, `/admin/`, `/admin/anything` 경로를 매칭합니다.
+</details>
 
 ### Ingress 점검 체크리스트
 
@@ -270,7 +285,7 @@ kubectl patch svc store-admin -n pets -p '{"spec": {"type": "LoadBalancer"}}'
 
 ---
 
-## 4-5. (옵션 B) AGC — Application Gateway for Containers
+## 4-5. (옵션 B) AGC — Application Gateway for Containers (Preview)
 
 > 이 섹션은 4-4의 Web App Routing 대신 **AGC**를 사용하는 **대안 방식**입니다.  
 > 4-4를 이미 완료했다면, 먼저 되돌린 후 진행하세요.
@@ -288,11 +303,43 @@ kubectl patch svc store-admin -n pets -p '{"spec": {"type": "LoadBalancer"}}'
 
 ### Step 1: ALB Controller 애드온 활성화
 
+AGC의 ALB Controller는 Azure 리소스(Application Gateway for Containers)를 생성/관리하기 위해 Azure API에 접근해야 합니다.  
+이때 **Workload Identity**를 사용하여 Pod이 Azure AD 토큰을 안전하게 발급받고, **OIDC Issuer**가 Kubernetes 서비스 어카운트와 Azure AD 간 신뢰를 설정합니다.
+
 ```bash
+# AGC 관련 CLI 옵션을 사용하려면 aks-preview 확장이 필요합니다
+az extension add --name aks-preview --upgrade
+
+# Preview 기능 등록 (구독당 한 번만 실행)
+az feature register --namespace "Microsoft.ContainerService" --name "ManagedGatewayAPIPreview"
+az feature register --namespace "Microsoft.ContainerService" --name "ApplicationLoadBalancerPreview"
+
+# 등록 상태 확인 — "Registered"가 될 때까지 대기 (수 분 소요)
+az feature show --namespace "Microsoft.ContainerService" --name "ManagedGatewayAPIPreview" --query "properties.state" -o tsv
+az feature show --namespace "Microsoft.ContainerService" --name "ApplicationLoadBalancerPreview" --query "properties.state" -o tsv
+
+# 등록 완료 후 provider 갱신
+az provider register --namespace Microsoft.ContainerService
+```
+
+> ⏱ Feature 등록에 약 3~5분 소요될 수 있습니다. `Registered`로 바뀐 후 다음 단계를 진행하세요.
+
+```bash
+# OIDC Issuer 및 Workload Identity 활성화
+# - OIDC Issuer: AKS 클러스터가 외부 ID 공급자로 동작하여 서비스 어카운트 토큰을 발급
+# - Workload Identity: Pod이 Azure AD 토큰을 발급받아 Azure 리소스에 접근 가능
 az aks update \
   --name $CLUSTER_NAME \
   --resource-group $RESOURCE_GROUP \
-  --enable-alb-controller
+  --enable-oidc-issuer \
+  --enable-workload-identity
+
+# Gateway API + ALB Controller 애드온 활성화
+az aks update \
+  --name $CLUSTER_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --enable-gateway-api \
+  --enable-application-load-balancer
 ```
 
 > ⏱ 약 2~3분 소요됩니다.
@@ -300,8 +347,8 @@ az aks update \
 활성화 확인:
 
 ```bash
-# ALB Controller Pod 확인
-kubectl get pods -n azure-alb-system
+# ALB Controller Pod 확인 (AKS 애드온 방식은 kube-system에서 실행)
+kubectl get pods -n kube-system | grep alb-controller
 
 # GatewayClass 확인
 kubectl get gatewayclass
@@ -310,9 +357,8 @@ kubectl get gatewayclass
 ### 예상 출력
 
 ```
-NAME                                    READY   STATUS    RESTARTS   AGE
-alb-controller-xxxx                     1/1     Running   0          2m
-alb-controller-bootstrap-xxxx           1/1     Running   0          2m
+alb-controller-xxxx-xxxxx   1/1     Running   0   2m
+alb-controller-xxxx-xxxxx   1/1     Running   0   2m
 ```
 
 ```
@@ -350,8 +396,9 @@ spec:
 EOF
 ```
 
-> ⚠️ AGC는 전용 서브넷이 필요할 수 있습니다. 기본 AKS 서브넷으로 동작하지 않으면
-> [공식 문서](https://learn.microsoft.com/ko-kr/azure/application-gateway/for-containers/quickstart-deploy-application-gateway-for-containers-alb-controller)를 참고하여 서브넷을 구성하세요.
+> ⚠️ AGC는 **전용 서브넷**이 필요합니다. 최소 **/24** CIDR 대역(256개 IP)이 권장되며,  
+> `Microsoft.ServiceNetworking/TrafficController` 서브넷 위임이 설정되어야 합니다.  
+> 기본 AKS 서브넷으로 동작하지 않으면 [공식 문서](https://learn.microsoft.com/ko-kr/azure/application-gateway/for-containers/quickstart-deploy-application-gateway-for-containers-alb-controller)를 참고하여 서브넷을 구성하세요.
 
 ### Step 3: Service 타입을 ClusterIP로 변경
 
@@ -364,13 +411,45 @@ kubectl patch svc store-admin -n pets -p '{"spec": {"type": "ClusterIP"}}'
 
 ### Step 4: Gateway & HTTPRoute 배포
 
+먼저 AGC 전용 서브넷 ID를 매니페스트에 주입한 후 배포합니다.
+
 ```bash
+# AGC 서브넷 ID 조회
+MC_RG=$(az aks show --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --query "nodeResourceGroup" -o tsv)
+VNET_NAME=$(az network vnet list -g $MC_RG --query "[0].name" -o tsv)
+AGC_SUBNET_ID=$(az network vnet subnet show -g $MC_RG --vnet-name $VNET_NAME -n aks-appgateway --query id -o tsv)
+echo "AGC Subnet ID: $AGC_SUBNET_ID"
+
+# 매니페스트에 서브넷 ID 주입
+sed -i "s|__AGC_SUBNET_ID__|$AGC_SUBNET_ID|g" workshop-manifests/61-agc-gateway.yaml
+
+# 배포
 kubectl apply -f workshop-manifests/61-agc-gateway.yaml
 ```
+
+> ⏱ `ApplicationLoadBalancer` 프로비저닝에 약 3~5분 소요됩니다.
+> `DEPLOYMENT`가 `True`로 바뀌는지 확인하세요.
+> ```bash
+> kubectl get applicationloadbalancer -n alb-infra -w
+> ```
 
 매니페스트 내용 (`workshop-manifests/61-agc-gateway.yaml`):
 
 ```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alb-infra
+---
+apiVersion: alb.networking.azure.io/v1
+kind: ApplicationLoadBalancer
+metadata:
+  name: pets-alb
+  namespace: alb-infra
+spec:
+  associations:
+    - __AGC_SUBNET_ID__    # ← sed로 실제 서브넷 ID가 주입됩니다
+---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
@@ -403,6 +482,12 @@ spec:
         - path:
             type: PathPrefix
             value: /admin
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /
       backendRefs:
         - name: store-admin
           port: 80
@@ -415,11 +500,35 @@ spec:
           port: 80
 ```
 
-> **Ingress API vs Gateway API**: AGC는 Kubernetes **Gateway API** 표준을 사용합니다.
+> **매니페스트 구성 요약**:
+> - `ApplicationLoadBalancer` = AGC 리소스를 Azure에 프로비저닝 (ALB Controller가 관리)
 > - `Gateway` = 인프라 (리스너, 포트, 프로토콜)
-> - `HTTPRoute` = 라우팅 규칙 (경로 → 서비스 매핑)
+> - `HTTPRoute` = 라우팅 규칙 (경로 → 서비스 매핑, `/admin` → `/`로 URL 재작성)
 
-### Step 5: Gateway IP 확인 & 접속
+### Step 5: NSG 규칙 추가
+
+AGC가 외부 트래픽을 받으려면 AGC 서브넷의 NSG에 인바운드 규칙을 추가해야 합니다.
+
+```bash
+# AGC 서브넷 NSG 이름 확인
+NSG_NAME=$(az network vnet subnet show -g $MC_RG --vnet-name $VNET_NAME -n aks-appgateway \
+  --query "networkSecurityGroup.id" -o tsv | xargs -I{} basename {})
+echo "NSG: $NSG_NAME"
+
+# HTTP/HTTPS 인바운드 허용
+az network nsg rule create \
+  -g $MC_RG \
+  --nsg-name $NSG_NAME \
+  -n AllowHTTPInbound \
+  --priority 100 \
+  --source-address-prefixes Internet \
+  --destination-port-ranges 80 443 \
+  --access Allow \
+  --protocol Tcp \
+  --direction Inbound
+```
+
+### Step 6: Gateway IP 확인 & 접속
 
 ```bash
 # Gateway 상태 확인 (Programmed=True 대기)
@@ -429,8 +538,8 @@ kubectl get gateway pets-gateway -n pets -w
 > ⏱ AGC 리소스가 Azure에서 프로비저닝되므로 **3~5분** 소요될 수 있습니다.
 
 ```
-NAME           CLASS                ADDRESSES        PROGRAMMED   AGE
-pets-gateway   azure-alb-external   <AGC-FQDN>       True         5m
+NAME           CLASS                ADDRESS                               PROGRAMMED   AGE
+pets-gateway   azure-alb-external   bjduafcpgef6b9h0.fz37.alb.azure.com   True         4m59s
 ```
 
 ```bash
@@ -712,7 +821,7 @@ kubectl describe gateway pets-gateway -n pets
 kubectl get ApplicationLoadBalancer -n alb-infra -o yaml
 ```
 
-> AGC 전용 서브넷이 없으면 프로비저닝이 실패합니다.  
+> AGC 전용 서브넷(최소 /24 CIDR)이 없으면 프로비저닝이 실패합니다.  
 > [공식 가이드](https://learn.microsoft.com/ko-kr/azure/application-gateway/for-containers/quickstart-deploy-application-gateway-for-containers-alb-controller)를 참고하여 서브넷을 생성하세요.
 
 ### MongoDB가 CrashLoop 또는 Readiness 실패

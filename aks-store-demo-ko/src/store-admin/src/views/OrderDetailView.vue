@@ -97,7 +97,8 @@ const completeOrder = () => {
 
     if (foundOrder) {
       foundOrder.status = 1
-      fetch(`/api/makeline/order`, {
+      const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '')
+      fetch(`${baseUrl}/api/makeline/order`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

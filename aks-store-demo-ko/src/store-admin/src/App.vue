@@ -13,9 +13,10 @@ const productStore = useProductStore()
 const orderStore = useOrderStore()
 
 onMounted(() => {
+  const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '')
   if (productStore.count === 0) {
     console.log('Fetching products')
-    fetch('/api/products')
+    fetch(`${baseUrl}/api/products`)
       .then((response) => response.json())
       .then((data: Product[]) => {
         productStore.addProducts(data)
@@ -28,11 +29,11 @@ onMounted(() => {
   }
   if (orderStore.count === 0) {
     console.log('Fetching orders')
-    fetch('/api/makeline/order/fetch')
+    fetch(`${baseUrl}/api/makeline/order/fetch`)
       .then((response) => response.json())
       .then((data: Order[]) => {
-        orderStore.addOrders(data)
-        console.log(`Fetched ${data.length} orders`)
+        orderStore.addOrders(data || [])
+        console.log(`Fetched ${(data || []).length} orders`)
       })
       .catch((error) => {
         console.log(error)

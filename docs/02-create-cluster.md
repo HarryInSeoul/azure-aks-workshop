@@ -41,10 +41,16 @@ az aks create \
 
 ## 2-2. ACR 연결
 
-AKS 클러스터가 개인 ACR에서 이미지를 풀(pull) 할 수 있도록 연결합니다.
+AKS 클러스터가 ACR에서 이미지를 풀(pull) 할 수 있도록 연결합니다.
 
 ```bash
-# 개인 ACR 연결 (store-admin 이미지 빌드/푸시용)
+# 공용 ACR 연결 (주최자 제공 이미지)
+az aks update \
+  --name $CLUSTER_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --attach-acr aksworkshopkoea6e
+
+# 개인 ACR 연결 (store-admin 이미지)
 az aks update \
   --name $CLUSTER_NAME \
   --resource-group $RESOURCE_GROUP \
