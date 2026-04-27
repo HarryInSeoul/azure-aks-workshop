@@ -1,0 +1,60 @@
+<mxfile host="app.diagrams.net" agent="draw.io">
+  <diagram id="ai-agent-architecture" name="AI Agent Architecture">
+    <mxGraphModel dx="2044" dy="1825" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;strokeWidth=2;dashed=1;fontSize=13;fontFamily=Verdana;verticalAlign=top;spacingTop=10;" value="" vertex="1">
+          <mxGeometry height="260" width="560" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=1;fontFamily=Verdana;fontColor=#666666;" value="AKS Cluster (pets namespace)" vertex="1">
+          <mxGeometry height="25" width="250" x="55" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=1;fontFamily=Verdana;align=center;verticalAlign=middle;" value="ai-agent&#xa;(Python/FastAPI)" vertex="1">
+          <mxGeometry height="70" width="180" x="80" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;fontFamily=Verdana;align=center;verticalAlign=middle;" value="product-service&#xa;(Rust)" vertex="1">
+          <mxGeometry height="70" width="180" x="380" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="6" edge="1" parent="1" source="4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#82b366;fontFamily=Verdana;fontSize=12;fontStyle=1;fontColor=#82b366;labelBackgroundColor=#FFFFFF;" target="5" value="Tool">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7" edge="1" parent="1" source="4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#9673a6;fontFamily=Verdana;fontSize=12;fontStyle=1;fontColor=#9673a6;labelBackgroundColor=#FFFFFF;" target="8" value="LLM">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="170" y="250" />
+              <mxPoint x="170" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=1;fontFamily=Verdana;align=center;verticalAlign=middle;" value="Azure OpenAI&#xa;(GPT-4o)" vertex="1">
+          <mxGeometry height="70" width="180" x="80" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="10" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontStyle=1;fontFamily=Verdana;fontColor=#333333;" value="구성 요소" vertex="1">
+          <mxGeometry height="25" width="80" x="640" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="11" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontStyle=1;fontFamily=Verdana;fontColor=#333333;" value="역할" vertex="1">
+          <mxGeometry height="25" width="150" x="730" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="12" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontFamily=Verdana;fontColor=#d6b656;fontStyle=1;" value="AI Agent" vertex="1">
+          <mxGeometry height="25" width="80" x="640" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="13" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontFamily=Verdana;fontColor=#666666;" value="요청 → 상품 조회 → LLM → 추천" vertex="1">
+          <mxGeometry height="25" width="200" x="730" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="14" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontFamily=Verdana;fontColor=#82b366;fontStyle=1;" value="product-service" vertex="1">
+          <mxGeometry height="25" width="90" x="640" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="15" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontFamily=Verdana;fontColor=#666666;" value="상품 카탈로그 제공 (Tool)" vertex="1">
+          <mxGeometry height="25" width="200" x="730" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="16" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontFamily=Verdana;fontColor=#9673a6;fontStyle=1;" value="Azure OpenAI" vertex="1">
+          <mxGeometry height="25" width="90" x="640" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="17" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontFamily=Verdana;fontColor=#666666;" value="자연어 이해 + 추천 생성" vertex="1">
+          <mxGeometry height="25" width="200" x="730" y="140" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
