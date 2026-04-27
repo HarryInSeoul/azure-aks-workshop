@@ -5,16 +5,9 @@
 
 ## AI Agent 패턴
 
-```
-고객 질문                    AI Agent (Python/FastAPI)
-"활발한 고양이 장난감 추천해줘"  ─▶  ┌──────────────────────┐
-                                │ 1. Tool: 상품 조회    │──▶ product-service:3002
-                                │ 2. LLM: 맞춤 추천    │──▶ Azure OpenAI (GPT-4o)
-                                └──────────────────────┘
-                                         │
-                                         ▼
-                                  구조화된 추천 결과 (JSON)
-```
+![AI Agent 패턴](images/ai-agent-pattern.png)
+
+> 💡 [draw.io 원본 파일](ai-agent-pattern.drawio)을 열면 다이어그램을 직접 편집할 수 있습니다.
 
 ### 개요
 
@@ -54,7 +47,7 @@ az cognitiveservices account deployment create \
   --resource-group $RESOURCE_GROUP \
   --deployment-name gpt-4o \
   --model-name gpt-4o \
-  --model-version "2024-08-06" \
+  --model-version "2024-11-20" \
   --model-format OpenAI \
   --sku-capacity 10 \
   --sku-name Standard \
@@ -92,24 +85,12 @@ AOAI_KEY="demo-key"
 
 ---
 
-## 5-2. AI Agent 빌드 & ACR 푸시
+## 5-2. AI Agent 이미지 확인
+
+> **참고**: ai-agent 이미지는 공용 ACR에 사전 빌드되어 있습니다. 별도 빌드가 필요 없습니다.
 
 ```bash
-cd aks-store-demo-ko/src/ai-agent
-
-# ACR에서 원격 빌드 & 푸시
-az acr build \
-  --registry $ACR_NAME \
-  --image ai-agent:v1 \
-  .
-```
-
-> ⏱ 약 1~2분 소요됩니다.
-
-빌드 확인:
-
-```bash
-az acr repository show-tags --name $ACR_NAME --repository ai-agent -o table
+az acr repository show-tags --name aksworkshopkoea6e --repository ai-agent -o table
 ```
 
 ```
@@ -125,7 +106,7 @@ v1
 AI Agent가 Azure OpenAI에 접근하기 위한 자격증명을 Secret으로 생성합니다.
 
 ```bash
-cd /home/hyehunlim/projects/AKS-Workshop
+cd ~/azure-aks-workshop
 
 # Secret 생성 (API 키, 엔드포인트, 배포 이름)
 kubectl create secret generic ai-agent-secrets \
@@ -175,6 +156,14 @@ kubectl exec -n pets deploy/ai-agent -- wget -qO- http://localhost:5100/health
 ---
 
 ## 5-5. AI 추천 테스트
+
+AI Agent 배포가 완료되면 store-front 하단의 **🤖 AI 상품 추천** 버튼으로 직접 추천을 받을 수 있습니다.
+
+![store-front AI 추천 화면](images/store-front-main.png)
+
+> **참고**: AI Agent가 배포되지 않은 상태에서 버튼을 클릭하면 "AI 추천 서비스가 아직 준비되지 않았습니다" 안내가 표시됩니다.
+>
+> ![AI 추천 미배포 안내](images/ai-recommend-unavailable.png)
 
 ### Port-Forward로 접속
 
@@ -254,23 +243,9 @@ az cognitiveservices account delete \
 
 ## AI Agent 아키텍처 요약
 
-```
-┌─────────────────────────────────────────────────┐
-│                AKS Cluster (pets)                │
-│                                                  │
-│   ┌──────────┐    Tool     ┌────────────────┐   │
-│   │ ai-agent │────────────▶│ product-service│   │
-│   │ (Python) │             │   (Rust)       │   │
-│   └────┬─────┘             └────────────────┘   │
-│        │ LLM                                    │
-└────────┼────────────────────────────────────────┘
-         │
-         ▼
-  ┌──────────────┐
-  │ Azure OpenAI │
-  │   (GPT-4o)   │
-  └──────────────┘
-```
+![AI Agent 아키텍처](images/ai-agent-architecture.png)
+
+> 💡 [draw.io 원본 파일](ai-agent-architecture.drawio)을 열면 다이어그램을 직접 편집할 수 있습니다.
 
 | 구성 요소 | 역할 |
 |-----------|------|
