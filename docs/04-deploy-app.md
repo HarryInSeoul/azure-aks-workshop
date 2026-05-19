@@ -1,5 +1,42 @@
 # 04. 펫 스토어 배포
 
+<details>
+<summary><strong>⚠️ Cloud Shell 세션이 만료된 경우 — 환경 변수 재설정</strong></summary>
+
+```bash
+export RESOURCE_GROUP="WorkshopDemo-RG"
+export CLUSTER_NAME="workshop-demo"
+export LOCATION="koreacentral"
+export MY_ACR_NAME=$(az acr list --resource-group $RESOURCE_GROUP --query "[?starts_with(name,'workshop')].name" -o tsv)
+az aks get-credentials --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --overwrite-existing
+```
+
+</details>
+
+## 목차
+
+- [4-1. 전체 스택 배포](#4-1-전체-스택-배포)
+- [4-2. 배포 상태 확인](#4-2-배포-상태-확인)
+- [4-3. 외부 접속 확인](#4-3-외부-접속-확인)
+- [4-4. Ingress로 단일 IP 노출 (핸즈온)](#4-4-ingress로-단일-ip-노출-핸즈온)
+- [4-5. (옵션 B) AGC](#4-5-옵션-b-agc--application-gateway-for-containers-preview) — 고급
+- [4-6. (선택) Windows 노드풀 + .NET](#4-6-선택-사항-windows-노드풀--net-order-service) — 선택
+- [트러블슈팅](#트러블슈팅)
+
+이제 마이크로서비스 기반 펫 스토어 애플리케이션을 AKS 클러스터에 배포합니다.  
+하나의 YAML 매니페스트로 10개 서비스(MongoDB, RabbitMQ, 백엔드 API, 프론트엔드, 부하 생성기)를 한 번에 배포하고,
+**Ingress**로 단일 IP 로드 밸런싱을 구성하는 과정을 체험합니다.
+
+### 이 섹션에서 배우는 것
+
+- **Kubernetes 워크로드 배포** — Deployment, StatefulSet, Service, Namespace
+- **외부 접속** — LoadBalancer Service로 브라우저 접속
+- **Ingress 라우팅** — Web App Routing으로 경로 기반 단일 IP 통합
+- **(선택) AGC** — Azure 네이티브 L7 로드 밸런싱 (Gateway API)
+- **(선택) Windows 노드풀** — Linux/Windows 혼합 클러스터 운영
+
+---
+
 ## 4-1. 전체 스택 배포
 
 모든 서비스를 한 번에 배포합니다.
@@ -26,7 +63,20 @@ kubectl apply -f workshop-manifests/aks-store-all-in-one-ko.yaml
 | Service | `store-admin` | pets | **LoadBalancer** (포트 80) |
 | Service | 나머지 | pets | ClusterIP (내부 전용) |
 
-> ⚠️ **보안 참고**: 이 매니페스트에는 RabbitMQ 기본 자격증명(`username`/`password`)이 포함되어 있습니다.
+### Service 타입 비교
+
+| 타입 | 접근 범위 | 동작 방식 | 이 워크샵에서의 용도 |
+|------|----------|----------|-------------------|
+| **ClusterIP** | 클러스터 내부만 | Pod 간 내부 통신용 가상 IP 할당 | `order-service`, `product-service` 등 백엔드 |
+| **NodePort** | 노드 IP + 지정 포트 | 각 노드의 `30000~32767` 포트를 외부에 오픈 | (이 워크샵에서는 미사용) |
+| **LoadBalancer** | 인터넷 공개 | Azure Load Balancer를 생성하여 **공인 IP** 할당 | `store-front`, `store-admin` 웹 UI |
+
+> [!NOTE]
+> 이 워크샵에서는 `store-front`와 `store-admin`만 LoadBalancer로 외부에 노출하고, 나머지 서비스는 ClusterIP로 내부 통신만 허용합니다.
+> 4-4절에서 Ingress를 적용하면 LoadBalancer 2개를 **하나의 IP로 통합**합니다.
+
+> [!WARNING]
+> **보안 참고**: 이 매니페스트에는 RabbitMQ 기본 자격증명(`username`/`password`)이 포함되어 있습니다.
 > 워크샵 데모 전용이며, **프로덕션 환경에서는 반드시 강력한 비밀번호로 변경**하고 Azure Key Vault 등과 연동하세요.
 
 ## 4-2. 배포 상태 확인
@@ -36,26 +86,48 @@ kubectl apply -f workshop-manifests/aks-store-all-in-one-ko.yaml
 kubectl get pods -n pets -w
 ```
 
+> [!NOTE]
 > ⏱ 모든 Pod가 Ready가 되기까지 약 2~3분 소요됩니다.  
 > MongoDB가 먼저 Ready가 되어야 makeline-service가 정상 기동합니다.
 
-### 예상 출력
+### 실행 결과
 
 ```
-NAME                                READY   STATUS    RESTARTS       AGE
-makeline-service-c8568b9c7-6pfdh    1/1     Running   0              2m33s
-mongodb-0                           1/1     Running   0              2m35s
-order-service-c9cd69cff-qr5ld       1/1     Running   0              2m33s
-product-service-5497bfff7f-wrjp8    1/1     Running   0              2m32s
-rabbitmq-0                          1/1     Running   0              2m34s
-store-admin-59f6656f5f-pkrlp        1/1     Running   0              2m31s
-store-front-5d9488b5db-54b6n        1/1     Running   0              2m32s
-store-front-5d9488b5db-t6m6g        1/1     Running   0              2m32s
-virtual-customer-67674c6946-d52w7   1/1     Running   0              2m31s
-virtual-worker-5486bbb9b6-n857z     1/1     Running   3 (107s ago)   2m31s
+NAME                                READY   STATUS    RESTARTS      AGE
+makeline-service-c8568b9c7-5jmqz    1/1     Running   0             13m
+mongodb-0                           1/1     Running   0             14m
+order-service-c9cd69cff-dt7hf       1/1     Running   0             13m
+product-service-5497bfff7f-jmr2q    1/1     Running   0             13m
+rabbitmq-0                          1/1     Running   0             13m
+store-admin-666f7897d4-cmsjc        1/1     Running   0             2m11s
+store-front-7dfd9dd7cf-m2jwm        1/1     Running   0             25s
+store-front-7dfd9dd7cf-ssvh4        1/1     Running   0             15s
+virtual-customer-67674c6946-zp4gx   1/1     Running   0             13m
+virtual-worker-5486bbb9b6-wkzpf     1/1     Running   3 (12m ago)   13m
 ```
+
 
 ## 4-3. 외부 접속 확인
+
+현재 배포 상태에서는 `store-front`와 `store-admin`이 각각 **별도의 LoadBalancer IP**를 가집니다.
+
+```mermaid
+flowchart LR
+    U["👤 사용자"] --> LB1["Public IP #1\n:80"]
+    U --> LB2["Public IP #2\n:80"]
+    LB1 --> SF["store-front"]
+    LB2 --> SA["store-admin"]
+
+    subgraph AKS["AKS Cluster"]
+        SF
+        SA
+        OS["order-service"]
+        PS["product-service"]
+        ML["makeline-service"]
+        RMQ[("RabbitMQ")]
+        MDB[("MongoDB")]
+    end
+```
 
 ```bash
 kubectl get svc -n pets
@@ -76,10 +148,19 @@ store-front        LoadBalancer   10.0.59.53     20.200.224.21   80:30942/TCP   
 
 1. **고객 스토어**: `http://<store-front EXTERNAL-IP>`
    - 제목: "Contoso 펫 스토어"
-   - 상품 목록이 표시됨 (예: "짭짤한 선원의 샑샑 오징어")
+   - 상품 목록이 표시됨 (예: "짭짤한 선원의 삑삑 오징어")
+
+   > 📸 **스크린샷**: store-front 고객 스토어 화면
+   >
+   > ![store-front 고객 스토어](images/store-front-products.png)
 
 2. **관리자 대시보드**: `http://<store-admin EXTERNAL-IP>`
    - 주문 목록 확인 (virtual-customer가 자동 주문 생성 중)
+   - **03절에서 수정한 타이틀이 반영되었는지 확인하세요!** 자신이 빌드한 이미지가 실행되고 있습니다.
+
+   > 📸 **스크린샷**: store-admin 관리자 대시보드
+   >
+   > ![store-admin 관리자 대시보드](images/store-admin-orders.png)
 
 ### CLI로 상품 확인
 
@@ -113,6 +194,24 @@ for p in json.load(sys.stdin):
 현재 store-front과 store-admin이 각각 별도의 LoadBalancer IP를 가지고 있습니다.  
 **Ingress**를 사용하면 하나의 IP로 경로 기반 라우팅이 가능합니다.
 
+```mermaid
+flowchart LR
+    U["👤 사용자"] --> ING["Ingress\nPublic IP 1개\n:80"]
+
+    ING -->|"/"| SF["store-front"]
+    ING -->|"/admin"| SA["store-admin"]
+
+    subgraph AKS["AKS Cluster"]
+        subgraph NGX["Web App Routing\nNGINX"]
+            ING
+        end
+        SF
+        SA
+        OS["order-service"]
+        PS["product-service"]
+    end
+```
+
 ### LoadBalancer vs Ingress 비교
 
 | 항목 | LoadBalancer (현재) | Ingress (이번 실습) |
@@ -132,6 +231,7 @@ az aks approuting enable \
   --resource-group $RESOURCE_GROUP
 ```
 
+> [!NOTE]
 > ⏱ 약 1~2분 소요됩니다.
 
 활성화 확인:
@@ -218,7 +318,8 @@ spec:
                   number: 80
 ```
 
-> **💡 `rewrite-target: /$2` 동작 원리**  
+> [!TIP]
+> **`rewrite-target: /$2` 동작 원리**  
 > 두 경로 모두 캡처 그룹 2개를 사용하며, `$2`가 실제 요청 경로가 됩니다.
 > - `/admin/js/app.js` → `/admin(/|$)(.*)` 매칭 → `$2` = `js/app.js` → store-admin에 `/js/app.js` 전달
 > - `/api/products` → `/()(.*)` 매칭 → `$2` = `api/products` → store-front에 `/api/products` 전달
@@ -246,6 +347,10 @@ echo "Ingress IP: $INGRESS_IP"
 |-----|--------|------|
 | `http://<INGRESS-IP>/` | store-front | 고객 펫 스토어 |
 | `http://<INGRESS-IP>/admin` | store-admin | 관리자 대시보드 |
+
+> 📸 **스크린샷**: Ingress로 단일 IP 접속 화면
+>
+> 📸 *스크린샷 준비 중 — `images/ingress-single-ip.png`*
 
 ### CLI 검증
 
@@ -287,8 +392,34 @@ kubectl patch svc store-admin -n pets -p '{"spec": {"type": "LoadBalancer"}}'
 
 ## 4-5. (옵션 B) AGC — Application Gateway for Containers (Preview)
 
+> [!CAUTION]
+> **이 섹션은 고급 실습입니다.** Preview Feature 등록, OIDC/Workload Identity 활성화, 전용 서브넷 구성 등 사전 작업이 많아 **30분 이상** 소요될 수 있습니다. 워크샵 시간이 충분하지 않다면 4-4(Web App Routing)를 권장합니다.
+
 > 이 섹션은 4-4의 Web App Routing 대신 **AGC**를 사용하는 **대안 방식**입니다.  
 > 4-4를 이미 완료했다면, 먼저 되돌린 후 진행하세요.
+
+```mermaid
+flowchart LR
+    U["👤 사용자"] --> GW["Gateway\nAGC FQDN\n:80"]
+
+    GW -->|"/"| SF["store-front"]
+    GW -->|"/admin"| SA["store-admin"]
+
+    subgraph AZURE["Azure 네트워크"]
+        GW
+    end
+
+    subgraph AKS["AKS Cluster"]
+        subgraph ALB["ALB Controller"]
+            HR["HTTPRoute"]
+        end
+        SF
+        SA
+    end
+
+    GW --> HR
+    HR --> SF & SA
+```
 
 ### Web App Routing vs AGC 비교
 
@@ -321,8 +452,7 @@ az feature show --namespace "Microsoft.ContainerService" --name "ApplicationLoad
 # 등록 완료 후 provider 갱신
 az provider register --namespace Microsoft.ContainerService
 ```
-
-> ⏱ Feature 등록에 약 3~5분 소요될 수 있습니다. `Registered`로 바뀐 후 다음 단계를 진행하세요.
+> [!NOTE]> ⏱ Feature 등록에 약 3~5분 소요될 수 있습니다. `Registered`로 바뀐 후 다음 단계를 진행하세요.
 
 ```bash
 # OIDC Issuer 및 Workload Identity 활성화
@@ -342,6 +472,7 @@ az aks update \
   --enable-application-load-balancer
 ```
 
+> [!NOTE]
 > ⏱ 약 2~3분 소요됩니다.
 
 활성화 확인:
@@ -396,7 +527,8 @@ spec:
 EOF
 ```
 
-> ⚠️ AGC는 **전용 서브넷**이 필요합니다. 최소 **/24** CIDR 대역(256개 IP)이 권장되며,  
+> [!WARNING]
+> AGC는 **전용 서브넷**이 필요합니다. 최소 **/24** CIDR 대역(256개 IP)이 권장되며,  
 > `Microsoft.ServiceNetworking/TrafficController` 서브넷 위임이 설정되어야 합니다.  
 > 기본 AKS 서브넷으로 동작하지 않으면 [공식 문서](https://learn.microsoft.com/ko-kr/azure/application-gateway/for-containers/quickstart-deploy-application-gateway-for-containers-alb-controller)를 참고하여 서브넷을 구성하세요.
 
@@ -427,6 +559,7 @@ sed -i "s|__AGC_SUBNET_ID__|$AGC_SUBNET_ID|g" workshop-manifests/61-agc-gateway.
 kubectl apply -f workshop-manifests/61-agc-gateway.yaml
 ```
 
+> [!NOTE]
 > ⏱ `ApplicationLoadBalancer` 프로비저닝에 약 3~5분 소요됩니다.
 > `DEPLOYMENT`가 `True`로 바뀌는지 확인하세요.
 > ```bash
@@ -535,6 +668,7 @@ az network nsg rule create \
 kubectl get gateway pets-gateway -n pets -w
 ```
 
+> [!NOTE]
 > ⏱ AGC 리소스가 Azure에서 프로비저닝되므로 **3~5분** 소요될 수 있습니다.
 
 ```
@@ -555,7 +689,8 @@ echo "AGC 주소: http://$AGC_FQDN"
 | `http://<AGC-FQDN>/` | store-front | 고객 펫 스토어 |
 | `http://<AGC-FQDN>/admin` | store-admin | 관리자 대시보드 |
 
-> **참고**: AGC는 IP 대신 FQDN(도메인)으로 접근합니다.
+> [!NOTE]
+> AGC는 IP 대신 FQDN(도메인)으로 접근합니다.
 
 ### CLI 검증
 
@@ -592,10 +727,13 @@ kubectl patch svc store-admin -n pets -p '{"spec": {"type": "LoadBalancer"}}'
 
 ---
 
-## 4-6. (옵션 C) Windows 노드풀 + .NET order-service
+<details>
+<summary><strong>4-6. (선택 사항) Windows 노드풀 + .NET order-service</strong></summary>
 
 > 이 섹션에서는 order-service를 **.NET 8 (C#)** 로 재작성하여 **Windows 노드풀**에 배포합니다.  
-> Linux/Windows 혼합 AKS 클러스터 운영과 마이크로서비스 런타임 교체를 직접 체험합니다.
+> Linux/Windows 혼합 AKS 클러스터 운영과 마이크로서비스 런타임 교체를 직접 체험합니다.  
+> [!WARNING]
+> **이 섹션은 선택 사항**입니다. Windows 노드풀이 필요하지 않은 경우 건너뛸 수 있습니다.
 
 ### 개요
 
@@ -609,10 +747,24 @@ kubectl patch svc store-admin -n pets -p '{"spec": {"type": "LoadBalancer"}}'
 
 ### 혼합 클러스터 개념
 
-```
-AKS Cluster (Azure CNI Overlay)
-├── nodepool1 (Linux)     ← store-front, product-service, MongoDB, RabbitMQ 등
-└── npwin (Windows)       ← order-service-dotnet (.NET 8)
+```mermaid
+flowchart LR
+    subgraph AKS["AKS Cluster"]
+        subgraph LINUX["🐧 Linux nodepool1"]
+            SF["store-front"]
+            PS["product-service"]
+            OS_NODE["order-service"]
+            ML["makeline-service"]
+            MDB[("MongoDB")]
+            RMQ[("RabbitMQ")]
+        end
+        subgraph WIN["🪟 Windows npwin"]
+            DOTNET["order-service-dotnet"]
+        end
+    end
+
+    OS_NODE <-.->|"ClusterIP"| DOTNET
+    DOTNET --> RMQ
 ```
 
 - `nodeSelector`와 `tolerations`로 Pod를 특정 OS 노드에 스케줄링합니다
@@ -632,6 +784,7 @@ az aks nodepool add \
   -o table
 ```
 
+> [!NOTE]
 > ⏱ Windows 노드풀 추가에 약 5~8분 소요됩니다.
 
 확인:
@@ -654,14 +807,15 @@ cd aks-store-demo-ko/src/order-service-dotnet
 
 # Windows 컨테이너 이미지 빌드 (ACR에서 원격 빌드 — 로컬 Docker 불필요)
 az acr build \
-  --registry $ACR_NAME \
+  --registry $MY_ACR_NAME \
   --image order-service-dotnet:win \
   --platform windows \
   --file Dockerfile.windows \
   .
 ```
 
-> **참고**: Windows 컨테이너 이미지는 로컬 Linux Docker에서 빌드할 수 없습니다.  
+> [!NOTE]
+> Windows 컨테이너 이미지는 로컬 Linux Docker에서 빌드할 수 없습니다.  
 > `az acr build --platform windows`를 사용하면 ACR에서 원격 빌드됩니다.
 
 ### Step 3: 매니페스트 ACR 이름 수정 & 배포
@@ -670,7 +824,7 @@ az acr build \
 cd /home/hyehunlim/projects/AKS-Workshop
 
 # 매니페스트 내 ACR 이름 치환
-sed -i "s/__ACR_NAME__/$ACR_NAME/g" workshop-manifests/65-order-service-dotnet-windows.yaml
+sed -i "s/__ACR_NAME__/$MY_ACR_NAME/g" workshop-manifests/65-order-service-dotnet-windows.yaml
 
 # 배포
 kubectl apply -f workshop-manifests/65-order-service-dotnet-windows.yaml
@@ -764,6 +918,8 @@ az aks nodepool delete \
 - [ ] `/health` 응답에 `"runtime":".NET 8"` 포함
 - [ ] store-front에서 주문 시 `.NET` 로그 출력 확인
 
+</details>
+
 ---
 
 ## 트러블슈팅
@@ -777,7 +933,8 @@ kubectl describe pod -n pets -l app=order-service-dotnet
 kubectl get nodes -l "kubernetes.io/os=windows"
 ```
 
-> **참고**: Cilium 데이터플레인(`--network-dataplane cilium`)을 사용하는 클러스터에서는 Windows 노드를 추가할 수 없습니다. Cilium 없이 클러스터를 생성하세요.
+> [!NOTE]
+> Cilium 데이터플레인(`--network-dataplane cilium`)을 사용하는 클러스터에서는 Windows 노드를 추가할 수 없습니다. Cilium 없이 클러스터를 생성하세요.
 
 ```bash
 kubectl describe pod -n pets -l app=order-service-dotnet
@@ -851,7 +1008,7 @@ kubectl rollout restart deployment/makeline-service -n pets
 ACR 연결이 안 된 경우입니다.
 
 ```bash
-az aks update --name $CLUSTER_NAME -g $RESOURCE_GROUP --attach-acr $ACR_NAME
+az aks update --name $CLUSTER_NAME -g $RESOURCE_GROUP --attach-acr $MY_ACR_NAME
 ```
 
 ## 점검 체크리스트
