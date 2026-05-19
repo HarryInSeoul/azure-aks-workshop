@@ -14,6 +14,7 @@ from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from openai import AzureOpenAI
 from pydantic import BaseModel
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -30,6 +31,7 @@ AZURE_OPENAI_API_KEY = os.environ.get("AZURE_OPENAI_API_KEY", "")
 AZURE_OPENAI_DEPLOYMENT = os.environ.get("AZURE_OPENAI_DEPLOYMENT_NAME", "gpt-4o")
 AZURE_OPENAI_API_VERSION = os.environ.get("AZURE_OPENAI_API_VERSION", "2024-12-01-preview")
 DEMO_MODE = os.environ.get("DEMO_MODE", "false").lower() == "true"
+USE_AZURE_AD = os.environ.get("USE_AZURE_AD", "false").lower() == "true"
 
 SYSTEM_PROMPT = """당신은 Contoso 펫 스토어의 AI 상품 추천 에이전트입니다.
 고객의 요청을 분석하고, 제공된 상품 목록에서 가장 적합한 상품을 1~3개 추천해주세요.
@@ -89,13 +91,17 @@ async def health():
     mode = "demo" if DEMO_MODE else "azure-openai"
     ready = True
 
-    if not DEMO_MODE and (not AZURE_OPENAI_ENDPOINT or not AZURE_OPENAI_API_KEY):
-        ready = False
+    if not DEMO_MODE:
+        if USE_AZURE_AD and not AZURE_OPENAI_ENDPOINT:
+            ready = False
+        elif not USE_AZURE_AD and (not AZURE_OPENAI_ENDPOINT or not AZURE_OPENAI_API_KEY):
+            ready = False
 
     return {
         "status": "ok" if ready else "degraded",
         "service": "ai-agent",
         "mode": mode,
+        "auth": "entra-id" if USE_AZURE_AD else "api-key",
         "ready": ready,
     }
 
@@ -117,11 +123,24 @@ async def recommend(request: RecommendRequest):
 
     # Step 3: Azure OpenAI를 통한 AI 추천 (LLM Reasoning)
     try:
-        client = AzureOpenAI(
-            api_key=AZURE_OPENAI_API_KEY,
-            api_version=AZURE_OPENAI_API_VERSION,
-            azure_endpoint=AZURE_OPENAI_ENDPOINT,
-        )
+        if USE_AZURE_AD:
+            logger.info("Entra ID (Managed Identity) 인증으로 Azure OpenAI 호출")
+            token_provider = get_bearer_token_provider(
+                DefaultAzureCredential(),
+                "https://cognitiveservices.azure.com/.default",
+            )
+            client = AzureOpenAI(
+                azure_ad_token_provider=token_provider,
+                api_version=AZURE_OPENAI_API_VERSION,
+                azure_endpoint=AZURE_OPENAI_ENDPOINT,
+            )
+        else:
+            logger.info("API Key 인증으로 Azure OpenAI 호출")
+            client = AzureOpenAI(
+                api_key=AZURE_OPENAI_API_KEY,
+                api_version=AZURE_OPENAI_API_VERSION,
+                azure_endpoint=AZURE_OPENAI_ENDPOINT,
+            )
 
         product_list = json.dumps(
             [{"id": p.get("id"), "name": p.get("name"), "price": p.get("price"),

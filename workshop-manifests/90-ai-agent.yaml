@@ -8,6 +8,8 @@ data:
   AZURE_OPENAI_API_VERSION: "2024-12-01-preview"
   # DEMO_MODE: "true" 로 변경하면 Azure OpenAI 없이 데모 추천이 동작합니다
   DEMO_MODE: "false"
+  # USE_AZURE_AD: "true" 로 변경하면 API Key 대신 Entra ID(Workload Identity) 인증을 사용합니다
+  USE_AZURE_AD: "false"
 ---
 apiVersion: apps/v1
 kind: Deployment

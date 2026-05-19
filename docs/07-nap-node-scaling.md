@@ -1,9 +1,28 @@
 # 07. NAP (Node Auto Provisioning) 노드 자동 확장
 
+<details>
+<summary><strong>⚠️ Cloud Shell 세션이 만료된 경우 — 환경 변수 재설정</strong></summary>
+
+```bash
+export RESOURCE_GROUP="WorkshopDemo-RG"
+export CLUSTER_NAME="workshop-demo"
+az aks get-credentials --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --overwrite-existing
+```
+
+</details>
+
 ## 개요
 
-NAP(Node Auto Provisioning)은 Karpenter 기반의 AKS 노드 오토스케일링 기능입니다.  
-기존 Cluster Autoscaler와 달리 **VMSS 노드풀 단위가 아니라 Pod 요구사항에 맞춰 개별 VM을 직접 프로비저닝**합니다.
+이전 섹션에서 HPA가 Pod 수를 늘렸지만, 노드에 리소스가 부족하면 Pod이 **Pending** 상태로 남습니다.  
+**NAP(Node Auto Provisioning)** 은 Karpenter 기반의 AKS 노드 오토스케일링 기능으로,
+Pending Pod를 감지하면 **~60초 내에 최적의 VM을 자동으로 프로비저닝**합니다.
+
+### 이 섹션에서 배우는 것
+
+- **NAP vs Cluster Autoscaler** — 개별 VM 단위 프로비저닝의 장점
+- **커스텀 NodePool CRD** — VM SKU 가족, OS, 아키텍처 제약 조건 설정
+- **노드 자동 확장 관찰** — replica 증가 → Pending → 노드 생성 과정 실시간 확인
+- **Consolidation** — 부하 감소 시 저활용 노드를 자동으로 제거하여 비용 절감
 
 ### NAP vs Cluster Autoscaler
 
@@ -103,6 +122,10 @@ kubectl get nodeclaims.karpenter.sh
 3. D 시리즈 VM 자동 프로비저닝 (~60초)
 4. 새 노드에 Pending Pod 스케줄링
 
+> 📸 **스크린샷**: NAP 노드 자동 확장 (신규 노드 추가)
+>
+> 📸 *스크린샷 준비 중 — `images/nap-node-scale-out.png`*
+
 ```bash
 # Pending Pod 확인
 kubectl get pods -n pets --field-selector=status.phase=Pending
@@ -139,23 +162,17 @@ kubectl get nodes --show-labels | grep karpenter
 
 ## 핵심 개념 정리
 
-```
-Pod Pending (리소스 부족)
-       │
-       ▼
-Karpenter가 Pod 요구사항 분석
-       │
-       ▼
-NodePool 제약 조건 (SKU family, OS, arch) 확인
-       │
-       ▼
-최적 VM SKU 선택 & 프로비저닝 (~60초)
-       │
-       ▼
-노드 Ready → Pending Pod 스케줄링
-       │
-       ▼
-부하 감소 시 → consolidation 정책에 따라 노드 제거
+```mermaid
+flowchart TD
+    A["Pod Pending"] --> B["Karpenter 분석"]
+    B --> C["NodePool 제약 확인"]
+    C --> D["최적 VM 선택 ~60초"]
+    D --> E["노드 Ready"]
+    E --> F["부하 감소 시 consolidation"]
+
+    style A fill:#ff6b6b,color:#fff
+    style E fill:#51cf66,color:#fff
+    style F fill:#748ffc,color:#fff
 ```
 
 ## 점검 체크리스트

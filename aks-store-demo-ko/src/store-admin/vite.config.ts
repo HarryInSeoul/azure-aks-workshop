@@ -201,7 +201,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   }
 
   return {
-    base: '/admin/',
+    base: '/',
     plugins: [
       vue(),
       vueJsx(),

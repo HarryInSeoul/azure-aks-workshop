@@ -608,3 +608,21 @@ spec:
             limits:
               cpu: 2m
               memory: 20Mi
+---
+# ai-agent Service (DNS placeholder)
+# store-front의 nginx가 upstream "ai-agent"를 참조하므로,
+# DNS 해석 실패를 방지하기 위해 Service만 미리 생성합니다.
+# 실제 ai-agent Deployment는 05절(AI Agent)에서 배포합니다.
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-agent
+  namespace: pets
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 5100
+      targetPort: 5100
+  selector:
+    app: ai-agent

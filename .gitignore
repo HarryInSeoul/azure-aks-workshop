@@ -1,0 +1,12 @@
+# Windows Alternate Data Streams (Zone.Identifier, etc.)
+*:Zone.Identifier
+*:sec.endpointdlp
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+
+# GitOps working directory
+gitops-manifests/
