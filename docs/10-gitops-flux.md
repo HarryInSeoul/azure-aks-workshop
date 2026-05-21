@@ -337,4 +337,4 @@ flowchart TD
 
 | | |
 |:---|---:|
-| [⬅️ 08. 모니터링 & 트러블슈팅](08-monitoring-troubleshooting.md) | [10. 정리 ➡️](10-cleanup.md) |
+| [⬅️ 09. 모니터링 & 트러블슈팅](09-monitoring-troubleshooting.md) | [11. 정리 ➡️](11-cleanup.md) |

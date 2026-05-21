@@ -186,4 +186,4 @@ flowchart TD
 
 | | |
 |:---|---:|
-| [⬅️ 06. HPA 오토스케일링](06-hpa-autoscaling.md) | [08. 모니터링 & 트러블슈팅 ➡️](08-monitoring-troubleshooting.md) |
+| [⬅️ 07. HPA 오토스케일링](07-hpa-autoscaling.md) | [09. 모니터링 & 트러블슈팅 ➡️](09-monitoring-troubleshooting.md) |

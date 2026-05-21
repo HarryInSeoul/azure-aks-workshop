@@ -436,4 +436,4 @@ flowchart LR
 
 | | |
 |:---|---:|
-| [⬅️ 04. 앱 배포](04-deploy-app.md) | [06. HPA 오토스케일링 ➡️](06-hpa-autoscaling.md) |
+| [⬅️ 05. Ingress](05-ingress.md) | [07. HPA 오토스케일링 ➡️](07-hpa-autoscaling.md) |

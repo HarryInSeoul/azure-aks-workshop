@@ -20,7 +20,7 @@ kubectl delete namespace pets
 # 커스텀 NodePool 삭제
 kubectl delete nodepool workshop-linux
 
-# GitOps Flux 구성 삭제 (09절 진행 시)
+# GitOps Flux 구성 삭제 (10절 진행 시)
 az k8s-configuration flux delete \
   --name workshop-gitops \
   --cluster-name $CLUSTER_NAME \
@@ -63,7 +63,7 @@ az group show --name $RESOURCE_GROUP 2>/dev/null && echo "아직 삭제 중..." 
 ## 삭제 체크리스트
 
 - [ ] pets 네임스페이스 삭제됨
-- [ ] GitOps Flux 구성 삭제됨 (09절 진행 시)
+- [ ] GitOps Flux 구성 삭제됨 (10절 진행 시)
 - [ ] `WorkshopDemo-RG` 리소스 그룹 삭제 → AKS + Prometheus/Grafana + 모든 워크샵 리소스 정리
 - [ ] kubeconfig에서 컨텍스트/클러스터 제거
 - [ ] (Terraform 사용 시) `terraform destroy` 실행 또는 리소스 그룹 삭제로 대체
@@ -87,4 +87,4 @@ az group show --name $RESOURCE_GROUP 2>/dev/null && echo "아직 삭제 중..." 
 
 | | |
 |:---|---:|
-| [⬅️ 09. GitOps](09-gitops-flux.md) | [00. 워크샵 개요 🏠](00-overview.md) |
+| [⬅️ 10. GitOps](10-gitops-flux.md) | [00. 워크샵 개요 🏠](00-overview.md) |
