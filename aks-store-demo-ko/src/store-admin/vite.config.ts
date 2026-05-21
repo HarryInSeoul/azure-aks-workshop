@@ -201,7 +201,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   }
 
   return {
-    base: '/',
+    // Ingress(예: /admin path)로 노출 시 자산 경로 prefix가 필요함
+    // (NGINX Ingress의 rewrite-target: /$2 가 /admin/assets/x → /assets/x 로 풀어주므로
+    //  base: '/admin/' 로 두면 단일 IP + 경로 기반 라우팅과 정상 동작)
+    base: '/admin/',
     plugins: [
       vue(),
       vueJsx(),

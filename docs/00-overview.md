@@ -27,26 +27,27 @@
 | [01](01-prerequisites.md) | 사전 준비 — 구독, CLI, ACR | 10분 | 🟢 필수 |
 | [02](02-create-cluster.md) | AKS 클러스터 생성 (NAP + KEDA + Azure CNI Overlay) | 15분 | 🟢 필수 |
 | [03](03-build-and-push.md) | 애플리케이션 빌드 & ACR 푸시 | 15분 | 🟢 필수 |
-| [04](04-deploy-app.md) | 펫 스토어 배포 + Ingress 설정 | 20분 | 🟢 필수 |
-| [05](05-ai-agent.md) | AI Agent 배포 (Azure OpenAI) | 20분 | 🔵 선택 |
-| [06](06-hpa-autoscaling.md) | HPA 오토스케일링 관찰 | 15분 | 🟢 필수 |
-| [07](07-nap-node-scaling.md) | NAP(Karpenter) 노드 자동 확장 | 15분 | 🟢 필수 |
-| [08](08-monitoring-troubleshooting.md) | 모니터링 & 트러블슈팅 실습 | 25분 | 🟡 권장 |
-| [09](09-gitops-flux.md) | GitOps — Flux v2 배포 자동화 | 25분 | 🟡 권장 |
-| [10](10-cleanup.md) | 정리 (리소스 삭제) | 5분 | 🟢 필수 |
+| [04](04-deploy-app.md) | 펫 스토어 배포 (LoadBalancer) + Windows(선택) | 15분 | 🟢 필수 |
+| [05](05-ingress.md) | Ingress 옵션 비교 & 핸즈온 (WAR / AGC / approuting-istio) | 20분 | 🟢 필수 |
+| [06](06-ai-agent.md) | AI Agent 배포 (Azure OpenAI) | 20분 | 🔵 선택 |
+| [07](07-hpa-autoscaling.md) | HPA 오토스케일링 관찰 | 15분 | 🟢 필수 |
+| [08](08-nap-node-scaling.md) | NAP(Karpenter) 노드 자동 확장 | 15분 | 🟢 필수 |
+| [09](09-monitoring-troubleshooting.md) | 모니터링 & 트러블슈팅 실습 | 25분 | 🟡 권장 |
+| [10](10-gitops-flux.md) | GitOps — Flux v2 배포 자동화 | 25분 | 🟡 권장 |
+| [11](11-cleanup.md) | 정리 (리소스 삭제) | 5분 | 🟢 필수 |
 
 ### 권장 진행 경로
 
 | 경로 | 구성 | 예상 시간 |
 |------|------|-----------|
-| 🟢 **기본** (권장) | 01 → 02 → 03 → 04(Ingress) → 06 → 07 → 10 | **~115분** |
-| 🟡 **표준** | 기본 + 08(모니터링 & 트러블슈팅) | **~140분** |
-| 🟠 **심화** | 표준 + 09(GitOps) | **~165분** |
-| 🔵 **풀코스** | 심화 + 05(AI Agent) | **~185분** |
+| 🟢 **기본** (권장) | 01 → 02 → 03 → 04 → 05(WAR 핸즈온만) → 07 → 08 → 11 | **~125분** |
+| 🟡 **표준** | 기본 + 09(모니터링 & 트러블슈팅) | **~150분** |
+| 🟠 **심화** | 표준 + 10(GitOps) | **~175분** |
+| 🔵 **풀코스** | 심화 + 06(AI Agent) | **~195분** |
 
 > [!TIP]
 > 워크샵 시간이 2시간이라면 **기본** 경로를, 3시간이라면 **표준 + AI Agent** 조합을 권장합니다.
-> 04절의 AGC(4-5)와 Windows 노드풀(4-6)은 시간 여유가 있을 때만 진행하세요.
+> 05절의 AGC(5-3)와 approuting-istio(5-4, Preview), 04절의 Windows 노드풀(4-4)은 시간 여유가 있을 때만 진행하세요.
 
 
 ### 서비스 흐름도
@@ -183,7 +184,7 @@ flowchart TB
 
 > [!TIP]
 > **비용 절감 팁**
-> - 워크샵 종료 후 반드시 `WorkshopDemo-RG`를 삭제하세요 (10-cleanup 참조)
+> - 워크샵 종료 후 반드시 `WorkshopDemo-RG`를 삭제하세요 (11-cleanup 참조)
 > - NAP 노드는 부하 제거 시 자동으로 축소되므로 별도 조치 불필요
 
 ---

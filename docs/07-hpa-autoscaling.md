@@ -24,7 +24,7 @@ az aks get-credentials --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --o
 - **쿨다운 동작** — 부하 감소 후 5분 대기 후 자동 스케일 다운
 
 > [!TIP]
-> 스케일링 과정을 Grafana 대시보드로 시각적으로 확인하고 싶다면, [08. 모니터링](08-monitoring-troubleshooting.md)의 8-1절(Prometheus & Grafana 구성)을 먼저 진행하는 것을 권장합니다.
+> 스케일링 과정을 Grafana 대시보드로 시각적으로 확인하고 싶다면, [09. 모니터링](09-monitoring-troubleshooting.md)의 9-1절(Prometheus & Grafana 구성)을 먼저 진행하는 것을 권장합니다.
 
 ## 6-1. HPA 배포
 
@@ -116,7 +116,7 @@ kubectl set env deployment/virtual-customer -n pets ORDERS_PER_HOUR=1000
 
 > [!NOTE]
 > HPA의 `maxReplicas`(store-front: 10, order-service: 8)에 도달하면 더 이상 Pod가 추가되지 않습니다.
-> 노드 리소스가 부족하면 Pending Pod가 발생하고 NAP이 노드를 추가합니다 (07절에서 실습).
+> 노드 리소스가 부족하면 Pending Pod가 발생하고 NAP이 노드를 추가합니다 (08절에서 실습).
 
 ### Step 4: 부하 감소 (10 → 스케일 다운 관찰)
 
@@ -160,7 +160,7 @@ flowchart TD
     style H fill:#51cf66,color:#fff
 ```
 
-> 다음 섹션(07절)에서 NAP 노드 자동 확장을 직접 실습합니다.
+> 다음 섹션(08절)에서 NAP 노드 자동 확장을 직접 실습합니다.
 
 ## 점검 체크리스트
 
@@ -172,4 +172,4 @@ flowchart TD
 
 | | |
 |:---|---:|
-| [⬅️ 05. AI Agent 배포](05-ai-agent.md) | [07. NAP 노드 확장 ➡️](07-nap-node-scaling.md) |
+| [⬅️ 06. AI Agent 배포](06-ai-agent.md) | [08. NAP 노드 확장 ➡️](08-nap-node-scaling.md) |

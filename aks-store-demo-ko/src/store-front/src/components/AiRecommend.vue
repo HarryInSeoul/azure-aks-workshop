@@ -9,7 +9,7 @@
       <div v-if="!agentAvailable" class="ai-unavailable">
         <p>⚠️ AI 추천 서비스가 아직 준비되지 않았습니다.</p>
         <p class="ai-guide-msg">
-          <a href="https://github.com/bbiggum/azure-aks-workshop/blob/main/docs/05-ai-agent.md" target="_blank">
+          <a href="https://github.com/bbiggum/azure-aks-workshop/blob/main/docs/06-ai-agent.md" target="_blank">
             05. AI Agent 배포
           </a> 섹션을 완료한 후 사용할 수 있습니다.
         </p>

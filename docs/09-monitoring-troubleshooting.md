@@ -370,4 +370,4 @@ kubectl describe aksnodeclasses.karpenter.azure.com default
 
 | | |
 |:---|---:|
-| [⬅️ 07. NAP 노드 확장](07-nap-node-scaling.md) | [09. GitOps ➡️](09-gitops-flux.md) |
+| [⬅️ 08. NAP 노드 확장](08-nap-node-scaling.md) | [10. GitOps ➡️](10-gitops-flux.md) |

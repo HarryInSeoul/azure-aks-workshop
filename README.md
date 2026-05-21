@@ -83,13 +83,14 @@ flowchart LR
 | 01 | [사전 준비](docs/01-prerequisites.md) | Cloud Shell, 구독 설정, ACR 생성 | 🟢 필수 |
 | 02 | [클러스터 생성](docs/02-create-cluster.md) | AKS + NAP + KEDA + Azure CNI Overlay | 🟢 필수 |
 | 03 | [빌드 & 푸시](docs/03-build-and-push.md) | 소스 커스터마이징, ACR Task 이미지 빌드 | 🟢 필수 |
-| 04 | [앱 배포](docs/04-deploy-app.md) | K8s 배포, Ingress 통합, AGC/Windows(선택) | 🟢 필수 |
-| 05 | [AI Agent](docs/05-ai-agent.md) | Azure OpenAI + AI 상품 추천 에이전트 | 🟣 선택 |
-| 06 | [HPA 오토스케일링](docs/06-hpa-autoscaling.md) | CPU 기반 Pod 수평 확장 + 부하 실험 | 🟢 필수 |
-| 07 | [NAP 노드 확장](docs/07-nap-node-scaling.md) | Karpenter 기반 노드 자동 프로비저닝 | 🟢 필수 |
-| 08 | [모니터링 & 트러블슈팅](docs/08-monitoring-troubleshooting.md) | Prometheus/Grafana + 오류 재현 실습 | 🟡 권장 |
-| 09 | [GitOps](docs/09-gitops-flux.md) | Flux v2 선언적 배포 & 드리프트 복구 | 🟡 권장 |
-| 10 | [정리](docs/10-cleanup.md) | 리소스 삭제 | 🟢 필수 |
+| 04 | [앱 배포](docs/04-deploy-app.md) | K8s 배포 (LoadBalancer), Windows(선택) | 🟢 필수 |
+| 05 | [Ingress](docs/05-ingress.md) | Web App Routing / AGC / approuting-istio 비교 + 핸즈온 | 🟢 필수 |
+| 06 | [AI Agent](docs/06-ai-agent.md) | Azure OpenAI + AI 상품 추천 에이전트 | 🟣 선택 |
+| 07 | [HPA 오토스케일링](docs/07-hpa-autoscaling.md) | CPU 기반 Pod 수평 확장 + 부하 실험 | 🟢 필수 |
+| 08 | [NAP 노드 확장](docs/08-nap-node-scaling.md) | Karpenter 기반 노드 자동 프로비저닝 | 🟢 필수 |
+| 09 | [모니터링 & 트러블슈팅](docs/09-monitoring-troubleshooting.md) | Prometheus/Grafana + 오류 재현 실습 | 🟡 권장 |
+| 10 | [GitOps](docs/10-gitops-flux.md) | Flux v2 선언적 배포 & 드리프트 복구 | 🟡 권장 |
+| 11 | [정리](docs/11-cleanup.md) | 리소스 삭제 | 🟢 필수 |
 
 ## 프로젝트 구조
 
@@ -97,7 +98,7 @@ flowchart LR
 azure-aks-workshop/
 ├── README.md
 ├── docs/                              # 워크샵 가이드 (섹션별)
-│   ├── 00-overview.md ~ 10-cleanup.md
+│   ├── 00-overview.md ~ 11-cleanup.md
 │   ├── architecture.drawio            # draw.io 아키텍처 다이어그램
 │   └── images/                        # 스크린샷 및 다이어그램
 ├── aks-store-demo-ko/                 # 애플리케이션 소스
@@ -115,7 +116,7 @@ azure-aks-workshop/
 │   ├── main.tf                        # AKS 클러스터 리소스 정의
 │   ├── variables.tf                   # 변수 (구독, 리전, K8s 버전 등)
 │   └── outputs.tf                     # 출력 (클러스터명, kubeconfig 명령)
-├── gitops-manifests/                  # GitOps 매니페스트 (09절에서 생성)
+├── gitops-manifests/                  # GitOps 매니페스트 (10절에서 생성)
 └── workshop-manifests/                # Kubernetes 매니페스트
     ├── aks-store-all-in-one-ko.yaml   # 전체 스택 배포
     ├── 55-hpa-store.yaml              # HPA 설정
