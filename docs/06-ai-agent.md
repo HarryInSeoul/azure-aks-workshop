@@ -1,4 +1,4 @@
-# 05. AI Agent 배포 (Azure OpenAI)
+# 06. AI Agent 배포 (Azure OpenAI)
 
 <details>
 <summary><strong>⚠️ Cloud Shell 세션이 만료된 경우 — 환경 변수 재설정</strong></summary>
@@ -15,11 +15,11 @@ az aks get-credentials --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --o
 ## 목차
 
 - [AI Agent 패턴](#ai-agent-패턴)
-- [5-1. Azure OpenAI 리소스 생성](#5-1-azure-openai-리소스-생성)
-- [5-2. AI Agent 이미지 확인](#5-2-ai-agent-이미지-확인)
-- [5-3. Secret & ConfigMap 생성](#5-3-kubernetes-secret--configmap-생성)
-- [5-4. AI Agent 배포](#5-4-ai-agent-배포)
-- [5-5. AI 추천 테스트](#5-5-ai-추천-테스트)
+- [6-1. Azure OpenAI 리소스 생성](#6-1-azure-openai-리소스-생성)
+- [6-2. AI Agent 이미지 확인](#6-2-ai-agent-이미지-확인)
+- [6-3. Secret & ConfigMap 생성](#6-3-kubernetes-secret--configmap-생성)
+- [6-4. AI Agent 배포](#6-4-ai-agent-배포)
+- [6-5. AI 추천 테스트](#6-5-ai-추천-테스트)
 - [AI Agent 아키텍처 요약](#ai-agent-아키텍처-요약)
 
 ---
@@ -50,11 +50,11 @@ az aks get-credentials --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --o
 
 ---
 
-## 5-1. Azure OpenAI 리소스 생성
+## 6-1. Azure OpenAI 리소스 생성
 
 > [!TIP]
-> 이미 Azure OpenAI 리소스가 있다면 이 단계를 건너뛰고 5-2로 이동하세요.  
-> **Azure OpenAI가 없거나 빠르게 테스트만 하려면** [5-1-B. 데모 모드](#5-1-b-데모-모드-azure-openai-없이-실습)로 이동하세요.
+> 이미 Azure OpenAI 리소스가 있다면 이 단계를 건너뛰고 6-2로 이동하세요.  
+> **Azure OpenAI가 없거나 빠르게 테스트만 하려면** [6-1-B. 데모 모드](#6-1-b-데모-모드-azure-openai-없이-실습)로 이동하세요.
 
 ```bash
 # Azure OpenAI 리소스 생성
@@ -195,7 +195,7 @@ metadata:
 EOF
 ```
 
-### 5-1-B. 데모 모드 (Azure OpenAI 없이 실습)
+### 6-1-B. 데모 모드 (Azure OpenAI 없이 실습)
 
 Azure OpenAI 리소스 없이도 AI Agent의 동작 흐름을 체험할 수 있습니다.  
 데모 모드에서는 LLM 대신 규칙 기반으로 인기 상품을 추천합니다.
@@ -206,11 +206,11 @@ AOAI_ENDPOINT="https://demo.openai.azure.com"
 AOAI_KEY="demo-key"
 ```
 
-> 5-3에서 ConfigMap의 `DEMO_MODE`를 `"true"`로 변경하면 됩니다.
+> 6-3에서 ConfigMap의 `DEMO_MODE`를 `"true"`로 변경하면 됩니다.
 
 ---
 
-## 5-2. AI Agent 이미지 확인
+## 6-2. AI Agent 이미지 확인
 
 > [!NOTE]
 > ai-agent 이미지는 공용 ACR에 사전 빌드되어 있습니다. 별도 빌드가 필요 없습니다.
@@ -227,7 +227,7 @@ v1
 
 ---
 
-## 5-3. Kubernetes Secret & ConfigMap 생성
+## 6-3. Kubernetes Secret & ConfigMap 생성
 
 ### Option 1 — API Key 방식
 
@@ -270,7 +270,7 @@ sed -i 's/USE_AZURE_AD: "false"/USE_AZURE_AD: "true"/' workshop-manifests/90-ai-
 
 ---
 
-## 5-4. AI Agent 배포
+## 6-4. AI Agent 배포
 
 > **Option 2 (Entra ID)를 선택한 경우**, 배포 전에 매니페스트에 ServiceAccount와 Workload Identity 레이블을 추가해야 합니다:
 > ```bash
@@ -309,7 +309,7 @@ kubectl exec -n pets deploy/ai-agent -- wget -qO- http://localhost:5100/health
 
 ---
 
-## 5-5. AI 추천 테스트
+## 6-5. AI 추천 테스트
 
 AI Agent 배포가 완료되면 store-front 하단의 **🤖 AI 상품 추천** 버튼으로 직접 추천을 받을 수 있습니다.
 
@@ -381,7 +381,7 @@ kill %1 2>/dev/null
 
 ---
 
-## 5-6. (선택) 정리
+## 6-6. (선택) 정리
 
 ```bash
 # AI Agent 리소스 삭제

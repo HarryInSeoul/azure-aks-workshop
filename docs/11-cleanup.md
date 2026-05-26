@@ -1,4 +1,4 @@
-# 10. 정리 (리소스 삭제)
+# 11. 정리 (리소스 삭제)
 
 워크샵이 종료되면 불필요한 비용 발생을 막기 위해 생성한 리소스를 정리해야 합니다.  
 `WorkshopDemo-RG` 리소스 그룹을 삭제하면 AKS 클러스터, 노드, 네트워크, 개인 ACR 등 워크샵에서 생성한 **모든 리소스가 한 번에 정리**됩니다.
@@ -9,7 +9,7 @@
 2. 리소스 그룹 삭제 (WorkshopDemo-RG)
 3. kubeconfig 정리
 
-## 10-1. Kubernetes 리소스 삭제
+## 11-1. Kubernetes 리소스 삭제
 
 배포된 애플리케이션을 먼저 정리합니다.
 
@@ -35,7 +35,7 @@ kubectl get all -n pets
 kubectl get nodepools.karpenter.sh
 ```
 
-## 10-2. 워크샵 리소스 그룹 삭제
+## 11-2. 워크샵 리소스 그룹 삭제
 
 리소스 그룹을 삭제하면 AKS 클러스터를 포함한 **워크샵에서 생성한 모든 리소스**가 한 번에 정리됩니다.
 
@@ -47,14 +47,14 @@ az group delete --name $RESOURCE_GROUP --yes --no-wait
 > `WorkshopDemo-RG` 삭제 시 AKS 클러스터, 노드 VMSS, LoadBalancer, Public IP, NSG, VNET 등이 모두 제거됩니다.  
 > ✅ ACR은 워크샵 주최자가 관리하는 공용 리소스이므로 참가자가 삭제할 필요가 없습니다.
 
-## 10-3. kubeconfig 정리
+## 11-3. kubeconfig 정리
 
 ```bash
 kubectl config delete-context $CLUSTER_NAME
 kubectl config delete-cluster $CLUSTER_NAME
 ```
 
-## 10-4. 삭제 확인
+## 11-4. 삭제 확인
 
 ```bash
 az group show --name $RESOURCE_GROUP 2>/dev/null && echo "아직 삭제 중..." || echo "✅ 삭제 완료"
