@@ -16,9 +16,9 @@ az aks get-credentials --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --o
 ## 목차
 
 - [5-1. AKS Ingress 옵션 개념 비교](#5-1-aks-ingress-옵션-개념-비교)
-- [5-2. 핸즈온 ① — Web App Routing (NGINX Ingress)](#5-2-핸즈온--web-app-routing-nginx-ingress)
-- [5-3. 핸즈온 ② — AGC (Application Gateway for Containers)](#5-3-핸즈온--agc-application-gateway-for-containers) — 고급
-- [5-4. 핸즈온 ③ — App Routing Gateway API (`approuting-istio`)](#5-4-핸즈온--app-routing-gateway-api-approuting-istio) — Preview
+- [5-2. 핸즈온 ① — Web App Routing (NGINX Ingress)](#5-2)
+- [5-3. 핸즈온 ② — AGC (Application Gateway for Containers)](#5-3) — 고급
+- [5-4. 핸즈온 ③ — App Routing Gateway API (`approuting-istio`)](#5-4) — Preview
 - [트러블슈팅](#트러블슈팅)
 
 04절에서는 `store-front`/`store-admin`을 각각 LoadBalancer Service로 외부에 노출했습니다.  
@@ -102,7 +102,7 @@ flowchart TB
 
 ---
 
-## 5-2. 핸즈온 ① — Web App Routing (NGINX Ingress)
+## <a id="5-2"></a>5-2. 핸즈온 ① — Web App Routing (NGINX Ingress)
 
 AKS 관리형 NGINX Ingress(Web App Routing)로 두 개의 LoadBalancer를 **단일 IP + 경로 기반 라우팅**으로 통합합니다.
 
@@ -294,7 +294,7 @@ kubectl patch svc store-admin -n pets -p '{"spec": {"type": "LoadBalancer"}}'
 
 ---
 
-## 5-3. 핸즈온 ② — AGC (Application Gateway for Containers)
+## <a id="5-3"></a>5-3. 핸즈온 ② — AGC (Application Gateway for Containers)
 
 > [!NOTE]
 > **GA 상태 안내** — AGC 서비스 자체는 **GA(2024.5)** 이며 SLA가 적용됩니다. 다만 본 절에서 사용하는 **AKS 매니지드 애드온(`--enable-application-load-balancer`)은 현재 Preview**이며, `aks-preview` CLI 확장과 두 개의 feature 등록이 필요합니다. GA 경로로 운영하려면 ALB Controller를 **Helm으로 설치**하고 AGC 리소스를 **BYO**로 프로비저닝하세요.
@@ -689,7 +689,7 @@ kubectl patch svc store-admin -n pets -p '{"spec": {"type": "LoadBalancer"}}'
 
 ---
 
-## 5-4. 핸즈온 ③ — App Routing Gateway API (`approuting-istio`)
+## <a id="5-4"></a>5-4. 핸즈온 ③ — App Routing Gateway API (`approuting-istio`)
 
 > [!IMPORTANT]
 > **Preview 안내** — 이 절에서 사용하는 **App Routing의 Gateway API 구현(`approuting-istio`)** 은 현재 **Preview** 입니다. `aks-preview` CLI 확장과 두 개의 feature(`AppRoutingIstioGatewayAPIPreview`, `ManagedGatewayAPIPreview`)를 등록해야 합니다.
@@ -776,14 +776,15 @@ kubectl get gatewayclass
 예상 출력:
 
 ```
-NAME                              READY   STATUS    RESTARTS   AGE
-istiod-54b4ff45cf-htph8           1/1     Running   0          3m
-istiod-54b4ff45cf-wlvgd           1/1     Running   0          3m
+NAME                      READY   STATUS    RESTARTS   AGE
+istiod-69b56bbd8c-qvldm   1/1     Running   0          23s
+istiod-69b56bbd8c-vp2m9   1/1     Running   0          38s
 ```
 
 ```
-NAME                CONTROLLER                                  ACCEPTED   AGE
-approuting-istio    istio.io/gateway-controller                 True       2m
+NAME               CONTROLLER                               ACCEPTED   AGE
+approuting-istio   istio.aks.azure.com/gateway-controller   True       79s
+istio-remote       istio.io/unmanaged-gateway               True       79s
 ```
 
 ### Step 3: Service 타입을 ClusterIP로 변경
@@ -874,10 +875,16 @@ kubectl get deployment,svc,hpa,pdb -n pets pets-gateway-approuting-istio
 
 ```
 NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/pets-gateway-approuting-istio   2/2     2            2           3m
+deployment.apps/pets-gateway-approuting-istio   2/2     2            2           40s
 
-NAME                                    TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)
-service/pets-gateway-approuting-istio   LoadBalancer   10.0.x.x      20.249.x.x     15021/TCP,80/TCP
+NAME                                    TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)                        AGE
+service/pets-gateway-approuting-istio   LoadBalancer   10.0.44.250   20.196.247.19   15021:31994/TCP,80:31621/TCP   40s
+
+NAME                                                                REFERENCE                                  TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/pets-gateway-approuting-istio   Deployment/pets-gateway-approuting-istio   cpu: <unknown>/80%   2         5         2          40s
+
+NAME                                                       MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+poddisruptionbudget.policy/pets-gateway-approuting-istio   1               N/A               1                     41s
 ```
 
 ### 브라우저 접속

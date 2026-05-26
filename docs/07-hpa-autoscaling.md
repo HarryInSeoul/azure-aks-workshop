@@ -1,4 +1,4 @@
-# 06. HPA 오토스케일링
+# 07. HPA 오토스케일링
 
 <details>
 <summary><strong>⚠️ Cloud Shell 세션이 만료된 경우 — 환경 변수 재설정</strong></summary>
@@ -20,17 +20,80 @@ az aks get-credentials --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --o
 
 - **HPA 개념** — CPU/메모리 기반으로 Pod을 수평 확장/축소하는 Kubernetes 네이티브 기능
 - **스케일 아웃/인 관찰** — 부하 변화에 따른 replica 수 증감을 실시간으로 확인
-- **부하 조절** — `ORDERS_PER_HOUR` 환경 변수로 트래픽을 제어하여 오토스케일링 동작 실험
+
 - **쿨다운 동작** — 부하 감소 후 5분 대기 후 자동 스케일 다운
 
 > [!TIP]
 > 스케일링 과정을 Grafana 대시보드로 시각적으로 확인하고 싶다면, [09. 모니터링](09-monitoring-troubleshooting.md)의 9-1절(Prometheus & Grafana 구성)을 먼저 진행하는 것을 권장합니다.
 
-## 6-1. HPA 배포
+## 7-1. HPA 배포
+
+`pets` 네임스페이스에 `store-front`와 `order-service` 두 개의 **HorizontalPodAutoscaler** 리소스를 생성합니다.
+
+> [!IMPORTANT]
+> **부하 생성기는 이미 돌아가고 있습니다.**  
+> `virtual-customer` Deployment는 04절에서 [`aks-store-all-in-one-ko.yaml`](../workshop-manifests/aks-store-all-in-one-ko.yaml)을 적용할 때 함께 배포되었고, 그때부터 환경 변수 `ORDERS_PER_HOUR=100`으로 **시간당 100건의 주문**을 `order-service`에 계속 보내고 있었습니다.  
+> 즉, 부하는 04절부터 이미 있었지만 HPA가 없어서 Pod 개수가 고정돼 있었을 뿐입니다. 이 절에서 HPA를 만드는 순간, HPA 컨트롤러가 **이미 진행 중이던 CPU 부하**를 인식하고 곧바로 스케일 아웃을 시작합니다.
+
+```bash
+# (확인용) virtual-customer가 04절부터 이미 돌고 있는지 보기
+kubectl get deployment virtual-customer -n pets
+kubectl get deployment virtual-customer -n pets \
+  -o jsonpath='{.spec.template.spec.containers[0].env}' | python3 -m json.tool
+```
+
+### HPA 생성
 
 ```bash
 kubectl apply -f workshop-manifests/55-hpa-store.yaml
 ```
+
+### 적용되는 매니페스트
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: store-front-hpa
+  namespace: pets
+spec:
+  scaleTargetRef:                        # ① 어떤 Deployment를 대상으로 할지
+    apiVersion: apps/v1
+    kind: Deployment
+    name: store-front
+  minReplicas: 2                         # ② 최소 Pod 개수 (트래픽이 없어도 유지)
+  maxReplicas: 10                        # ③ 최대 Pod 개수 (스케일 아웃 상한)
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60         # ④ CPU 평균 사용률 60% 초과 시 확장
+---
+# order-service-hpa: 동일한 구조, min=1 / max=8 / CPU 60%
+```
+
+### 적용 직후 발생하는 변화
+
+1. **`store-front` Pod 수가 1 → 2로 즉시 증가** (현재 replica < `minReplicas`이므로)
+2. **`order-service` Pod 수는 변동 없음** (이미 1개로 `minReplicas`와 동일)
+3. HPA 컨트롤러가 **15초 주기**로 metrics-server에서 CPU 사용률을 폴링 시작
+4. **virtual-customer가 만들던 기존 부하**(시간당 100건의 주문)로 인해 이미 `order-service` CPU 사용률이 60% 임계치를 넘고 있다면, 수십 초~수 분 이내에 replica가 점진적으로 추가됨 (최대 10/8개)
+5. 부하가 떨어지면 약 **5분 쿨다운** 후 천천히 축소 (`minReplicas`까지)
+
+> [!NOTE]
+> HPA는 CPU **요청량(`resources.requests.cpu`) 대비 사용률**로 판단합니다. 04절 매니페스트에서 `store-front`/`order-service` Deployment에 `resources.requests` 가 이미 설정되어 있어야 정상 동작합니다.
+
+### 적용 직후 확인
+
+```bash
+kubectl get hpa -n pets
+kubectl get deploy -n pets store-front order-service
+```
+
+`store-front` 의 `READY`가 `1/1` → `2/2`로 바뀌고, `kubectl get hpa`에 두 HPA가 표시되면 정상입니다.
+초기 몇 초간 `TARGETS` 열에 `<unknown>/60%`가 보일 수 있는데, metrics-server가 첫 측정값을 수집하기 전 정상 동작입니다.
 
 ### HPA 설정 요약
 
@@ -39,7 +102,7 @@ kubectl apply -f workshop-manifests/55-hpa-store.yaml
 | store-front | 2 | 10 | 60% |
 | order-service | 1 | 8 | 60% |
 
-## 6-2. HPA 상태 관찰
+## 7-2. HPA 상태 관찰
 
 ```bash
 # HPA 현황 (TARGETS 컬럼에 현재 CPU% / 목표% 표시)
@@ -49,18 +112,18 @@ kubectl get hpa -n pets -w
 ### 예상 출력
 
 ```
-NAME                REFERENCE                  TARGETS        MINPODS   MAXPODS   REPLICAS
-store-front-hpa     Deployment/store-front     cpu: 85%/60%   2         10        5
-order-service-hpa   Deployment/order-service   cpu: 120%/60%  1         8         4
+NAME                            REFERENCE                                  TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+order-service-hpa               Deployment/order-service                   cpu: 200%/60%   1         8         1          24s
+pets-gateway-approuting-istio   Deployment/pets-gateway-approuting-istio   cpu: 2%/80%     2         5         2          4d15h
+store-front-hpa                 Deployment/store-front                     cpu: 100%/60%   2         10        2          25s
+store-front-hpa                 Deployment/store-front                     cpu: 100%/60%   2         10        4          31s
+order-service-hpa               Deployment/order-service                   cpu: 200%/60%   1         8         4          30s
+order-service-hpa               Deployment/order-service                   cpu: 100%/60%   1         8         4          90s
 ```
-
-> 📸 **스크린샷**: HPA 스케일 아웃 상태
->
-> 📸 *스크린샷 준비 중 — `images/hpa-scale-out.png`*
 
 > virtual-customer가 시간당 100건의 주문을 생성하므로, 배포 후 수 분 이내에 HPA가 스케일 아웃을 시작합니다.
 
-## 6-3. 실시간 모니터링
+## 7-3. 실시간 모니터링
 
 ### Pod 리소스 사용량
 
@@ -81,58 +144,7 @@ kubectl get pods -n pets -w
 kubectl get deploy -n pets -w
 ```
 
-## 6-4. 부하 조절 실험
-
-아래 단계를 순서대로 실행하며 **각 부하 수준에서 HPA의 반응을 기록**해 보세요.
-
-### 실험 기록표
-
-| 단계 | 명령어 | ORDERS_PER_HOUR | store-front Pod 수 | order-service Pod 수 | 반응 시간 |
-|------|--------|:---------------:|:------------------:|:--------------------:|:---------:|
-| 1️⃣ 기본 | (현재 상태) | 100 | ___개 | ___개 | — |
-| 2️⃣ 부하 증가 | 아래 실행 | 500 | ___개 | ___개 | ___분 |
-| 3️⃣ 극단 부하 | 아래 실행 | 1000 | ___개 | ___개 | ___분 |
-| 4️⃣ 부하 감소 | 아래 실행 | 10 | ___개 | ___개 | ___분 |
-
-### Step 1: 기본 상태 확인
-
-```bash
-kubectl get hpa -n pets
-```
-
-### Step 2: 부하 증가 (500 → 스케일 아웃 관찰)
-
-```bash
-kubectl set env deployment/virtual-customer -n pets ORDERS_PER_HOUR=500
-```
-
-잠시 후 HPA가 더 많은 Pod를 추가하는 것을 관찰하세요.
-
-### Step 3: 극단 부하 (1000 → 최대 스케일 확인)
-
-```bash
-kubectl set env deployment/virtual-customer -n pets ORDERS_PER_HOUR=1000
-```
-
-> [!NOTE]
-> HPA의 `maxReplicas`(store-front: 10, order-service: 8)에 도달하면 더 이상 Pod가 추가되지 않습니다.
-> 노드 리소스가 부족하면 Pending Pod가 발생하고 NAP이 노드를 추가합니다 (08절에서 실습).
-
-### Step 4: 부하 감소 (10 → 스케일 다운 관찰)
-
-```bash
-kubectl set env deployment/virtual-customer -n pets ORDERS_PER_HOUR=10
-```
-
-약 5분 뒤 HPA가 스케일 다운을 시작합니다 (기본 쿨다운: 5분).
-
-### (선택) 부하 중지 — virtual-customer 일시 중지
-
-```bash
-kubectl scale deployment/virtual-customer -n pets --replicas=0
-```
-
-## 6-5. HPA 상세 확인
+## 7-4. HPA 상세 확인
 
 ```bash
 kubectl describe hpa store-front-hpa -n pets
@@ -165,8 +177,7 @@ flowchart TD
 ## 점검 체크리스트
 
 - [ ] `kubectl get hpa -n pets` — 두 HPA 모두 TARGETS 표시
-- [ ] ORDERS_PER_HOUR=500 시 replica 수 증가 확인
-- [ ] ORDERS_PER_HOUR=10 시 약 5분 뒤 스케일 다운 확인
+- [ ] virtual-customer의 기본 부하로 `order-service` replica 가 증가하는지 확인
 
 ---
 
