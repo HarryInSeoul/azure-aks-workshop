@@ -11,6 +11,14 @@ spec:
     memory: 200Gi
   template:
     spec:
+      # NodePool 격리: 이 NodePool에서 만든 노드에는 이 taint가 자동 부여되므로,
+      # toleration이 명시된 Pod(예: nap-trigger)만 스케줄됩니다.
+      # → 시스템 워크로드(flux-system, pets 일반 Pod 등)가 임시 NAP 노드에
+      #   올라타지 않게 막아주어, 8-4 정리 시점에 영향을 받지 않습니다.
+      taints:
+        - key: workshop-linux
+          value: "true"
+          effect: NoSchedule
       expireAfter: Never
       nodeClassRef:
         group: karpenter.azure.com

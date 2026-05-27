@@ -81,6 +81,10 @@ spec:
     memory: 200Gi                                      # 전체 메모리 상한
   template:
     spec:
+      taints:                                          # ★ NodePool 격리용 taint
+        - key: workshop-linux                          #   이 NodePool이 만든 노드에
+          value: "true"                                #   자동으로 부여됨 → toleration
+          effect: NoSchedule                           #   없는 Pod은 스케줄링 안 됨
       expireAfter: Never                               # 만료 없음
       nodeClassRef:
         group: karpenter.azure.com                     # AKS 전용 그룹
@@ -100,6 +104,12 @@ spec:
         operator: In
         values: ["on-demand"]                         # 온디맨드만 (Spot 제외)
 ```
+
+> [!IMPORTANT]
+> **`taints: workshop-linux=true:NoSchedule` 가 핵심입니다.**  
+> 이 NodePool에서 NAP가 만드는 노드에는 자동으로 이 taint가 붙어, **toleration이 명시된 Pod만** 스케줄링됩니다. 다음 절 8-3의 `nap-trigger` Deployment 가 바로 그 toleration을 가집니다.  
+>
+> 이렇게 격리하지 않으면 8-4 cleanup에서 NAP 노드가 사라질 때 그 위에 떠 있던 시스템 Pod(flux-system 컨트롤러, store-front 등)이 graceful shutdown에 실패하여 **수 시간 Terminating 좀비 상태**로 남을 수 있습니다.
 
 ```bash
 kubectl get nodepools.karpenter.sh
@@ -126,19 +136,42 @@ workshop-linux   default        0       True    20s
 
 ### Step 1: 더미 Deployment 생성 (`nap-trigger`)
 
-```bash
-# pause 이미지로 가벼운 Deployment 생성 (실제 로직 없이 자리만 차지)
-kubectl create deployment nap-trigger \
-  --image=registry.k8s.io/pause:3.9 \
-  --replicas=8 \
-  -n pets
+YAML로 한 번에 배포합니다. `tolerations` 가 있어야 8-2에서 NodePool에 부여한 `workshop-linux=true:NoSchedule` taint를 통과해 새로 만들어지는 NAP 노드에 스케줄링됩니다.
 
-# 각 Pod이 1.5 vCPU + 2Gi 메모리를 요청하도록 설정 → 기존 노드 여유를 초과
-kubectl set resources deployment/nap-trigger -n pets \
-  --requests=cpu=1500m,memory=2Gi
+```bash
+kubectl apply -n pets -f - <<'EOF'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nap-trigger
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      app: nap-trigger
+  template:
+    metadata:
+      labels:
+        app: nap-trigger
+    spec:
+      # ★ workshop-linux NodePool의 taint를 통과하는 toleration
+      tolerations:
+        - key: workshop-linux
+          operator: Exists
+          effect: NoSchedule
+      containers:
+        - name: nap-trigger
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: 1500m       # 큰 요청으로 기존 노드 여유 초과 → NAP 트리거
+              memory: 2Gi
+EOF
 ```
 
 > `pause` 이미지는 Kubernetes가 Pod sandbox용으로 쓰는 가장 가벼운 컨테이너(수 MB)입니다. 실행 부하는 거의 없지만 `resources.requests`로 **스케줄러가 인식하는 점유량**을 만들 수 있어 NAP 트리거에 이상적입니다.
+>
+> `tolerations`이 없으면 새로 뜬 NAP 노드에도 스케줄되지 못해 Pending이 풀리지 않으니, **반드시 위 YAML 그대로 사용**하세요.
 
 ### Step 2: Pending 발생 확인
 
