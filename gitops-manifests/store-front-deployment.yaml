@@ -4,7 +4,7 @@ metadata:
   name: store-front
   namespace: pets
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: store-front
